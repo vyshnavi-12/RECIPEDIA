@@ -1,0 +1,213 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: yellow;
+}
+
+/* Container for Login, Register, and Home */
+.container {
+  background: white;
+  padding: 20px;
+  width: 320px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+ margin-left: auto;
+ margin-right: auto;
+ margin-top: 20px;
+}
+
+/* Input Fields */
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+:root {
+  --primary-color: #007bff;
+  --hover-color: #0056b3;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --border-color: #ccc;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    width: 90%;
+    padding: 15px;
+  }
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+input:focus {
+  outline: 2px solid var(--primary-color);
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.carousel img {
+  outline: none;
+  border: none;
+}
+
+.carousel-control-prev, .carousel-control-next {
+  outline: none;
+  border: none;
+  box-shadow: none !important;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 500px; /* Adjust as per your requirement */
+  object-fit: cover; /* Ensures the image covers the space without distortion */
+}
+
+.carousel-item img:hover {
+  outline: none;
+}
+
+.card-img-top {
+  width: 100%;
+  height: 400px; /* Adjust height as needed */
+  object-fit: cover; /* Ensures images are properly cropped to fit */
+}
+.recipe-footer {
+  background-color: #333;
+  color: white;
+  padding: 40px 0 20px;
+  margin-top: 50px;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.footer-section h4 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.footer-section a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-section a:hover {
+  color: #fff;
+}
+
+.footer-section input {
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+  margin-bottom: 10px;
+}
+
+.subscribe-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.subscribe-btn:hover {
+  background-color: #45a049;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  margin-top: 30px;
+  border-top: 1px solid #555;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .footer-section {
+    align-items: center;
+  }
+}
+.bg-dark {
+    background-color: #212529 !important;
+}
+
+.text-light {
+    color: #f8f9fa !important;
+}
+
+.footer h5 {
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+}
+
+.footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer ul li a:hover {
+    color: #0d6efd !important;
+    transition: color 0.3s ease;
+}
+
+.footer .bi {
+    transition: transform 0.3s ease;
+}
+
+.footer .bi:hover {
+    transform: scale(1.2);
+}
+
+.footer hr {
+    opacity: 0.2;
+    margin: 1.5rem 0;
+}
+
+.gap-3 {
+    gap: 1rem !important;
+}

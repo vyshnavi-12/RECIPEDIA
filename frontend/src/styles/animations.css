@@ -1,0 +1,49 @@
+.animated-bg {
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+.login-bg {
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #2196F3, #00BCD4, #3F51B5, #673AB7);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+.register-bg {
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #4CAF50, #8BC34A, #009688, #00BCD4);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Optional floating elements animation */
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
