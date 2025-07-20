@@ -14,43 +14,6 @@
 - 📦 **MongoDB Cloud Storage** for efficient data management
 
 
-
-**🗂️ Project Structure**
-
-RECIPEDIA/
-├── backend/
-│ ├── models/
-│ │ ├── Recipe.js
-│ │ └── User.js
-│ ├── .env
-│ ├── server.js
-│ ├── package.json
-│ └── ...
-├── frontend/
-│ ├── public/
-│ │ ├── *.jpg (recipe images like biryani, coffee, jalebi, etc.)
-│ │ ├── favicon.ico
-│ │ └── manifest.json
-│ ├── src/
-│ │ ├── components/
-│ │ │ └── Navbar.jsx
-│ │ ├── pages/
-│ │ │ ├── About.jsx, AddRecipe.jsx, Login.jsx, Register.jsx, UserProfile.jsx, etc.
-│ │ │ └── Category pages like Biryani.jsx, Dessert.jsx, etc.
-│ │ ├── styles/
-│ │ │ ├── App.css
-│ │ │ └── index.css
-│ │ ├── App.js
-│ │ ├── index.js
-│ │ └── setupTests.js
-│ └── ...
-├── README.md
-├── CODE_OF_CONDUCT.md
-├── LEARN.md
-└── .gitignore
-
-
-
 **🛠️ Built With**
 
 - React.js - Frontend
