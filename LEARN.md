@@ -53,7 +53,7 @@ RECIPEDIA/
 
 **🚀 Getting Started**
 **1. Clone the repository**
-git clone https://github.com/your-username/recipedia.git
+git clone https://github.com/MeghanaDG04/RECIPEDIA.git
 cd recipedia
 
 **2. Install dependencies**
