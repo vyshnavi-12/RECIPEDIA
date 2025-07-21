@@ -106,6 +106,7 @@ Check our [Issues Page](https://github.com/MeghanaDG04/RECIPEDIA/issues) for beg
 
 
 🧩**GSSoC '25 Contribution Levels, Points & Timeline**
+
 To streamline contributions during GirlScript Summer of Code 2025 (GSSoC’25), each issue is categorized by difficulty level and awarded points based on complexity.
 
 <img width="880" height="208" alt="image" src="https://github.com/user-attachments/assets/1c9033b2-f4de-4981-aa65-7f1d4331d735" />
