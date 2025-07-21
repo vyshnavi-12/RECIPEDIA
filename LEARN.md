@@ -17,6 +17,9 @@ A full-stack **recipe management web application** built with the MERN stack (Mo
 
 **🗂️ Project Structure**
 
+<img width="536" height="627" alt="image" src="https://github.com/user-attachments/assets/6b9691fa-f148-49d6-bb82-5ddf0e563735" />
+
+
 RECIPEDIA/
 ├── backend/
 │   ├── models/
