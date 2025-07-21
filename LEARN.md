@@ -105,5 +105,18 @@ Check our [Issues Page](https://github.com/MeghanaDG04/RECIPEDIA/issues) for beg
 * Ensure responsiveness and smooth navigation
 
 
+🧩**GSSoC '25 Contribution Levels, Points & Timeline**
+To streamline contributions during GirlScript Summer of Code 2025 (GSSoC’25), each issue is categorized by difficulty level and awarded points based on complexity.
+
+<img width="880" height="208" alt="image" src="https://github.com/user-attachments/assets/1c9033b2-f4de-4981-aa65-7f1d4331d735" />
+
+-------------------------------------------
+
+Duration:
+* You can pick issues anytime during the program window.
+* Please ensure timely communication and PR submissions.
+* Issues may have individual time limits once assigned (generally 3–7 days).
+
+
 **Happy Coding!**
 
