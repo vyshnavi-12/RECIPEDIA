@@ -104,8 +104,6 @@ Check our [Issues Page](https://github.com/MeghanaDG04/RECIPEDIA/issues) for beg
 * CRUD operations for recipes
 * Ensure responsiveness and smooth navigation
 
----
 
-**Happy Cooking & Coding! 👩‍🍳👨‍🍳**
+**Happy Coding!**
 
-Let me know if you’d like this as a downloadable `README.md` file or want a contribution guideline (`CONTRIBUTING.md`) too.
