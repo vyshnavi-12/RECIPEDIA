@@ -1,18 +1,26 @@
-import React from 'react';
+import { FaExclamationTriangle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import "./Error.css"
 
 const NotFound = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 bg-white">
-      <h1 className="text-6xl font-bold text-red-500">404</h1>
-      <p className="text-2xl mt-4 font-semibold text-gray-800">Recipe Not Found</p>
-      <p className="text-gray-500 mt-2">Oops! The recipe you're looking for doesn't exist.</p>
-      <Link
-        to="/"
-        className="mt-6 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
-      >
-        Back to Home
-      </Link>
+     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md">
+        {/* Yellow Triangle Icon */}
+        <FaExclamationTriangle className="text-yellow-400 text-6xl mb-4 mx-auto" />
+
+        <h1 className="text-5xl font-bold text-red-500 mb-2">404</h1>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2">Page Not Found</h2>
+        <p className="text-gray-600 mb-6">
+          The page you’re looking for doesn’t exist or has been moved.
+        </p>
+        <a
+          href="/"
+          className="inline-block px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        >
+          Go Home
+        </a>
+      </div>
     </div>
   );
 };

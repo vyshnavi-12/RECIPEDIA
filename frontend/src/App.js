@@ -28,7 +28,7 @@ import MasalaChai from "./pages/MasalaChai";
 import UserProfile from "./pages/UserProfile";
 import AddRecipe from "./pages/AddRecipe";
 import About from "./pages/About";
-import NotFoundPage from './pages/NotFoundPage';
+import NotFoundPage from './pages/NotFound';
 import ErrorPage from './pages/ErrorPage';
 
 
