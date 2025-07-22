@@ -28,6 +28,8 @@ import MasalaChai from "./pages/MasalaChai";
 import UserProfile from "./pages/UserProfile";
 import AddRecipe from "./pages/AddRecipe";
 import About from "./pages/About";
+import NotFoundPage from './pages/NotFoundPage';
+import ErrorPage from './pages/ErrorPage';
 
 
 function App() {
@@ -70,6 +72,8 @@ function App() {
           <Route path="/profile" element={<UserProfile />} /> 
           <Route path="/add-recipe" element={<AddRecipe />} />
           <Route path="/about" element={<About />} />
+          <Route path="/error" element={<ErrorPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </Router>  );
