@@ -2,7 +2,7 @@
 module.exports = {
   content: [
    "./src/pages/ErrorPage.jsx",
-   "./src/pages/NotFound.jsx"
+   "./src/pages/NotFound.jsx",
   ],
   theme: {
     extend: {},
