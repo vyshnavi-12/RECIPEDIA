@@ -4,12 +4,22 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const User = require('./models/User');
 const Recipe = require('./models/Recipe');
-
+const cors = require('cors');
 const app = express();
 const port = 3000;
-
+app.use(cors({
+  origin: 'http://localhost:3001',
+  credentials: true // if you’re using cookies or auth headers
+}));
 app.use(express.json());
-
+// Error handling middleware
+const errorHandler = (err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    message: 'Something went wrong!', 
+    error: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error' 
+  });
+};
 // Home
 app.get('/', (req, res) => {
     res.send('Welcome to RECIPEDIA');
