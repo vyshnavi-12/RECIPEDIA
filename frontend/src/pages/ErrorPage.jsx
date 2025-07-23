@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const ErrorPage = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-red-50 px-4">
-      <div className="bg-white p-8 rounded-xl shadow-2xl border border-red-300 text-center">
+    <div className="flex items-center justify-center px-4">
+      <div className="bg-white/10 p-8 rounded-xl shadow-2xl border border-red-300 text-center mt-[150px]">
         <h1 className="text-4xl font-bold text-red-600 mb-4">Something Went Wrong</h1>
         <p className="text-gray-700 mb-2">
           An unexpected error occurred while loading this page.
