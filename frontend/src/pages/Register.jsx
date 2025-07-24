@@ -23,7 +23,7 @@ const Register = ({ setIsLoggedIn }) => {
 
   return (
     <div className="auth-container">
-      <h2>Register</h2>
+      <h2 className="heading">Register</h2>
       <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
       <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
       <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
@@ -32,7 +32,11 @@ const Register = ({ setIsLoggedIn }) => {
       <input type="text" placeholder="Phone Number" onChange={(e) => setPhone(e.target.value)} />
       <input type="text" placeholder="Address" onChange={(e) => setAddress(e.target.value)} />
       <button onClick={handleRegister}>Register</button>
-      <p>Already have an account? <Link to="/login">Login</Link></p>
+      <p className='swap_state'>Already have an account? <span className='link'><Link to="/login">Login</Link></span></p>
+      <span className='termsandconditions'>
+        <input type="checkbox" name="" id="" checked="true"/>
+        <h6>By Continuing, I agree to the terms of use & privacy policiy</h6>
+      </span>
     </div>
   );
 };

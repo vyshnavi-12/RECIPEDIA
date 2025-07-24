@@ -22,11 +22,15 @@ const Login = ({setIsLoggedIn}) => {
   return (
     <div>
      <div className="auth-container">
-      <h2>Login</h2>
+      <h2 className='heading'>Login</h2>
       <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
       <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
       <button onClick={handleLogin}>Login</button>
-      <p>New user? <Link to="/register">Register</Link></p>
+      <p className='swap_state'>New user? <span className='link'><Link to="/register">Register</Link></span></p>
+      <span className='termsandconditions'>
+        <input type="checkbox" name="" id="" checked="true"/>
+        <h6>By Continuing, I agree to the terms of use & privacy policiy</h6>
+      </span>
     </div>
     </div>
   )
