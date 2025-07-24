@@ -1,9 +1,7 @@
-/* Reset default body styles here if needed, keeping them minimal to let Tailwind drive the look */
 body{
   margin: 0;
   padding: 0;
 }
-
 /* Container for authentication forms (Login & Register) */
 .auth-container {
   background: white;
