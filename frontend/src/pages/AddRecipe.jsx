@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaTrash, FaEdit, FaHeart, FaComment } from 'react-icons/fa';
 import './AddRecipe.css';
 
@@ -14,17 +14,45 @@ const AddRecipe = () => {
     image: "",
   });
   const [editingRecipe, setEditingRecipe] = useState(null);
+  const navigate = useNavigate();
 
   // API base URL
   const API_BASE_URL = 'http://localhost:3000';
 
-  // Get current user ID (you might want to get this from context/auth)
-  const getCurrentUserId = () => {
-    // For now, using a dummy user ID. Replace with actual authentication
-    return "60d5ecb74b24c73d5c8f1234"; // Replace with real user ID from auth
+  // Get authentication token
+  const getAuthToken = () => {
+    return sessionStorage.getItem('token');
   };
 
-  // Fetch all recipes
+  // Get current user
+  const getCurrentUser = () => {
+    const user = sessionStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  };
+
+  // Check if user is authenticated
+  const isAuthenticated = () => {
+    return !!getAuthToken() && !!getCurrentUser();
+  };
+
+  // Get authorization headers
+  const getAuthHeaders = () => {
+    const token = getAuthToken();
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': token ? `Bearer ${token}` : ''
+    };
+  };
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate('/login');
+      return;
+    }
+  }, [navigate]);
+
+  // Fetch all recipes (public endpoint)
   const fetchRecipes = async () => {
     try {
       setLoading(true);
@@ -41,7 +69,9 @@ const AddRecipe = () => {
 
   // Load recipes on component mount
   useEffect(() => {
-    fetchRecipes();
+    if (isAuthenticated()) {
+      fetchRecipes();
+    }
   }, []);
 
   // Handle input changes
@@ -52,41 +82,69 @@ const AddRecipe = () => {
   // Add or Update Recipe
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!isAuthenticated()) {
+      setError('Please log in to add recipes');
+      navigate('/login');
+      return;
+    }
+
     try {
       const recipeData = {
-        ...newRecipe,
-        ingredients: newRecipe.ingredients.split(',').map(item => item.trim()),
-        userId: getCurrentUserId()
+        title: newRecipe.title.trim(),
+        description: newRecipe.description.trim(),
+        ingredients: newRecipe.ingredients.split(',').map(item => item.trim()).filter(item => item),
+        image: newRecipe.image.trim()
       };
+
+      // Validate recipe data
+      if (!recipeData.title || !recipeData.description || !recipeData.ingredients.length) {
+        setError('Please fill in all required fields');
+        return;
+      }
 
       if (editingRecipe) {
         // Update existing recipe
         const response = await fetch(`${API_BASE_URL}/recipes/${editingRecipe._id}`, {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: getAuthHeaders(),
           body: JSON.stringify(recipeData)
         });
 
-        if (!response.ok) throw new Error('Failed to update recipe');
+        if (response.status === 401) {
+          setError('Session expired. Please log in again.');
+          navigate('/login');
+          return;
+        }
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to update recipe');
+        }
         
-        const updatedRecipe = await response.json();
+        const result = await response.json();
         setRecipes(recipes.map(recipe => 
-          recipe._id === editingRecipe._id ? updatedRecipe.recipe : recipe
+          recipe._id === editingRecipe._id ? result.recipe : recipe
         ));
         setEditingRecipe(null);
       } else {
         // Add new recipe
         const response = await fetch(`${API_BASE_URL}/recipes`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: getAuthHeaders(),
           body: JSON.stringify(recipeData)
         });
 
-        if (!response.ok) throw new Error('Failed to add recipe');
+        if (response.status === 401) {
+          setError('Session expired. Please log in again.');
+          navigate('/login');
+          return;
+        }
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to add recipe');
+        }
         
         const result = await response.json();
         setRecipes([...recipes, result.recipe]);
@@ -96,17 +154,24 @@ const AddRecipe = () => {
       setNewRecipe({ title: "", description: "", ingredients: "", image: "" });
       setError('');
     } catch (err) {
+      console.error('Recipe submission error:', err);
       setError('Error saving recipe: ' + err.message);
     }
   };
 
   // Edit Recipe
   const handleEdit = (recipe) => {
+    const currentUser = getCurrentUser();
+    if (!currentUser || recipe.userId !== currentUser.id) {
+      setError('You can only edit your own recipes');
+      return;
+    }
+
     setNewRecipe({
       title: recipe.title,
       description: recipe.description,
-      ingredients: recipe.ingredients.join(', '),
-      image: recipe.image
+      ingredients: Array.isArray(recipe.ingredients) ? recipe.ingredients.join(', ') : recipe.ingredients,
+      image: recipe.image || ''
     });
     setEditingRecipe(recipe);
   };
@@ -115,36 +180,67 @@ const AddRecipe = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this recipe?')) return;
     
+    if (!isAuthenticated()) {
+      setError('Please log in to delete recipes');
+      navigate('/login');
+      return;
+    }
+    
     try {
       const response = await fetch(`${API_BASE_URL}/recipes/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: getAuthHeaders()
       });
 
-      if (!response.ok) throw new Error('Failed to delete recipe');
+      if (response.status === 401) {
+        setError('Session expired. Please log in again.');
+        navigate('/login');
+        return;
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to delete recipe');
+      }
       
       setRecipes(recipes.filter(recipe => recipe._id !== id));
     } catch (err) {
+      console.error('Delete error:', err);
       setError('Error deleting recipe: ' + err.message);
     }
   };
 
   // Like Recipe
   const handleLike = async (id) => {
+    if (!isAuthenticated()) {
+      setError('Please log in to like recipes');
+      navigate('/login');
+      return;
+    }
+
     try {
       const response = await fetch(`${API_BASE_URL}/recipes/${id}/like`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        }
+        headers: getAuthHeaders()
       });
 
-      if (!response.ok) throw new Error('Failed to like recipe');
+      if (response.status === 401) {
+        setError('Session expired. Please log in again.');
+        navigate('/login');
+        return;
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to like recipe');
+      }
       
       const result = await response.json();
       setRecipes(recipes.map(recipe => 
         recipe._id === id ? { ...recipe, likes: result.likes } : recipe
       ));
     } catch (err) {
+      console.error('Like error:', err);
       setError('Error liking recipe: ' + err.message);
     }
   };
@@ -153,25 +249,38 @@ const AddRecipe = () => {
   const handleAddComment = async (recipeId, commentText) => {
     if (!commentText.trim()) return;
     
+    if (!isAuthenticated()) {
+      setError('Please log in to add comments');
+      navigate('/login');
+      return;
+    }
+    
     try {
       const response = await fetch(`${API_BASE_URL}/recipes/${recipeId}/comments`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: getAuthHeaders(),
         body: JSON.stringify({
-          userId: getCurrentUserId(),
-          text: commentText
+          text: commentText.trim()
         })
       });
 
-      if (!response.ok) throw new Error('Failed to add comment');
+      if (response.status === 401) {
+        setError('Session expired. Please log in again.');
+        navigate('/login');
+        return;
+      }
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to add comment');
+      }
       
       const result = await response.json();
       setRecipes(recipes.map(recipe => 
         recipe._id === recipeId ? result.recipe : recipe
       ));
     } catch (err) {
+      console.error('Comment error:', err);
       setError('Error adding comment: ' + err.message);
     }
   };
@@ -204,22 +313,22 @@ const AddRecipe = () => {
             value={newRecipe.description} 
             onChange={handleChange} 
             required
+            rows="4"
           />
-          <input 
-            type="text" 
+          <textarea 
             name="ingredients" 
             placeholder="Ingredients (comma separated)" 
             value={newRecipe.ingredients} 
             onChange={handleChange} 
             required 
+            rows="3"
           />
           <input 
-            type="text" 
+            type="url" 
             name="image" 
-            placeholder="Image URL" 
+            placeholder="Image URL (optional)" 
             value={newRecipe.image} 
             onChange={handleChange} 
-            required 
           />
           <button type="submit">
             {editingRecipe ? "Update Recipe" : "Add Recipe"}
@@ -231,6 +340,7 @@ const AddRecipe = () => {
                 setEditingRecipe(null);
                 setNewRecipe({ title: "", description: "", ingredients: "", image: "" });
               }}
+              className="cancel-button"
             >
               Cancel
             </button>
@@ -242,12 +352,13 @@ const AddRecipe = () => {
       <div className="recipe-list">
         <h2>All Recipes</h2>
         {recipes.length === 0 ? (
-          <p>No recipes found.</p>
+          <p>No recipes found. Be the first to add a recipe!</p>
         ) : (
           recipes.map((recipe) => (
             <RecipeCard 
               key={recipe._id} 
               recipe={recipe} 
+              currentUser={getCurrentUser()}
               onEdit={handleEdit}
               onDelete={handleDelete}
               onLike={handleLike}
@@ -261,7 +372,7 @@ const AddRecipe = () => {
 };
 
 // Separate Recipe Card Component
-const RecipeCard = ({ recipe, onEdit, onDelete, onLike, onAddComment }) => {
+const RecipeCard = ({ recipe, currentUser, onEdit, onDelete, onLike, onAddComment }) => {
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState('');
 
@@ -271,24 +382,43 @@ const RecipeCard = ({ recipe, onEdit, onDelete, onLike, onAddComment }) => {
     setNewComment('');
   };
 
+  const isOwner = currentUser && recipe.userId === currentUser.id;
+  const authorName = recipe.userId?.username || 'Unknown Author';
+
   return (
     <div className="recipe-card">
-      <img src={recipe.image} alt={recipe.title} onError={(e) => {
-        e.target.src = '/placeholder-recipe.jpg'; // Fallback image
-      }} />
+      {recipe.image && (
+        <img 
+          src={recipe.image} 
+          alt={recipe.title} 
+          onError={(e) => {
+            e.target.style.display = 'none';
+          }} 
+        />
+      )}
       <div className="recipe-info">
         <h3>{recipe.title}</h3>
+        <p className="recipe-author">By: {authorName}</p>
         <p>{recipe.description}</p>
-        <p><strong>Ingredients:</strong> {recipe.ingredients.join(", ")}</p>
-        
-        <div className="recipe-actions">
-          <button onClick={() => onEdit(recipe)}>
-            <FaEdit /> Edit
-          </button>
-          <button onClick={() => onDelete(recipe._id)} className="delete">
-            <FaTrash /> Delete
-          </button>
+        <div className="ingredients">
+          <strong>Ingredients:</strong>
+          <ul>
+            {(Array.isArray(recipe.ingredients) ? recipe.ingredients : []).map((ingredient, index) => (
+              <li key={index}>{ingredient}</li>
+            ))}
+          </ul>
         </div>
+        
+        {isOwner && (
+          <div className="recipe-actions">
+            <button onClick={() => onEdit(recipe)}>
+              <FaEdit /> Edit
+            </button>
+            <button onClick={() => onDelete(recipe._id)} className="delete">
+              <FaTrash /> Delete
+            </button>
+          </div>
+        )}
         
         <div className="recipe-meta">
           <button 
@@ -312,10 +442,10 @@ const RecipeCard = ({ recipe, onEdit, onDelete, onLike, onAddComment }) => {
                 <div key={index} className="comment">
                   <p>{comment.text}</p>
                   <small>
-                    {new Date(comment.createdAt).toLocaleDateString()}
+                    {comment.user?.username || 'Anonymous'} - {new Date(comment.createdAt).toLocaleDateString()}
                   </small>
                 </div>
-              ))}
+              )) || <p>No comments yet.</p>}
             </div>
             
             <form onSubmit={handleCommentSubmit} className="comment-form">

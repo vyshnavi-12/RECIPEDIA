@@ -46,6 +46,12 @@ const Register = ({ setIsLoggedIn }) => {
             return "Please enter a valid email address";
         }
         
+        // Basic phone validation
+        const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+        if (!phoneRegex.test(phone) || phone.length < 10) {
+            return "Please enter a valid phone number";
+        }
+        
         return null;
     };
 
@@ -62,28 +68,38 @@ const Register = ({ setIsLoggedIn }) => {
         setError("");
 
         try {
-            // Updated to correct backend port (3000) and send all required fields
             const response = await axios.post("http://localhost:3000/register", {
-                username: formData.username,
-                email: formData.email,
+                username: formData.username.trim(),
+                email: formData.email.trim().toLowerCase(),
                 password: formData.password,
                 age: parseInt(formData.age),
                 gender: formData.gender,
-                address: formData.address,
-                phone: formData.phone
+                address: formData.address.trim(),
+                phone: formData.phone.trim()
             });
 
-            // Store user data in localStorage
-            localStorage.setItem("username", formData.username);
-            localStorage.setItem("userEmail", formData.email);
+            // Store authentication data using sessionStorage (more secure than localStorage)
+            const { token, user } = response.data;
+            
+            sessionStorage.setItem("token", token);
+            sessionStorage.setItem("user", JSON.stringify(user));
             
             setIsLoggedIn(true);
             navigate("/home");
         } catch (error) {
             console.error("Registration error:", error);
-            if (error.response && error.response.data && error.response.data.message) {
-                setError(error.response.data.message);
+            console.error("Error response:", error.response?.data);
+            
+            if (error.response) {
+                // Server responded with error status
+                const errorMessage = error.response.data?.message || "Registration failed";
+                setError(errorMessage);
+                console.log("Server error message:", errorMessage);
+            } else if (error.request) {
+                // Request was made but no response received
+                setError("Cannot connect to server. Please check if the server is running.");
             } else {
+                // Something else happened
                 setError("Registration failed. Please try again.");
             }
         } finally {
