@@ -34,34 +34,51 @@ const AddRecipe = () => {
 
   const [editingRecipe, setEditingRecipe] = useState(null);
 
-  // Handle input changes
+  
   const handleChange = (e) => {
     setNewRecipe({ ...newRecipe, [e.target.name]: e.target.value });
   };
 
-  // Add or Update Recipe
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+  
+    const ingredientsArray = newRecipe.ingredients.split(',').map(ingredient => ingredient.trim());
+    
+    const recipeData = {
+      ...newRecipe,
+      ingredients: ingredientsArray 
+    };
+    
     if (editingRecipe) {
       setRecipes(
         recipes.map((recipe) =>
-          recipe.id === editingRecipe.id ? { ...recipe, ...newRecipe } : recipe
+          recipe.id === editingRecipe.id ? { ...recipe, ...recipeData } : recipe
         )
       );
       setEditingRecipe(null);
     } else {
-      setRecipes([...recipes, { ...newRecipe, id: Date.now(), likes: 0, comments: [] }]);
+      setRecipes([...recipes, { ...recipeData, id: Date.now(), likes: 0, comments: [] }]);
     }
     setNewRecipe({ title: "", description: "", ingredients: "", image: "" });
   };
 
-  // Edit Recipe
+
   const handleEdit = (recipe) => {
-    setNewRecipe(recipe);
+   
+    const ingredientsString = Array.isArray(recipe.ingredients) 
+      ? recipe.ingredients.join(", ") 
+      : recipe.ingredients;
+    
+    setNewRecipe({
+      ...recipe,
+      ingredients: ingredientsString
+    });
     setEditingRecipe(recipe);
   };
 
-  // Delete Recipe
+ 
   const handleDelete = (id) => {
     setRecipes(recipes.filter((recipe) => recipe.id !== id));
   };
@@ -93,7 +110,11 @@ const AddRecipe = () => {
               <div className="recipe-info">
                 <h3>{recipe.title}</h3>
                 <p>{recipe.description}</p>
-                <p><strong>Ingredients:</strong> {recipe.ingredients.join(", ")}</p>
+                <p><strong>Ingredients:</strong> {
+                  Array.isArray(recipe.ingredients) 
+                    ? recipe.ingredients.join(", ") 
+                    : recipe.ingredients
+                }</p>
                 <div className="recipe-actions">
                   <button onClick={() => handleEdit(recipe)}><FaEdit /> Edit</button>
                   <button onClick={() => handleDelete(recipe.id)} className="delete"><FaTrash /> Delete</button>

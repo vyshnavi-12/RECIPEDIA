@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ isLoggedIn, setIsLoggedIn }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => setMobileOpen(!mobileOpen);
+
+ 
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/");
+  };
 
   const navLinks = (
     <>
@@ -26,7 +35,26 @@ const Header = () => {
 
         <div className="hidden md:flex items-center space-x-4">
           <Link to="/add-recipe" className="bg-red-500 text-white px-5 py-2 rounded-full font-semibold hover:bg-red-600 transition shadow-sm">Add Recipe</Link>
-          <Link to="/login" className="text-gray-600 hover:text-red-500 font-medium">Login</Link>
+          
+          {isLoggedIn ? (
+            <div className="flex items-center space-x-4">
+              <Link to="/profile" className="text-gray-600 hover:text-red-500 font-medium">Profile</Link>
+              <button 
+                onClick={handleLogout}
+                className="text-gray-600 hover:text-red-500 font-medium bg-transparent border-none cursor-pointer"
+              >
+                Logout
+              </button>
+              <span className="text-sm text-gray-500">
+                Welcome, {localStorage.getItem("username") || "User"}!
+              </span>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-4">
+              <Link to="/login" className="text-gray-600 hover:text-red-500 font-medium">Login</Link>
+              <Link to="/register" className="bg-gray-200 text-gray-800 px-4 py-2 rounded-full font-semibold hover:bg-gray-300 transition">Register</Link>
+            </div>
+          )}
         </div>
 
         {/* Mobile toggle */}
@@ -43,7 +71,26 @@ const Header = () => {
           {navLinks}
           <hr />
           <Link to="/add-recipe" className="block bg-red-500 text-white text-center px-5 py-2 rounded-full font-semibold hover:bg-red-600 transition shadow-sm">Add Recipe</Link>
-          <Link to="/login" className="block text-center mt-2 bg-gray-200 text-gray-800 px-5 py-2 rounded-full font-semibold hover:bg-gray-300 transition">Login</Link>
+          
+          {isLoggedIn ? (
+            <div className="space-y-2">
+              <Link to="/profile" className="block text-center mt-2 bg-gray-200 text-gray-800 px-5 py-2 rounded-full font-semibold hover:bg-gray-300 transition">Profile</Link>
+              <button 
+                onClick={handleLogout}
+                className="block w-full text-center mt-2 bg-red-200 text-red-800 px-5 py-2 rounded-full font-semibold hover:bg-red-300 transition border-none cursor-pointer"
+              >
+                Logout
+              </button>
+              <div className="text-center text-sm text-gray-500 mt-2">
+                Welcome, {localStorage.getItem("username") || "User"}!
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <Link to="/login" className="block text-center mt-2 bg-gray-200 text-gray-800 px-5 py-2 rounded-full font-semibold hover:bg-gray-300 transition">Login</Link>
+              <Link to="/register" className="block text-center mt-2 bg-blue-200 text-blue-800 px-5 py-2 rounded-full font-semibold hover:bg-blue-300 transition">Register</Link>
+            </div>
+          )}
         </nav>
       )}
     </header>

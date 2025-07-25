@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleProfileClick = () => {
@@ -14,6 +14,13 @@ const Navbar = () => {
 
   const handleAboutClick = () => {
     navigate('/about');
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("username");
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    navigate("/");
   };
 
   return (
@@ -69,12 +76,28 @@ const Navbar = () => {
               </li>
             </ul>
             <div className="d-flex">
-              <button className="btn btn-outline-light btn-sm mx-1">
-                <Link className="nav-link text-white p-0" to="/login">Login</Link>
-              </button>
-              <button className="btn btn-outline-light btn-sm mx-1">
-                <Link className="nav-link text-white p-0" to="/register">Register</Link>
-              </button>
+              {isLoggedIn ? (
+                <div className="d-flex align-items-center">
+                  <span className="text-white me-3">
+                    Welcome, {localStorage.getItem("username") || "User"}!
+                  </span>
+                  <button 
+                    onClick={handleLogout}
+                    className="btn btn-outline-light btn-sm mx-1"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <button className="btn btn-outline-light btn-sm mx-1">
+                    <Link className="nav-link text-white p-0" to="/login">Login</Link>
+                  </button>
+                  <button className="btn btn-outline-light btn-sm mx-1">
+                    <Link className="nav-link text-white p-0" to="/register">Register</Link>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

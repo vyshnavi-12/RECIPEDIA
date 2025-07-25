@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import "../App.css";  // Import CSS
-import Login from "./Login";
+import "../App.css";  
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
 const Register = ({ setIsLoggedIn }) => {
   const [username, setUsername] = useState("");
@@ -14,11 +14,54 @@ const Register = ({ setIsLoggedIn }) => {
   const [phone, setPhone] = useState("");
   const navigate = useNavigate();
 
-  const handleRegister = async () => {
-    await axios.post("http://localhost:5000/register", { username, email, password });
+  
+const handleRegister = async () => {
+  try {
+    await axios.post("http://localhost:5000/register", {
+  username,
+  email,
+  password,
+  age,
+  gender,
+  address,
+  phone,
+});
+
     localStorage.setItem("username", username);
     setIsLoggedIn(true);
     navigate("/home");
+  } catch (error) {
+    console.error("Registration failed:", error);
+    alert("Registration failed. Please check your details.");
+  }
+};
+
+  
+  const handleGoogleRegister = async (credentialResponse) => {
+    try {
+        const idToken = credentialResponse.credential;
+        const res = await axios.post("http://localhost:5000/auth/google", { idToken });
+        
+      
+        if (res.data.username) {
+            localStorage.setItem("username", res.data.username);
+            if (res.data.token) {
+                localStorage.setItem("token", res.data.token);
+            }
+            setIsLoggedIn(true);
+            navigate("/home");
+     } else {
+            throw new Error("No username received from server");
+        }
+    } catch (error) {
+        console.error("Google registration failed:", error);
+        alert("Google registration failed. Please try again.");
+    }
+  };
+
+  const handleGoogleError = () => {
+    console.log("Google Registration Failed");
+    alert("Google registration failed. Please try again.");
   };
 
   return (
@@ -32,6 +75,21 @@ const Register = ({ setIsLoggedIn }) => {
       <input type="text" placeholder="Phone Number" onChange={(e) => setPhone(e.target.value)} />
       <input type="text" placeholder="Address" onChange={(e) => setAddress(e.target.value)} />
       <button onClick={handleRegister}>Register</button>
+      
+      <div className="google-auth-section">
+        <p>Or register with Google:</p>
+        <GoogleOAuthProvider clientId="740849859932-6jfi3j7j4pi4ou19tvdo7a3gpj6sp4s2.apps.googleusercontent.com">
+          <GoogleLogin
+            onSuccess={handleGoogleRegister}
+            onError={handleGoogleError}
+            theme="outline"
+            size="large"
+            text="signup_with"
+            shape="rectangular"
+          />
+        </GoogleOAuthProvider>
+      </div>
+      
       <p>Already have an account? <Link to="/login">Login</Link></p>
     </div>
   );

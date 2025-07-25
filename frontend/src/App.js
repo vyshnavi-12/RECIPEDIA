@@ -44,7 +44,7 @@ import Header from "./components/Header";
     return (
       <Router>
         <div className="app-container">
-          <Header />
+          <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
           <Routes>
             <Route path="/" element={<RecipeHome />} />
             <Route path="/login" element={<div className="login-bg"><Login setIsLoggedIn={setIsLoggedIn} /></div>} />

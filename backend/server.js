@@ -1,14 +1,27 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { OAuth2Client } = require('google-auth-library');
 require('dotenv').config();
 const User = require('./models/User');
 const Recipe = require('./models/Recipe');
+const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = 5000;
+
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 app.use(express.json());
+app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
+
 
 // Home
 app.get('/', (req, res) => {
@@ -18,6 +31,7 @@ app.get('/', (req, res) => {
 // Register
 app.post('/register', async (req, res) => {
     const { username, email, password, age, gender, address, phone } = req.body;
+
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new User({ 
@@ -49,6 +63,63 @@ app.post('/login', async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: 'Login error' });
+    }
+});
+
+
+app.post('/auth/google', async (req, res) => {
+    const { idToken } = req.body;
+    
+    try {
+       
+        const ticket = await client.verifyIdToken({
+            idToken: idToken,
+            audience: process.env.GOOGLE_CLIENT_ID
+        });
+        
+        const payload = ticket.getPayload();
+        const { sub: googleId, email, name, picture } = payload;
+        
+     
+        let user = await User.findOne({ email: email });
+        
+        if (!user) {
+           
+            user = new User({
+                username: name,
+                email: email,
+                googleId: googleId,
+                avatar: picture,
+                password: 'google-auth', 
+                age: 0, 
+                gender: '',
+                address: '',
+                phone: ''
+            });
+            await user.save();
+        }
+        
+       
+        const jwtToken = jwt.sign(
+            { 
+                userId: user._id, 
+                username: user.username, 
+                email: user.email 
+            },
+            'your-secret-key', 
+            { expiresIn: '24h' }
+        );
+        
+        res.json({ 
+            message: 'Google login successful',
+            username: user.username,
+            email: user.email,
+            token: jwtToken
+        });
+        
+    } catch (error) {
+        console.error('Google authentication error:', error);
+        res.status(401).json({ message: 'Invalid Google token' });
     }
 });
 
@@ -255,11 +326,13 @@ app.delete('/recipes/:id', async (req, res) => {
     }
 });
 
-mongoose.connect(process.env.MONGO_URL)
+
+
+mongoose.connect("mongodb+srv://meghanadgaonkar04:meghana04@cluster0.n77cs.mongodb.net/recipedia2004?retryWrites=true&w=majority&appName=Cluster0")
     .then(() => console.log('DB Connected Successfully'))
     .catch(err => console.log(err));
 
-app.listen(port, (err) => {
+app.listen(5000, (err) => {
     if (err) {
         return console.log('Something bad happened', err);
     }
