@@ -4,9 +4,9 @@ import './About.css';
 
 const About = () => {
   return (
-    <div className="about-container">
-      <Link to="/home" className="back-button">&larr; Back to Home</Link>
-      <h1>About Our Recipe Sharing App</h1>
+    <div className="about-container  mt-28 dark:bg-slate-700 ">
+      <Link to="/home" className="back-button  dark:text-white bg-amber-400 font-bold ">&larr; Back to Home </Link>
+      <h1 className=' dark:text-white'>About Our Recipe Sharing App</h1>
       <p>
         Welcome to our Recipe Sharing App! This platform is designed for food lovers who want to explore, share, 
         and save their favorite recipes. Whether you're a professional chef or a home cook, our app allows you to 
