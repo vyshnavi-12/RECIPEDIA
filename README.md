@@ -61,3 +61,7 @@ To customize Tailwind:
 - `frontend/src/components/` – Reusable UI components
 - `frontend/src/pages/` – Route-based views
 - `frontend/src/styles/` – Tailwind and custom styles
+
+## 🪪 License
+This project is licensed under the [MIT License](LICENSE).
+
