@@ -68,6 +68,7 @@ const Register = ({ setIsLoggedIn }) => {
         setError("");
 
         try {
+            
             const response = await axios.post("http://localhost:3000/register", {
                 username: formData.username.trim(),
                 email: formData.email.trim().toLowerCase(),
