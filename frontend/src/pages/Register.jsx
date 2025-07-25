@@ -2,7 +2,11 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";  
+<<<<<<< HEAD
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+=======
+import Login from "./Login";
+>>>>>>> 6d23687 (Added Google authentication feature)
 
 const Register = ({ setIsLoggedIn }) => {
   const [username, setUsername] = useState("");
