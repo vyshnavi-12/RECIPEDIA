@@ -37,7 +37,7 @@ const Dessert = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pt-32 pb-16">
+    <div className="max-w-6xl mx-auto px-4 pt-32 pb-16 ">
       <h1 className="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-10">Dessert Recipes</h1>
 
       <div className="mb-10 flex justify-center">
@@ -46,7 +46,7 @@ const Dessert = () => {
           placeholder="Search for dessert recipes..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full md:w-1/2 px-5 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="w-full md:w-1/2 px-5 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 !bg-white dark:!bg-black !text-black dark:!text-white"
         />
       </div>
 
@@ -60,8 +60,8 @@ const Dessert = () => {
               onClick={() => handleCardClick(recipe.route)}
             >
               <img src={recipe.image} onError={(e) => { e.target.src = '/default3.jpg' }} alt={recipe.name} className="h-48 w-full object-cover" />
-              <div className="p-4">
-                <h3 className="font-semibold text-lg text-gray-800 text-center">{recipe.name}</h3>
+              <div className="p-4 !bg-white dark:!bg-slate-800">
+                <h3 className="font-semibold text-xl  !text-gray-800  dark:!text-white text-center">{recipe.name}</h3>
               </div>
             </div>
           ))}

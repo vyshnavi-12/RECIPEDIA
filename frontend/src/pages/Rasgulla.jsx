@@ -22,40 +22,40 @@ function Rasgulla() {
   };
 
   return (
-    <div className="recipe-detail-container">
-      <div className="back-button" onClick={() => navigate('/dessert')}>
+    <div className="recipe-detail-container ingrdientsDiv">
+      <div className="back-button !text-black dark:!text-white" onClick={() => navigate('/dessert')}>
         <FaArrowLeft /> Back
       </div>
       
-      <h1>Rasgulla</h1>
+      <h1  className="text-2xl block text-center my-10">Rasgulla</h1>
       
       <div className="recipe-image">
         <img src="/rasgulla.jpg" alt="Rassgulla" />
       </div>
 
       <div className="recipe-info">
-        <h2>About</h2>
+        <h2 className='ingredientsH2 mt-2'>About</h2>
         <p>A soft and spongy Bengali dessert made from chhena (Indian cottage cheese) balls cooked in a light sugar syrup.</p>
 
-        <h2>Ingredients</h2>
-        <h3>For the Chhena (Paneer):</h3>
-        <ul>
+        <h2 className='ingredientsH2 mt-2 mb-2'>Ingredients : </h2>
+        <h3 className='ingredientsH2 mt-2'>For the Chhena (Paneer):</h3>
+        <ul className='ingredientsUl'>
           <li>1 liter Full-fat milk</li>
           <li>2 tbsp Lemon juice or vinegar</li>
           <li>2 cups Cold water</li>
           <li>1 tsp Corn flour (optional, for binding)</li>
         </ul>
 
-        <h3>For the Sugar Syrup:</h3>
-        <ul>
+        <h3 className='ingredientsH2 mt-2'>For the Sugar Syrup:</h3>
+        <ul className='ingredientsUl'>
           <li>1 cup Sugar</li>
           <li>4 cups Water</li>
           <li>2 Cardamom pods (optional)</li>
           <li>1 tsp Rose water (optional)</li>
         </ul>
 
-        <h2>Preparation Steps</h2>
-        <ol>
+        <h2 className='ingredientsH2 mt-2'>Preparation Steps</h2>
+        <ol className='list-decimal'>
           <li>Boil milk, then add lemon juice or vinegar to curdle it</li>
           <li>Strain the curdled milk using a muslin cloth and rinse with cold water to remove acidity</li>
           <li>Hang the chhena for 30 minutes to remove excess water</li>
@@ -71,12 +71,15 @@ function Rasgulla() {
     
 
       <div className="user-interaction">
-        <div className="like-section">
-          <button onClick={handleLike}>
-            {liked ? <FaHeart color="red" /> : <FaRegHeart />}
-            {liked ? ' Liked' : ' Like'}
-          </button>
-        </div>
+         <div className="mt-10 flex items-center gap-4">
+                  <button
+                    onClick={handleLike}
+                    className="flex items-center gap-2 text-gray-600 dark:text-white hover:text-red-500 dark:hover:text-red-500 focus:outline-none "
+                  >
+                    {liked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}{" "}
+                    {liked ? "Liked" : "Like"}
+                  </button>
+                </div>
 
         <div className="comment-section">
           <h3>Comments</h3>
@@ -85,6 +88,7 @@ function Rasgulla() {
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Add a comment..."
+              className='text-black'
             />
             <button type="submit">Post Comment</button>
           </form>

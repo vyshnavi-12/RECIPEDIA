@@ -12,7 +12,7 @@
   .back-button {
     display: inline-block;
     margin-bottom: 15px;
-    color: #555;
+    /* color: #555; */
     font-size: 18px;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -29,7 +29,7 @@
   /* Paragraph Styles */
   p {
     font-size: 16px;
-    color: #333;
+    /* color: #333; */
     line-height: 1.5;
   }
   

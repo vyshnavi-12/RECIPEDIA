@@ -16,6 +16,7 @@ import { IoSunnySharp } from "react-icons/io5";
 const Navbar = ({ isAuthenticated, onLogout }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [theme,setTheme] = useState(()=>{return localStorage.getItem('mode')||'light'});
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -61,13 +62,32 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
   const getMobileNavLinkClass = ({ isActive }) =>
     `block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 dark:text-white text-center hover:scale-105 ${
       isActive
-        ? "bg-amber-100 text-amber-600 font-semibold dark:text-black"
-        : "text-gray-700 hover:text-white hover:bg-amber-400 "
+        ? "bg-amber-400 text-amber-600  font-semibold "
+        : "text-gray-700 hover:text-white hover:bg-amber-500 "
     }`;
+
+    useEffect(() => {
+    const html = document.documentElement;;
+    if(theme==='dark'){
+      html.classList.add('dark')
+    }
+    else{
+      html.classList.remove('dark');
+    }
+    localStorage.setItem("mode", theme);
+    
+  
+    
+  }, [theme]);
+
+    const ChangeTheme = ()=>{
+       setTheme((prev)=>(prev==='light'?'dark':'light'))
+
+    }
 
   return (
     // The header itself is the positioning context for the mobile menu
-    <header className="fixed top-0 left-0 w-full bg-white/80 dark:bg-slate-800  backdrop-blur-md shadow-sm z-50">
+    <header className="fixed top-0 left-0 w-full bg-white/80 dark:bg-slate-800  backdrop-blur-md  shadow-sm z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
@@ -143,7 +163,7 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
               <div className="flex  items-center space-x-3 justify-center">
                 <Link
                   to="/login"
-                  className="px-4 py-2  hover:underline text-gray-700 hover:text-amber-500 font-medium transition-colors rounded-md dark:text-white"
+                  className="px-4 py-2  hover:underline text-gray-700 hover:text-amber-500 font-medium transition-colors rounded-md dark:text-white "
                 >
                   Login
                 </Link>
@@ -153,17 +173,16 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
                 >
                   Sign Up
                 </Link>
-                <div  className="   bg-gray-800 text-white rounded-full hover:bg-gray-700 transition border border-amber-500 mx-3">
-
-                <button className='text-white '><FaMoon className="text-yellow-400 text-2xl mb-1.5 mx-2"/></button>
-                </div>
+                <button onClick={ChangeTheme} className="text-white rounded-full hover:bg-gray-700 transition border border-amber-500 mb-2 bg-slate-800">
+                  {theme === "dark" ? <IoSunnySharp className="text-yellow-400 text-2xl my-1 mx-1"/> : <FaMoon className="text-yellow-400 text-xl my-2 mx-2" />}
+                </button>
               </div>
             )}
           </div>
 
           {/* Mobile Menu Toggle - This is now guaranteed to be visible */}
           {/* Added Dark Mode  */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-3">
             <button
               onClick={toggleMobileMenu}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-white dark:hover:bg-slate-600 hover:text-amber-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500"
@@ -176,6 +195,9 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
               ) : (
                 <FaBars size={24} />
               )}
+            </button>
+            <button onClick={ChangeTheme} className="text-white rounded-full hover:bg-gray-700 transition border border-amber-500 mb-2 bg-slate-800">
+              {theme === "dark" ? <IoSunnySharp className="text-yellow-400 text-3xl "/> : <FaMoon className="text-yellow-400 text-2xl my-1 mx-1" />}
             </button>
           </div>
         </div>
