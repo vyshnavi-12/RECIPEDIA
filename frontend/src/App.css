@@ -13,31 +13,91 @@ body{
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 264px;
+  margin-top: 20px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
+.heading{
+  font-size: 24px;
+  font-weight: 600;
+  color: black;
+}
 /* Input Fields */
 input {
   width: 90%;
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  border: 1px solid #666;
   border-radius: 5px;
   font-size: 16px;
+}
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #007bff55;
 }
 
 /* Buttons */
 button {
-  width: 100%;
-  padding: 10px;
+  width: 90%;
+  padding: 8px;
   margin-top: 10px;
   border: none;
   border-radius: 5px;
   font-size: 16px;
-  /* background-color: #007bff;
-  color: white; */
+  font-weight: 600;
+  background-color: #0056b3;
+  color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #007bff;
+}
+
+.termsandconditions {
+  display: flex;
+  align-items: center;
+  gap: 3px; 
+  margin-top: 2px;
+  font-size: 14px;
+  color: #444;
+}
+
+.termsandconditions input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: #666; /*chage checkbox color */
+}
+.termsandconditions h6 {
+  margin: 0;
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.swap_state {
+  margin-top: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #444;
+text-align: justify;
+margin-left: 20px;
+}
+
+.link a {
+  color:#ef102d;
+  font-weight: 500;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.link a:hover {
+  text-decoration: underline;
+  color: #0056b3;
 }
 
 
