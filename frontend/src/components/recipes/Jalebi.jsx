@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaHeart, FaRegHeart } from "react-icons/fa";
-import "../styles/RecipeDetail.css";
+import "../../styles/RecipeDetail.css";
 
-function Thandai() {
+function Jalebi() {
   const navigate = useNavigate();
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]);
@@ -28,59 +28,69 @@ function Thandai() {
     <div className="recipe-detail-container ingrdientsDiv">
       <div
         className="back-button !text-black dark:!text-white"
-        onClick={() => navigate("/beverages")}
+        onClick={() => navigate("/dessert")}
       >
         <FaArrowLeft /> Back
       </div>
 
-      <h1 className="text-2xl block text-center my-10">Thandai</h1>
+      <h1 className="text-2xl block text-center my-10">Jalebi</h1>
 
       <div className="recipe-image">
-        <img src="/thandai.jpg" alt="Thandai" />
+        <img src="/jalebi.jpg" alt="Jalebi" />
       </div>
 
       <div className="recipe-info">
         <h2 className="ingredientsH2 mt-2">About</h2>
         <p>
-          A refreshing and aromatic Indian beverage made with milk, nuts, and a
-          blend of spices, traditionally enjoyed during festivals like Holi and
-          Mahashivratri.
+          A crispy, deep-fried Indian dessert soaked in sugar syrup, known for
+          its spiral shape and sweet, tangy flavor.
         </p>
 
-        <h2 className="ingredientsH2 mt-2">Ingredients</h2>
+        <h2 className="ingredientsH2 mt-2 mb-2">Ingredients</h2>
+        <h3 className="ingredientsH2 mt-2">For the Jalebi Batter:</h3>
         <ul className="ingredientsUl">
-          <li>2 cups Milk</li>
-          <li>2 tbsp Almonds</li>
-          <li>1 tbsp Cashews</li>
-          <li>1 tbsp Pistachios</li>
-          <li>1 tbsp Poppy seeds</li>
-          <li>1 tbsp Fennel seeds</li>
-          <li>1/2 tsp Black pepper</li>
-          <li>4-5 Cardamom pods</li>
-          <li>2 tbsp Sugar or honey</li>
+          <li>1 cup All-purpose flour (maida)</li>
+          <li>2 tbsp Corn flour</li>
+          <li>1/2 cup Yogurt</li>
+          <li>1/2 tsp Baking soda</li>
+          <li>1/2 cup Warm water (as needed)</li>
+          <li>1/2 tsp Turmeric or saffron for color (optional)</li>
+          <li>Oil or ghee for deep frying</li>
+        </ul>
+
+        <h3 className="ingredientsH2 mt-2">For the Sugar Syrup:</h3>
+        <ul className="ingredientsUl">
+          <li>1 cup Sugar</li>
+          <li>1/2 cup Water</li>
+          <li>1/2 tsp Cardamom powder</li>
+          <li>1/2 tsp Lemon juice</li>
           <li>1/2 tsp Rose water (optional)</li>
-          <li>1/2 tsp Saffron strands (optional)</li>
-          <li>Chilled water or ice cubes (optional, for a lighter version)</li>
-          <li>Chopped nuts for garnish</li>
         </ul>
 
         <h2 className="ingredientsH2 mt-2">Preparation Steps</h2>
         <ol className="list-decimal">
           <li>
-            Soak almonds, cashews, pistachios, poppy seeds, fennel seeds, and
-            cardamom in warm water for 2-3 hours
+            In a bowl, mix all-purpose flour, corn flour, yogurt, and baking
+            soda
           </li>
           <li>
-            Blend the soaked ingredients with black pepper and a little milk to
-            form a smooth paste
+            Gradually add warm water to make a smooth, thick batter and let it
+            ferment for 6-8 hours
           </li>
-          <li>Boil milk, add the prepared paste, and mix well</li>
           <li>
-            Stir in sugar, saffron, and rose water (if using), and let it cool
+            For sugar syrup: Boil sugar and water until sticky (1-string
+            consistency), then add lemon juice, cardamom powder, and rose water
           </li>
-          <li>Refrigerate for 1-2 hours for flavors to blend</li>
           <li>
-            Strain (optional) and serve chilled, garnished with chopped nuts
+            Heat oil or ghee in a pan, fill a piping bag or squeeze bottle with
+            the batter, and pipe spirals into hot oil
+          </li>
+          <li>
+            Fry until golden and crisp, then dip immediately into warm sugar
+            syrup for 30 seconds
+          </li>
+          <li>
+            Remove and serve hot, garnished with saffron strands or chopped nuts
           </li>
         </ol>
       </div>
@@ -122,4 +132,4 @@ function Thandai() {
   );
 }
 
-export default Thandai;
+export default Jalebi;

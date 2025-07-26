@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaHeart, FaRegHeart } from "react-icons/fa";
-import "../styles/RecipeDetail.css";
+import "../../styles/RecipeDetail.css";
 
 function Lassi() {
   const navigate = useNavigate();
