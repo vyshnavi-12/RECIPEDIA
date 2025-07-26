@@ -115,7 +115,7 @@ const Home = () => {
       </div>
     </div>
     <div className="footer-bottom">
-      <p>© 2024 Recipe Hub. All rights reserved.</p>
+      <p >© 2024 Recipe Hub. All rights reserved.</p>
     </div>
 </footer>
 

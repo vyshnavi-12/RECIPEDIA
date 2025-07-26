@@ -21,21 +21,21 @@ function DalMaKhani() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 pt-32 pb-16">
-      <button onClick={() => navigate('/veg')} className="flex items-center text-red-500 hover:text-red-600 mb-6">
+    <div className=" recipe-detail-container max-w-4xl mx-auto px-4 pt-32 pb-16 ingrdientsDiv">
+      <button onClick={() => navigate('/veg')} className="flex items-center text-red-500 hover:text-red-600 mb-6 dark:!text-white text-xl">
         <FaArrowLeft className="mr-2" /> Back
       </button>
 
-      <h1 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-6">Dal Makhani</h1>
+      <h1 className="text-2xl block text-center my-10">Dal Makhani</h1>
 
       <img src="/dal.jpg" alt="Dal Makhani" className="w-full h-80 object-cover rounded-xl shadow-lg mb-8" />
 
       <section className="prose max-w-none">
-        <h2>About</h2>
+        <h2 className="ingredientsH">About</h2>
         <p>A rich and creamy North Indian lentil dish made with black lentils (urad dal) and kidney beans (rajma) slow-cooked with butter, cream, and aromatic spices.</p>
 
-        <h2>Ingredients</h2>
-        <ul className="list-disc pl-6">
+        <h2 className="ingredientsH">Ingredients</h2>
+        <ul className="ingredientsUl">
           <li>1 cup Black lentils (Urad dal)</li>
           <li>1/4 cup Kidney beans (Rajma)</li>
           <li>4 tbsp Butter</li>
@@ -47,7 +47,7 @@ function DalMaKhani() {
           <li>1 tsp Kasuri methi</li>
         </ul>
 
-        <h2>Preparation Steps</h2>
+        <h2 className="ingredientsH">Preparation Steps</h2>
         <ol className="list-decimal pl-6 space-y-2">
           <li>Soak black lentils and kidney beans overnight, then pressure cook until soft.</li>
           <li>Heat butter in a pan and sauté ginger-garlic paste.</li>
@@ -58,20 +58,25 @@ function DalMaKhani() {
         </ol>
       </section>
 
-      <div className="mt-10 flex items-center gap-4">
-        <button onClick={handleLike} className="flex items-center gap-2 text-gray-600 hover:text-red-500 focus:outline-none">
-          {liked ? <FaHeart className="text-red-500" /> : <FaRegHeart />} {liked ? 'Liked' : 'Like'}
-        </button>
-      </div>
-
+     <div className="mt-10 flex items-center gap-4">
+             <button
+               onClick={handleLike}
+               className="flex items-center gap-2 text-gray-600 dark:text-white hover:text-red-500 dark:hover:text-red-500 focus:outline-none"
+             >
+               {liked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}{" "}
+               {liked ? "Liked" : "Like"}
+             </button>
+           </div>
+     
       <div className="mt-12">
         <h3 className="text-2xl font-semibold text-gray-800 mb-4">Comments</h3>
         <form onSubmit={handleComment} className="mb-6">
           <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
+            
             placeholder="Add a comment..."
-            className="w-full border border-gray-300 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[120px]"
+            className="w-full border border-gray-300 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[120px] text-black"
           />
           <button type="submit" className="mt-3 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full">Post Comment</button>
         </form>

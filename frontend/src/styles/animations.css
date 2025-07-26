@@ -5,12 +5,13 @@
   animation: gradient 15s ease infinite;
 }
 
-.login-bg {
+/* Removed This
+/* .login-bg {
   min-height: 100vh;
   background: linear-gradient(-45deg, #f0f0f0, #f45969, #f0a0a0, #F6B17A );
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
-}
+} */
 
 .register-bg {
   min-height: 100vh;

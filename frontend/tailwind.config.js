@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+   darkMode: 'class', 
   content: [
-   "./src/pages/ErrorPage.jsx",
-   "./src/pages/NotFound.jsx"
+    "./src/**/*.{js,jsx,ts,tsx}"
   ],
   theme: {
     extend: {},
