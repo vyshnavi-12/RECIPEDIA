@@ -6,6 +6,7 @@ const likeSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
+likeSchema.index({ user: 1, recipe: 1 }, { unique: true });
 likeSchema.index({ createdAt: 1 }); // for faster date filtering
 
 module.exports = mongoose.model("Like", likeSchema);

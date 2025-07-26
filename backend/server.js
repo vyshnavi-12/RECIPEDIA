@@ -147,7 +147,7 @@ app.post("/register", async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
+      { user: user._id, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: "24h" }
     );
@@ -242,7 +242,7 @@ app.post("/login", async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
+      { user: user._id, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: "24h" }
     );
@@ -349,27 +349,39 @@ app.post("/recipes", authenticateToken, async (req, res) => {
   const { title, description, ingredients, image } = req.body;
 
   try {
+    // Basic validation
     if (!title || !description || !ingredients) {
-      return res
-        .status(400)
-        .json({ message: "Title, description, and ingredients are required" });
+      return res.status(400).json({
+        success: false,
+        message: "Title, description, and ingredients are required"
+      });
     }
 
+    // Create recipe
     const recipe = new Recipe({
       title,
       description,
       ingredients,
       image,
-      userId: req.user.userId,
+      user: req.user.user  
     });
 
     await recipe.save();
-    res.status(201).json({ message: "Recipe added successfully", recipe });
+
+    res.status(201).json({
+      success: true,
+      message: "Recipe added successfully",
+      data: recipe
+    });
   } catch (err) {
     console.error("Recipe creation error:", err);
-    res.status(500).json({ message: "Error adding recipe" });
+    res.status(500).json({
+      success: false,
+      message: "Error adding recipe"
+    });
   }
 });
+
 
 // Protected route - Add comment to recipe
 app.post("/recipes/:id/comments", authenticateToken, async (req, res) => {
@@ -384,7 +396,7 @@ app.post("/recipes/:id/comments", authenticateToken, async (req, res) => {
     if (!recipe) return res.status(404).json({ message: "Recipe not found" });
 
     recipe.comments.push({
-      user: req.user.userId,
+      user: req.user.user,
       text: text.trim(),
       createdAt: new Date(),
     });
@@ -420,18 +432,46 @@ app.get("/users", async (req, res) => {
 
 app.get("/recipes", async (req, res) => {
   try {
-    const recipes = await Recipe.find().populate("userId", "username");
-    res.json(recipes);
+    const page = parseInt(req.query.page) || 1;
+    const limit = Math.min(parseInt(req.query.limit) || 10, 100);
+    const skip = (page - 1) * limit;
+
+    const [recipes, total] = await Promise.all([
+      Recipe.find()
+        .populate("user", "username")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit),
+      Recipe.countDocuments()
+    ]);
+
+    res.status(200).json({
+      success: true,
+      message: "Recipes fetched successfully",
+      data: {
+        recipes,
+        pagination: {
+          currentPage: page,
+          totalPages: Math.ceil(total / limit),
+          pageSize: limit,
+          totalItems: total
+        }
+      }
+    });
   } catch (err) {
     console.error("Recipes fetch error:", err);
-    res.status(500).json({ message: "Error fetching recipes" });
+    res.status(500).json({
+      success: false,
+      message: "Error fetching recipes"
+    });
   }
 });
+
 
 app.get("/recipes/:id", async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id)
-      .populate("userId", "username")
+      .populate("user", "username")
       .populate("comments.user", "username");
     if (!recipe) return res.status(404).json({ message: "Recipe not found" });
     res.json(recipe);
@@ -448,7 +488,7 @@ app.put("/recipes/:id", authenticateToken, async (req, res) => {
     if (!recipe) return res.status(404).json({ message: "Recipe not found" });
 
     // Only allow recipe owner to update
-    if (recipe.userId.toString() !== req.user.userId) {
+    if (recipe.user.toString() !== req.user.user) {
       return res.status(403).json({ message: "Access denied" });
     }
 
@@ -471,7 +511,7 @@ app.delete("/recipes/:id", authenticateToken, async (req, res) => {
     if (!recipe) return res.status(404).json({ message: "Recipe not found" });
 
     // Only allow recipe owner to delete
-    if (recipe.userId.toString() !== req.user.userId) {
+    if (recipe.user.toString() !== req.user.user) {
       return res.status(403).json({ message: "Access denied" });
     }
 
@@ -485,31 +525,47 @@ app.delete("/recipes/:id", authenticateToken, async (req, res) => {
 
 // Like recipe (protected)
 app.post('/recipes/:id/like', authenticateToken, async (req, res) => {
-  try {
-    const recipeId = req.params.id;
+  const session = await mongoose.startSession(); 
 
-    // Prevent duplicate likes
-    const alreadyLiked = await Like.findOne({ user: req.user.userId, recipe: recipeId });
+  try {
+    session.startTransaction(); 
+
+    const recipeId = req.params.id;
+    const user = req.user.user;
+
+    // Prevent duplicate likes inside the session
+    const alreadyLiked = await Like.findOne({ user: user, recipe: recipeId }).session(session);
     if (alreadyLiked) {
+      await session.abortTransaction(); 
+      session.endSession();
       return res.status(400).json({ message: 'You already liked this recipe.' });
     }
 
-    const newLike = new Like({
-      user: req.user.userId,
-      recipe: recipeId
-    });
+    // Create Like
+    const newLike = new Like({ user: userId, recipe: recipeId });
+    await newLike.save({ session });
 
-    await newLike.save();
+    // Increment Recipe's like count
+    await Recipe.findByIdAndUpdate(
+      recipeId,
+      { $inc: { likes: 1 } },
+      { session }
+    );
 
-    // Optionally increment recipe.likes if you're showing total likes
-    await Recipe.findByIdAndUpdate(recipeId, { $inc: { likes: 1 } });
+    await session.commitTransaction(); 
+    session.endSession();
 
     res.status(201).json({ message: 'Recipe liked successfully.' });
+
   } catch (err) {
+    await session.abortTransaction(); 
+    session.endSession();
+
     console.error("Error liking recipe:", err);
     res.status(500).json({ message: 'Error liking recipe' });
   }
 });
+
 
 app.get('/recipes/featured', async (req, res) => {
   try {
