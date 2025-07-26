@@ -43,3 +43,16 @@ code {
 a {
   text-decoration: none;
 }
+
+.ingrdientsDiv{
+  @apply dark:bg-slate-800 !text-black dark:!text-white
+}
+.ingredientsH{
+  @apply  text-xl
+}
+.ingredientsH2{
+  @apply !text-red-500 text-xl
+}
+.ingredientsUl{
+  @apply list-disc ml-6 marker:text-black dark:marker:text-white
+}

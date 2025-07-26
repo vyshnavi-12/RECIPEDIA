@@ -22,23 +22,23 @@ function MasalaChai() {
   };
 
   return (
-    <div className="recipe-detail-container">
-      <div className="back-button" onClick={() => navigate('/beverages')}>
+    <div className="recipe-detail-container ingrdientsDiv">
+      <div className="back-button !text-black dark:!text-white" onClick={() => navigate('/beverages')}>
         <FaArrowLeft /> Back
       </div>
       
-      <h1>Masala Chai</h1>
+      <h1 className="text-2xl block text-center my-10">Masala Chai</h1>
       
       <div className="recipe-image">
         <img src="/masala.jpg" alt="Maasala Chai" />
       </div>
 
       <div className="recipe-info">
-        <h2>About</h2>
+        <h2 className="ingredientsH2 mt-2">About</h2>
         <p>A fragrant and spiced Indian tea made by brewing black tea leaves with aromatic spices, milk, and sugar.</p>
 
-        <h2>Ingredients</h2>
-        <ul>
+        <h2 className="ingredientsH2 mt-2">Ingredients</h2>
+        <ul className="ingredientsUl">
           <li>2 cups Water</li>
           <li>1 cup Milk</li>
           <li>2 tsp Black tea leaves (or 2 tea bags)</li>
@@ -50,8 +50,8 @@ function MasalaChai() {
           <li>1/2 tsp Black peppercorns, crushed</li>
         </ul>
 
-        <h2>Preparation Steps</h2>
-        <ol>
+        <h2 className="ingredientsH2 mt-2">Preparation Steps</h2>
+        <ol className='list-decimal'>
           <li>In a saucepan, bring water to a boil</li>
           <li>Add crushed cardamom, cinnamon, cloves, black pepper, and grated ginger</li>
           <li>Simmer for 2-3 minutes to infuse the flavors</li>
@@ -64,12 +64,16 @@ function MasalaChai() {
     
 
       <div className="user-interaction">
-        <div className="like-section">
-          <button onClick={handleLike}>
-            {liked ? <FaHeart color="red" /> : <FaRegHeart />}
-            {liked ? ' Liked' : ' Like'}
-          </button>
-        </div>
+       <div className="mt-10 flex items-center gap-4">
+                 <button
+                   onClick={handleLike}
+                   className="flex items-center gap-2 text-gray-600 dark:text-white hover:text-red-500 dark:hover:text-red-500 focus:outline-none "
+                 >
+                   {liked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}{" "}
+                   {liked ? "Liked" : "Like"}
+                 </button>
+               </div>
+       
 
         <div className="comment-section">
           <h3>Comments</h3>
@@ -78,6 +82,7 @@ function MasalaChai() {
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Add a comment..."
+              className='text-black'
             />
             <button type="submit">Post Comment</button>
           </form>
