@@ -22,23 +22,23 @@ function Biryani() {
   };
 
   return (
-    <div className="recipe-detail-container">
-      <div className="back-button" onClick={() => navigate('/nonveg')}>
-        <FaArrowLeft /> Back
+    <div className="recipe-detail-container dark:bg-slate-800 !text-black dark:!text-white">
+      <div className="back-button dark:text-white " onClick={() => navigate('/nonveg')} >
+        <FaArrowLeft  /> Back
       </div>
       
-      <h1>Chicken Biryani</h1>
+      <h1 className='text-2xl block text-center my-10'>Chicken Biryani</h1>
       
       <div className="recipe-image">
         <img src="/biriyani.jpg" alt="Chicken Biryani" />
       </div>
 
       <div className="recipe-info">
-        <h2>About</h2>
+        <h2 className='!text-black dark:!text-white text-xl'>About</h2>
         <p>A delicious and aromatic rice dish made with marinated chicken, basmati rice, and a blend of fragrant spices.</p>
 
-        <h2>Ingredients</h2>
-        <ul>
+        <h2 className='!text-black dark:!text-white text-xl'>Ingredients</h2>
+        <ul className='list-disc ml-6 marker:text-black dark:marker:text-white'>
           <li>2 cups Basmati rice</li>
           <li>500g Chicken, cut into pieces</li>
           <li>1 cup Yogurt</li>
@@ -54,8 +54,8 @@ function Biryani() {
           <li>Fresh coriander and mint for garnish</li>
         </ul>
 
-        <h2>Preparation Steps</h2>
-        <ol>
+        <h2 className='!text-black dark:!text-white text-xl'>Preparation Steps</h2>
+        <ol className='list-decimal'>
           <li>Marinate chicken with yogurt, ginger-garlic paste, turmeric, chili powder, and salt for 30 minutes</li>
           <li>Rinse and soak basmati rice for 20 minutes</li>
           <li>Heat ghee in a pan, sauté onions until golden brown</li>
@@ -70,18 +70,18 @@ function Biryani() {
     
 
       <div className="user-interaction">
-        <div className="like-section">
-          <button onClick={handleLike}>
-            {liked ? <FaHeart color="red" /> : <FaRegHeart />}
-            {liked ? ' Liked' : ' Like'}
-          </button>
-        </div>
+         <div className="mt-10 flex items-center gap-4">
+                <button onClick={handleLike} className="flex items-center gap-2 text-gray-600 dark:text-white hover:text-red-500 dark:hover:text-red-500 focus:outline-none">
+                  {liked ? <FaHeart className="text-red-500" /> : <FaRegHeart />} {liked ? 'Liked' : 'Like'}
+                </button>
+              </div>
 
         <div className="comment-section">
           <h3>Comments</h3>
           <form onSubmit={handleComment}>
             <textarea
               value={newComment}
+              className='text-black'
               onChange={(e) => setNewComment(e.target.value)}
               placeholder="Add a comment..."
             />

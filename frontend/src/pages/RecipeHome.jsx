@@ -46,38 +46,38 @@ const RecipeHome = () => {
         </section>
 
         <!-- Categories Section -->
-        <section id="categories" class="py-20 bg-gray-50">
+        <section id="categories" class="py-20 bg-gray-50 dark:bg-slate-800">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Browse by Category</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white">Browse by Category</h2>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Vegetarian -->
-                    <a href="/veg" class="block category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1">
+                    <a href="/veg" class="block category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl dark:!shadow-lg dark:!shadow-slate-200 transition transform hover:-translate-y-1 dark:shadow-md">
                         <img src="/veg.jpg" alt="Vegetarian" class="w-full h-40 object-cover" />
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold text-gray-800">Vegetarian</h3>
+                        <div class="p-6 text-center !bg-white dark:!bg-slate-700">
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white">Vegetarian</h3>
                         </div>
                     </a>
                     <!-- Non-Vegetarian -->
-                    <a href="/nonveg" class="block category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1">
+                    <a href="/nonveg" class="block category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl dark:!shadow-lg dark:!shadow-slate-200 transition transform hover:-translate-y-1">
                         <img src="/nonveg.jpg" alt="Non-Vegetarian" class="w-full h-40 object-cover" />
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold text-gray-800">Non-Vegetarian</h3>
+                        <div class="p-6 text-center  !bg-white dark:!bg-slate-700">
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white">Non-Vegetarian</h3>
                         </div>
                     </a>
                     <!-- Desserts -->
-                    <a href="/dessert" class="block category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1">
+                    <a href="/dessert" class="block category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl dark:!shadow-lg dark:!shadow-slate-200 transition transform hover:-translate-y-1">
                         <img src="/dessert.jpg" alt="Desserts" class="w-full h-40 object-cover" />
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold text-gray-800">Desserts</h3>
+                        <div class="p-6 text-center  !bg-white dark:!bg-slate-700">
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white">Desserts</h3>
                         </div>
                     </a>
                     <!-- Beverages -->
-                    <a href="/beverages" class="block category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition transform hover:-translate-y-1">
+                    <a href="/beverages" class="block category-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl dark:!shadow-lg dark:!shadow-slate-200  transition transform hover:-translate-y-1 ">
                         <img src="/beverages.jpg" alt="Beverages" class="w-full h-40 object-cover" />
-                        <div class="p-6 text-center">
-                            <h3 class="text-xl font-bold text-gray-800">Beverages</h3>
+                        <div class="p-6 text-center  !bg-white dark:!bg-slate-700">
+                            <h3 class="text-xl font-bold text-gray-800 dark:text-white">Beverages</h3>
                         </div>
                     </a>
                 </div>
@@ -121,22 +121,22 @@ const RecipeHome = () => {
         </section>
         
         <!-- Features Section -->
-        <section id="features" class="py-20 bg-white">
+        <section id="features" class="py-20 !bg-white dark:!bg-slate-800">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div>
                         <img src="https://placehold.co/600x450/fbbf24/ffffff?text=Recipedia+App" alt="Recipedia App Interface" class="rounded-xl shadow-2xl" />
                     </div>
                     <div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">All The Tools You Need</h2>
+                        <h2 class="text-3xl md:text-4xl font-bold !text-gray-800 dark:!text-white mb-6">All The Tools You Need</h2>
                         <ul class="space-y-6">
                             <li class="flex items-start space-x-4">
                                 <div class="bg-red-500 text-white rounded-full w-8 h-8 flex-shrink-0 flex items-center justify-center mt-1">
                                     <i data-lucide="lock" class="w-5 h-5"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-semibold">Secure User Authentication</h3>
-                                    <p class="text-gray-600">Keep your recipes and profile safe with our secure login and sign-up system.</p>
+                                    <h3 class="text-xl font-semibold !text-gray-800 dark:!text-white">Secure User Authentication</h3>
+                                    <p class="text-gray-600 dark:text-gray-300">Keep your recipes and profile safe with our secure login and sign-up system.</p>
                                 </div>
                             </li>
                             <li class="flex items-start space-x-4">
@@ -144,8 +144,8 @@ const RecipeHome = () => {
                                     <i data-lucide="edit" class="w-5 h-5"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-semibold">Full Recipe Management</h3>
-                                    <p class="text-gray-600">Easily add, edit, and delete your recipes whenever you want.</p>
+                                    <h3 class="text-xl font-semibold !text-gray-800 dark:!text-white">Full Recipe Management</h3>
+                                    <p class="text-gray-600 dark:text-gray-300">Easily add, edit, and delete your recipes whenever you want.</p>
                                 </div>
                             </li>
                             <li class="flex items-start space-x-4">
@@ -153,8 +153,8 @@ const RecipeHome = () => {
                                     <i data-lucide="thumbs-up" class="w-5 h-5"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-semibold">Community Interaction</h3>
-                                    <p class="text-gray-600">Like your favorite recipes and leave comments to connect with other foodies.</p>
+                                    <h3 class="text-xl font-semibold !text-gray-800 dark:!text-white">Community Interaction</h3>
+                                    <p class="text-gray-600 dark:text-gray-300 ">Like your favorite recipes and leave comments to connect with other foodies.</p>
                                 </div>
                             </li>
                         </ul>
