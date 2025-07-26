@@ -10,6 +10,7 @@ const Login = ({ setIsLoggedIn }) => {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [agreeTerms, setAgreeTerms] = useState(false);
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -45,6 +46,11 @@ const Login = ({ setIsLoggedIn }) => {
             setError(validationError);
             return;
         }
+        
+        if (!agreeTerms) {
+             setError("Please agree to the Terms of Use & Privacy Policy");
+              return;
+            }
 
         setLoading(true);
         setError("");
@@ -120,10 +126,18 @@ const Login = ({ setIsLoggedIn }) => {
                 </button>
             </form>
      <p className='swap_state'>New user? <span className='link'><Link to="/register">Register</Link></span></p>
-      <span className='termsandconditions'>
-        <input type="checkbox" name="" id="" checked="true"/>
-        <h6>By Continuing, I agree to the terms of use & privacy policiy</h6>
-      </span>
+      <div className='termsandconditions'>
+  <input
+    type="checkbox"
+    id="terms"
+    checked={agreeTerms}
+    onChange={(e) => setAgreeTerms(e.target.checked)}
+    required
+  />
+  <label htmlFor="terms">
+    <h6>By continuing, I agree to the Terms of Use & Privacy Policy</h6>
+  </label>
+</div>
         </div>
     );
 };
