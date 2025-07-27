@@ -38,7 +38,7 @@ const Login = ({ setIsLoggedIn }) => {
               return;
             }
 
-
+          }
     
     const handleGoogleLogin = async (credentialResponse) => {
         try {
@@ -136,7 +136,7 @@ const Login = ({ setIsLoggedIn }) => {
 </div>
         </div>
     );
-};
+  
 
 
       <p>New user? <Link to="/register">Register</Link></p>
