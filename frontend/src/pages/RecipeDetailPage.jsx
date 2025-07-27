@@ -4,15 +4,17 @@ import { FaArrowLeft, FaHeart, FaRegHeart } from 'react-icons/fa';
 import allRecipes from '../data/recipes.json';
 import NotFoundPage from './NotFound.jsx'; // Updated import
 import '../styles/RecipeDetail.css';
+import { v4 as uuidv4 } from 'uuid';
 
 const RecipeDetailPage = () => {
   const { category, recipeId } = useParams();
   const navigate = useNavigate();
-  
+
   const [recipe, setRecipe] = useState(null);
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  const [error, setError] = useState("")
 
   useEffect(() => {
     const foundRecipe = allRecipes.find(r => r.id === recipeId && r.category === category);
@@ -26,10 +28,13 @@ const RecipeDetailPage = () => {
   const handleComment = (e) => {
     e.preventDefault();
     const username = localStorage.getItem('username') || 'Guest';
-    if (newComment.trim()) {
-      setComments([...comments, { text: newComment, user: username }]);
-      setNewComment('');
+    if (!newComment.trim()) {
+      setError("Comment cannot be empty!")
+      return
     }
+    setComments([...comments, { id: uuidv4(), text: newComment, user: username }]);
+    setNewComment('');
+    setError("")
   };
 
   if (!recipe) {
@@ -82,25 +87,29 @@ const RecipeDetailPage = () => {
             className="w-full border border-gray-300 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[120px] text-black bg-white"
             rows="4"
           />
+          {error && (
+             <p className="text-red-600 text-base mt-2 font-semibold">{error}</p>
+          )}
+
           <button type="submit" className="mt-3 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-semibold">
             Post Comment
           </button>
         </form>
 
         <div className="space-y-4 mt-6">
-  {comments.length > 0 ? (
-    comments.map((comment, index) => (
-      <div key={index} className="bg-gray-50 p-4 rounded-lg shadow">
-        <strong className="block text-gray-800">{comment.user}</strong>
-        <p className="text-gray-700 mt-1">{comment.text}</p>
-      </div>
-    ))
-  ) : (
-    <div className="bg-gray-100 p-4 rounded-lg shadow text-center text-gray-500">
-      No comments yet. Be the first to share your thoughts!
-    </div>
-  )}
-</div>
+          {comments.length > 0 ? (
+            comments.map((comment, index) => (
+              <div key={comment.id} className="bg-gray-50 p-4 rounded-lg shadow">
+                <strong className="block text-gray-800">{comment.user}</strong>
+                <p className="text-gray-700 mt-1">{comment.text}</p>
+              </div>
+            ))
+          ) : (
+            <div className="bg-gray-100 p-4 rounded-lg shadow text-center text-gray-500">
+              No comments yet. Be the first to share your thoughts!
+            </div>
+          )}
+        </div>
 
       </div>
     </div>
