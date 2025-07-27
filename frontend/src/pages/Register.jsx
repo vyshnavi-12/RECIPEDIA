@@ -16,6 +16,7 @@ const Register = ({ setIsLoggedIn }) => {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [agreeTerms, setAgreeTerms] = useState(false);
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -63,7 +64,11 @@ const Register = ({ setIsLoggedIn }) => {
             setError(validationError);
             return;
         }
-
+        
+        if (!agreeTerms) {
+          setError("Please agree to the Terms of Use & Privacy Policy");
+          return;
+        }
         setLoading(true);
         setError("");
 
@@ -183,11 +188,21 @@ const Register = ({ setIsLoggedIn }) => {
                     {loading ? "Registering..." : "Register"}
                 </button>
             </form>
-            
-            <p>Already have an account? <Link to="/login">Login</Link></p>
+             <p className='swap_state'>Already have an account? <span className='link'><Link to="/login">Login</Link></span></p>
+            <div className='termsandconditions'>
+            <input
+                type="checkbox"
+                id="terms"
+                checked={agreeTerms}
+                onChange={(e) => setAgreeTerms(e.target.checked)}
+                required
+              />
+              <label htmlFor="terms">
+                <h6>By continuing, I agree to the Terms of Use & Privacy Policy</h6>
+              </label>
+            </div>
         </div>
     );
-
 };
 
 export default Register;
