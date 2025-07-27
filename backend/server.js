@@ -13,7 +13,7 @@ const port = 3000;
 
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
