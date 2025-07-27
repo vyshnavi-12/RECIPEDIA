@@ -87,18 +87,21 @@ const RecipeDetailPage = () => {
           </button>
         </form>
 
-        <div className="space-y-4">
-          {comments.length > 0 ? (
-            comments.map((comment, index) => (
-              <div key={index} className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg shadow">
-                <strong className="block text-gray-800 dark:text-gray-200">{comment.user}</strong>
-                <p className="text-gray-700 dark:text-gray-300 mt-1">{comment.text}</p>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-500 dark:text-gray-400">No comments yet. Be the first to comment!</p>
-          )}
-        </div>
+        <div className="space-y-4 mt-6">
+  {comments.length > 0 ? (
+    comments.map((comment, index) => (
+      <div key={index} className="bg-gray-50 p-4 rounded-lg shadow">
+        <strong className="block text-gray-800">{comment.user}</strong>
+        <p className="text-gray-700 mt-1">{comment.text}</p>
+      </div>
+    ))
+  ) : (
+    <div className="bg-gray-100 p-4 rounded-lg shadow text-center text-gray-500">
+      No comments yet. Be the first to share your thoughts!
+    </div>
+  )}
+</div>
+
       </div>
     </div>
   );
