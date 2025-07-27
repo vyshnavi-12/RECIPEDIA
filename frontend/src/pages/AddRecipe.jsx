@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaTrash, FaEdit, FaHeart, FaComment } from 'react-icons/fa';
-import './AddRecipe.css';
+import '../styles/AddRecipe.css';
 
 const AddRecipe = () => {
   const [recipes, setRecipes] = useState([

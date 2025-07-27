@@ -1,45 +1,30 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Veg from  "./pages/veg";
-import Dessert from "./pages/dessert";
-import Nonveg from "./pages/nonveg";
-import Beverages from "./pages/beverages";
 import "./styles/animations.css";
-import PaneerButterMasala from "./pages/PaneerButterMasala";
-import DalMaKhani from "./pages/DalMakhani";
-import PalakSoup from "./pages/PalakSoup";
-import VegetableBiryani from "./pages/VegetableBiryani"; 
-import ButterChicken from "./pages/ButterChicken";
-import Prawn from "./pages/Prawn";
-import Fish from "./pages/Fish";
-import Biryani from "./pages/Biryani";
-import Thandai from "./pages/Thandai";
-import GulabJamun from "./pages/GulabJamun";
-import Rasgulla from "./pages/Rasgulla";
-import Jalebi from "./pages/Jalebi";
-import Falooda from "./pages/Falooda";
-import Lassi from "./pages/Lassi";
-import Coffee from "./pages/Coffee";
-import MasalaChai from "./pages/MasalaChai";
-import UserProfile from "./pages/UserProfile";
-import AddRecipe from "./pages/AddRecipe";
-import About from "./pages/About";
-import NotFoundPage from './pages/NotFound';
-import ErrorPage from './pages/ErrorPage';
-import RecipeHome from "./pages/RecipeHome";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Header from "./components/Header";
 
+// Reusable and Core Page Imports with .jsx extension
+import RecipeListPage from "./pages/RecipeListPage.jsx";
+import RecipeDetailPage from "./pages/RecipeDetailPage.jsx";
+import RecipeHome from "./pages/RecipeHome.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import UserProfile from "./pages/UserProfile.jsx";
+import AddRecipe from "./pages/AddRecipe.jsx";
+import About from "./pages/About.jsx";
+import NotFound from './pages/NotFound.jsx';
+import ErrorPage from './pages/ErrorPage.jsx';
 
+// Component Imports with .jsx extension
+import Header from "./components/Header.jsx";
 
-  function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    useEffect(() => {
-      const user = localStorage.getItem("username");
-      setIsLoggedIn(!!user);
-    }, []);
+  useEffect(() => {
+    const user = localStorage.getItem("username");
+    setIsLoggedIn(!!user);
+  }, []);
+
 
     return (
       <Router>
@@ -79,3 +64,39 @@ import Header from "./components/Header";
         </div>
       </Router>  );
   }export default App;
+
+  return (
+    <Router>
+      <div className="app-container">
+        <Header />
+        <Routes>
+          {/* Core Routes */}
+          <Route path="/" element={<RecipeHome />} />
+          <Route path="/home" element={<RecipeHome />} />
+          <Route path="/login" element={<div className="login-bg"><Login setIsLoggedIn={setIsLoggedIn} /></div>} />
+          <Route path="/register" element={<div className="register-bg"><Register setIsLoggedIn={setIsLoggedIn} /></div>} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/add-recipe" element={<AddRecipe />} />
+          <Route path="/about" element={<About />} />
+          
+          {/* Dynamic Category List Pages */}
+          <Route path="/veg" element={<RecipeListPage category="veg" />} />
+          <Route path="/nonveg" element={<RecipeListPage category="nonveg" />} />
+          <Route path="/dessert" element={<RecipeListPage category="dessert" />} />
+          <Route path="/beverages" element={<RecipeListPage category="beverages" />} />
+
+          {/* Dynamic Recipe Detail Page */}
+          {/* This one route handles ALL recipe details */}
+          <Route path="/recipes/:category/:recipeId" element={<RecipeDetailPage />} />
+          
+          {/* Error and Fallback Routes */}
+          <Route path="/error" element={<ErrorPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+
