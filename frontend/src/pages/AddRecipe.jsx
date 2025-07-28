@@ -288,84 +288,86 @@ const AddRecipe = () => {
   if (loading) return <div className="loading">Loading recipes...</div>;
 
   return (
-    <div className="recipe-container">
-      {/* Back to Home */}
-      <Link to="/home" className="back-button">← Back to Home</Link>
+    <div className="add-recipe-bg">
+      <div className="recipe-container">
+        {/* Back to Home */}
+        <Link to="/home" className="back-button">← Back to Home</Link>
 
-      {/* Error Display */}
-      {error && <div className="error-message">{error}</div>}
+        {/* Error Display */}
+        {error && <div className="error-message">{error}</div>}
 
-      {/* Recipe Form */}
-      <div className="recipe-form">
-        <h2>{editingRecipe ? "Edit Recipe" : "Add New Recipe"}</h2>
-        <form onSubmit={handleSubmit}>
-          <input 
-            type="text" 
-            name="title" 
-            placeholder="Recipe Title" 
-            value={newRecipe.title} 
-            onChange={handleChange} 
-            required 
-          />
-          <textarea 
-            name="description" 
-            placeholder="Description" 
-            value={newRecipe.description} 
-            onChange={handleChange} 
-            required
-            rows="4"
-          />
-          <textarea 
-            name="ingredients" 
-            placeholder="Ingredients (comma separated)" 
-            value={newRecipe.ingredients} 
-            onChange={handleChange} 
-            required 
-            rows="3"
-          />
-          <input 
-            type="url" 
-            name="image" 
-            placeholder="Image URL (optional)" 
-            value={newRecipe.image} 
-            onChange={handleChange} 
-          />
-          <button type="submit">
-            {editingRecipe ? "Update Recipe" : "Add Recipe"}
-          </button>
-          {editingRecipe && (
-            <button 
-              type="button" 
-              onClick={() => {
-                setEditingRecipe(null);
-                setNewRecipe({ title: "", description: "", ingredients: "", image: "" });
-              }}
-              className="cancel-button"
-            >
-              Cancel
-            </button>
-          )}
-        </form>
-      </div>
-
-      {/* Recipe List */}
-      <div className="recipe-list">
-        <h2>All Recipes</h2>
-        {recipes.length === 0 ? (
-          <p>No recipes found. Be the first to add a recipe!</p>
-        ) : (
-          recipes.map((recipe) => (
-            <RecipeCard 
-              key={recipe._id} 
-              recipe={recipe} 
-              currentUser={getCurrentUser()}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onLike={handleLike}
-              onAddComment={handleAddComment}
+        {/* Recipe Form */}
+        <div className="recipe-form">
+          <h2>{editingRecipe ? "Edit Recipe" : "Add New Recipe"}</h2>
+          <form onSubmit={handleSubmit}>
+            <input 
+              type="text" 
+              name="title" 
+              placeholder="Recipe Title" 
+              value={newRecipe.title} 
+              onChange={handleChange} 
+              required 
             />
-          ))
-        )}
+            <textarea 
+              name="description" 
+              placeholder="Description" 
+              value={newRecipe.description} 
+              onChange={handleChange} 
+              required
+              rows="4"
+            />
+            <textarea 
+              name="ingredients" 
+              placeholder="Ingredients (comma separated)" 
+              value={newRecipe.ingredients} 
+              onChange={handleChange} 
+              required 
+              rows="3"
+            />
+            <input 
+              type="url" 
+              name="image" 
+              placeholder="Image URL (optional)" 
+              value={newRecipe.image} 
+              onChange={handleChange} 
+            />
+            <button type="submit">
+              {editingRecipe ? "Update Recipe" : "Add Recipe"}
+            </button>
+            {editingRecipe && (
+              <button 
+                type="button" 
+                onClick={() => {
+                  setEditingRecipe(null);
+                  setNewRecipe({ title: "", description: "", ingredients: "", image: "" });
+                }}
+                className="cancel-button"
+              >
+                Cancel
+              </button>
+            )}
+          </form>
+        </div>
+
+        {/* Recipe List */}
+        <div className="recipe-list">
+          <h2>All Recipes</h2>
+          {recipes.length === 0 ? (
+            <p>No recipes found. Be the first to add a recipe!</p>
+          ) : (
+            recipes.map((recipe) => (
+              <RecipeCard 
+                key={recipe._id} 
+                recipe={recipe} 
+                currentUser={getCurrentUser()}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                onLike={handleLike}
+                onAddComment={handleAddComment}
+              />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

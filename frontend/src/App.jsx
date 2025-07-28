@@ -16,6 +16,7 @@ import ErrorPage from './pages/ErrorPage.jsx';
 
 // Component Imports with .jsx extension
 import Header from "./components/Header.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,6 +29,7 @@ function App() {
   return (
     <Router>
       <div className="app-container">
+        <ScrollToTop />
         <Header />
         <Routes>
           {/* Core Routes */}

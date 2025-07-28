@@ -1,8 +1,3 @@
-body{
-  margin: 0;
-  padding-top: 0;
-  min-height: 100vh; /* ✅ Ensures body fills the screen height */
-}
 /* Container for authentication forms (Login & Register) */
 .auth-container {
   background: white;
