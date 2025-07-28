@@ -58,7 +58,7 @@ const Login = ({ setIsLoggedIn }) => {
         try {
             console.log('Attempting login with:', { email: formData.email });
             
-            const response = await axios.post("http://localhost:3000/login", {
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, {
                 email: formData.email.trim().toLowerCase(),
                 password: formData.password
             });
