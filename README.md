@@ -1,5 +1,7 @@
 # 🍽️ RECIPEDIA - Your Personalized Recipe Sharing Platform
 
+> 🔗 Live Site: [https://recipedia-frontend-me8d.onrender.com/home](https://recipedia-frontend-me8d.onrender.com/home)
+
 Recipedia is a full-stack web application that allows users to add, explore, and manage delicious recipes with ease. Built with the MERN (MongoDB, Express.js, React.js, Node.js) stack, it offers a user-friendly interface, personalized recipe collections, and community interaction features like likes and comments.
 
 ## 🌟 Features
@@ -11,6 +13,12 @@ Recipedia is a full-stack web application that allows users to add, explore, and
 - 👤 User Profiles to view and manage favorite recipes
 - 📱 Responsive Design for all devices
 - 📦 MongoDB Cloud Storage for efficient data management
+
+## 🔗 Deployed Links
+
+- 🔸 **Frontend**: [https://recipedia-frontend-me8d.onrender.com/home](https://recipedia-frontend-me8d.onrender.com/home)
+- 🔹 **Backend (API)**: [https://recipedia-7xa0.onrender.com/](https://recipedia-7xa0.onrender.com/)
+
 
 ## 🛠️ Built With
 
