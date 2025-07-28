@@ -195,15 +195,16 @@ const handleSkipBack = () => {
 
   return (
     <div className="recipe-detail-container max-w-4xl mx-auto px-4 pt-32 pb-16 dark:bg-slate-800 dark:text-white">
-      <button
-        onClick={() => navigate(`/${recipe.category}`)}
-        className=" w-1/2 py-3 flex flex-row items-center justify-center cursor-pointer  !text-red-500 hover:text-red-600 mb-6 dark:!text-white text-xl"
-      >
-        <span className="block w-fit hover:scale-110"><FaArrowLeft className="mr-2" /> </span>
-        
-        <span className="block w-fit"> Back to {recipe.category}</span>
-        
-      </button>
+  <button
+  onClick={() => navigate(`/${recipe.category}`)}
+  className="mb-6 px-4 font-bold py-2.5 bg-red-100 text-red-600 hover:text-white hover:bg-red-500 rounded-xl shadow flex items-center gap-2 w-fit transition-all duration-200"
+>
+  <FaArrowLeft className="text-inherit" />
+  <span className="font-medium text-base">Back to {recipe.category}</span>
+</button>
+
+
+
 
      
 
@@ -309,11 +310,17 @@ const handleSkipBack = () => {
       </section>
 
       {/* User Interaction: Likes and Comments */}
-      <div className="mt-10 flex items-center gap-4">
-        <button onClick={handleLike} className="flex items-center w-fit text-xl gap-2   dark:!text-white hover:!text-red-500 dark:hover:!text-red-500 focus:outline-none ">
-          {liked ? <FaHeart className="text-red-500" /> : <FaRegHeart />} {liked ? 'Liked' : 'Like'}
-        </button>
-      </div>
+     <div className="mt-10 flex items-center gap-4">
+  <button
+    onClick={handleLike}
+    className="flex items-center gap-2 px-4 py-2.5 bg-red-100 text-red-600 hover:text-white hover:bg-red-500 rounded-xl shadow w-fit transition-all duration-200 focus:outline-none"
+  >
+    {liked ? <FaHeart className="text-inherit" /> : <FaRegHeart className="text-inherit" />}
+    {liked ? 'Liked' : 'Like'}
+  </button>
+</div>
+
+
 
       <div className="mt-12">
         <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Comments</h3>
