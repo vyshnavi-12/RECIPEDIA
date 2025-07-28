@@ -28,22 +28,27 @@ Recipedia is a full-stack web application that allows users to add, explore, and
 
 ### 🔧 Getting Started
 
-1. **Navigate to the frontend directory**
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/MeghanaDG04/RECIPEDIA.git
+   ```
+
+2. **Navigate to the frontend directory**
    ```bash
    cd frontend
    ```
 
-2. **Install dependencies**
+3. **Install dependencies**
    ```bash
    npm install
    ```
 
-3. **Start the development server**
+4. **Start the development server**
    ```bash
    npm run dev
    ```
 
-4. **Build for production**
+5. **Build for production**
    ```bash
    npm run build
    ```
@@ -61,6 +66,41 @@ To customize Tailwind:
 - `frontend/src/components/` – Reusable UI components
 - `frontend/src/pages/` – Route-based views
 - `frontend/src/styles/` – Tailwind and custom styles
+
+## 🚀 Backend Setup Instructions
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/MeghanaDG04/RECIPEDIA.git
+   ```
+   > [!NOTE]  
+   > If already cloned then skip this step.
+
+2. **Now Navigate to the backend directory**
+   ```bash
+   cd backend
+   ```
+
+3. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Build for production**
+   ```bash
+   npm run build
+   ```
+
+### 📁 Folder Structure Highlights
+
+- `backend/cron/` – Controllers
+- `backend/models/` – Models such as `User.js`, `Like.js`, etc.
+- `backend/server.js` – Entry Point
 
 ## 🪪 License
 This project is licensed under the [MIT License](LICENSE).
