@@ -32,6 +32,30 @@ const AddRecipe = () => {
     image: "",
   });
 
+
+  const [editingRecipe, setEditingRecipe] = useState(null);
+  const navigate = useNavigate();
+
+  // API base URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  // Get authentication token
+  const getAuthToken = () => {
+    return sessionStorage.getItem('token');
+  };
+
+  // Get current user
+  const getCurrentUser = () => {
+    const user = sessionStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  };
+
+  // Check if user is authenticated
+  const isAuthenticated = () => {
+    return !!getAuthToken() && !!getCurrentUser();
+  };
+
+
   const [editingRecipe, setEditingRecipe] = useState(null);
 
   

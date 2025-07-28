@@ -17,6 +17,15 @@ const port = 5000;
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+
+
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(cors({
   origin: "http://localhost:3001",

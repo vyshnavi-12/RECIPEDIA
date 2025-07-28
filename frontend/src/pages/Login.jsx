@@ -42,8 +42,17 @@ const Login = ({ setIsLoggedIn }) => {
     
     const handleGoogleLogin = async (credentialResponse) => {
         try {
+
             const idToken = credentialResponse.credential;
             const res = await axios.post("http://localhost:5000/auth/google", { idToken });
+
+            console.log('Attempting login with:', { email: formData.email });
+            
+            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, {
+                email: formData.email.trim().toLowerCase(),
+                password: formData.password
+            });
+
             
            
             if (res.data.username) {
