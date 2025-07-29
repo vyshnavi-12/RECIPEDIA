@@ -1,13 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 const Navbar = () => {
   const navigate = useNavigate();
-
   const handleProfileClick = () => {
     navigate('/profile');
   };
-
   const handleAddRecipeClick = () => {
     navigate('/add-recipe');
   };
@@ -19,16 +16,16 @@ const Navbar = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-primary">
-        <div className="container-fluid">
+        <div className="container-fluid d-flex align-items-center">
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <Link className="navbar-brand fw-bold text-white" to="/">RECIPEDIA</Link>
+            <Link className="navbar-brand fw-bold text-white ms-0" to="/">RECIPEDIA</Link>
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <button className="btn btn-light btn-sm mx-1">
-                  <Link className="nav-link text-dark p-0" to="/">Home</Link>
+                  <Link className="nav-link text-dark p-0 " to="/"><strong>Home</strong></Link>
                 </button>
               </li>
               
@@ -70,10 +67,10 @@ const Navbar = () => {
             </ul>
             <div className="d-flex">
               <button className="btn btn-outline-light btn-sm mx-1">
-                <Link className="nav-link text-white p-0" to="/login">Login</Link>
+                <Link className="nav-link text-white p-0" to="/login"><strong>Login</strong></Link>
               </button>
               <button className="btn btn-outline-light btn-sm mx-1">
-                <Link className="nav-link text-white p-0" to="/register">Register</Link>
+                <Link className="nav-link text-white p-0" to="/register"><strong>Register</strong></Link>
               </button>
             </div>
           </div>

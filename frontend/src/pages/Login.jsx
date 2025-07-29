@@ -22,11 +22,11 @@ const Login = ({setIsLoggedIn}) => {
   return (
     <div>
      <div className="auth-container">
-      <h2>Login</h2>
+      <h2 className='auth-title'>Login</h2>
       <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
       <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>Login</button>
-      <p>New user? <Link to="/register">Register</Link></p>
+      <button onClick={handleLogin}>Login</button> <br />
+      <p> New user? <Link to="/register">Register</Link></p>
     </div>
     </div>
   )

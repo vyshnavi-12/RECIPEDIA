@@ -1,20 +1,39 @@
 /* Reset default body styles here if needed, keeping them minimal to let Tailwind drive the look */
-body{
+html,body{
   margin: 0;
   padding: 0;
+  height: 100%;
+  padding-top:30px;
 }
 
 /* Container for authentication forms (Login & Register) */
 .auth-container {
-  background: white;
-  padding: 20px;
-  width: 320px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
+background: white;
+padding: 30px;
+width: 320px;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+text-align: center;
+justify-content: center;
+display: flex;
+align-items: center;
+position:absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+flex-direction: column;
+gap:15px;
+}
+.auth-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.auth-wrap{
+  height: 100vh;
+  width: 100%;
+  position: relative;
+
 }
 
 /* Input Fields */
