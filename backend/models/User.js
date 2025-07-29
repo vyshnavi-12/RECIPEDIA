@@ -16,29 +16,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    // Add the missing required fields from registration
-    age: {
-        type: Number,
-        required: true,
-        min: 1,
-        max: 120
-    },
-    gender: {
+    googleId: {
         type: String,
-        required: true,
-        enum: ['male', 'female', 'other', 'prefer-not-to-say']
+        default: null
     },
-    address: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    phone: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    // Optional profile fields
     avatar: {
         type: String,
         default: ''

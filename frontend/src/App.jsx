@@ -25,6 +25,46 @@ function App() {
     setIsLoggedIn(!!user);
   }, []);
 
+
+    return (
+      <Router>
+        <div className="app-container">
+          <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+          <Routes>
+            <Route path="/" element={<RecipeHome />} />
+            <Route path="/login" element={<div className="login-bg"><Login setIsLoggedIn={setIsLoggedIn} /></div>} />
+            <Route path="/register" element={<div className="register-bg"><Register setIsLoggedIn={setIsLoggedIn} /></div>} />
+            <Route path="/home" element={<RecipeHome />} />
+            <Route path="/veg" element={<Veg />}/>
+            <Route path="/dessert" element={<Dessert />} />
+            <Route path="/nonveg" element={<Nonveg />} />
+            <Route path="/beverages" element={<Beverages />} />
+            <Route path="/recipe/paneer-butter-masala" element={<PaneerButterMasala />} />
+            <Route path="/recipe/dal-makhani" element={<DalMaKhani />} />
+            <Route path="/recipe/palak-soup" element={<PalakSoup />} />
+            <Route path="/recipe/vegetable-biryani" element={<VegetableBiryani />} />
+            <Route path="/recipe/butter-chicken" element={<ButterChicken />} />
+            <Route path="/recipe/prawn" element={<Prawn />} />
+            <Route path="/recipe/fish" element={<Fish />} />
+            <Route path="/recipe/biryani" element={<Biryani />} />
+            <Route path="/recipe/thandai" element={<Thandai />} />
+            <Route path="/recipe/gulub-jamun" element={<GulabJamun />} />
+            <Route path="/recipe/rasgulla" element={<Rasgulla />} />
+            <Route path="/recipe/jalebi" element={<Jalebi />} />
+            <Route path="/recipe/falooda" element={<Falooda />} />
+            <Route path="/recipe/lassi" element={<Lassi />} />
+            <Route path="/recipe/coffee" element={<Coffee />} />
+            <Route path="/recipe/masala-chai" element={<MasalaChai />} />
+            <Route path="/profile" element={<UserProfile />} /> 
+            <Route path="/add-recipe" element={<AddRecipe />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/error" element={<ErrorPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
+      </Router>  );
+  }export default App;
+
   return (
     <Router>
       <div className="app-container">
@@ -59,3 +99,4 @@ function App() {
 }
 
 export default App;
+
