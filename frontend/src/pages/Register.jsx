@@ -1,20 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import "../App.css";  // Import CSS
-import Login from "./Login";
-
-
+import "../App.css";
 
 const Register = ({ setIsLoggedIn }) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-  const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         username: "",
@@ -30,43 +19,46 @@ const Register = ({ setIsLoggedIn }) => {
     const [agreeTerms, setAgreeTerms] = useState(false);
     const navigate = useNavigate();
 
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
 
-  
-const handleRegister = async () => {
-  try {
-    await axios.post("http://localhost:5000/register", {
-  username,
-  email,
-  password,
-  age,
-  gender,
-  address,
-  phone,
-});
-
-    localStorage.setItem("username", username);
-    setIsLoggedIn(true);
-    navigate("/home");
-  } catch (error) {
-    console.error("Registration failed:", error);
-    alert("Registration failed. Please check your details.");
-  }
-};
-
-  
-  const handleGoogleRegister = async (credentialResponse) => {
-    try {
-        const idToken = credentialResponse.credential;
-        const res = await axios.post("http://localhost:5000/auth/google", { idToken });
+    const validateForm = () => {
+        const { username, email, password, age, gender, address, phone } = formData;
         
+        if (!username || !email || !password || !age || !gender || !address || !phone) {
+            return "Please fill in all fields";
+        }
+        
+        if (password.length < 6) {
+            return "Password must be at least 6 characters long";
+        }
+        
+        if (isNaN(age) || age < 1 || age > 120) {
+            return "Please enter a valid age";
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return "Please enter a valid email address";
+        }
+        
+        // Basic phone validation
+        const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+        if (!phoneRegex.test(phone) || phone.length < 10) {
+            return "Please enter a valid phone number";
+        }
+        
+        return null;
+    };
 
-      
-        if (res.data.username) {
-            localStorage.setItem("username", res.data.username);
-            if (res.data.token) {
-                localStorage.setItem("token", res.data.token);
-            }
-
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        
         const validationError = validateForm();
         if (validationError) {
             setError(validationError);
@@ -97,53 +89,28 @@ const handleRegister = async () => {
             sessionStorage.setItem("token", token);
             sessionStorage.setItem("user", JSON.stringify(user));
             
-
             setIsLoggedIn(true);
             navigate("/home");
-     } else {
-            throw new Error("No username received from server");
+        } catch (error) {
+            console.error("Registration error:", error);
+            console.error("Error response:", error.response?.data);
+            
+            if (error.response) {
+                // Server responded with error status
+                const errorMessage = error.response.data?.message || "Registration failed";
+                setError(errorMessage);
+                console.log("Server error message:", errorMessage);
+            } else if (error.request) {
+                // Request was made but no response received
+                setError("Cannot connect to server. Please check if the server is running.");
+            } else {
+                // Something else happened
+                setError("Registration failed. Please try again.");
+            }
+        } finally {
+            setLoading(false);
         }
-    } catch (error) {
-        console.error("Google registration failed:", error);
-        alert("Google registration failed. Please try again.");
-    }
-  };
-
-
-  const handleGoogleError = () => {
-    console.log("Google Registration Failed");
-    alert("Google registration failed. Please try again.");
-  };
-
-  return (
-    <div className="auth-container">
-      <h2>Register</h2>
-      <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-      <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      <input type="number" placeholder="Age" onChange={(e) => setAge(e.target.value)} />
-      <input type="text" placeholder="Gender" onChange={(e) => setGender(e.target.value)} />
-      <input type="text" placeholder="Phone Number" onChange={(e) => setPhone(e.target.value)} />
-      <input type="text" placeholder="Address" onChange={(e) => setAddress(e.target.value)} />
-      <button onClick={handleRegister}>Register</button>
-      
-      <div className="google-auth-section">
-        <p>Or register with Google:</p>
-        <GoogleOAuthProvider clientId="740849859932-6jfi3j7j4pi4ou19tvdo7a3gpj6sp4s2.apps.googleusercontent.com">
-          <GoogleLogin
-            onSuccess={handleGoogleRegister}
-            onError={handleGoogleError}
-            theme="outline"
-            size="large"
-            text="signup_with"
-            shape="rectangular"
-          />
-        </GoogleOAuthProvider>
-      </div>
-      
-      <p>Already have an account? <Link to="/login">Login</Link></p>
-    </div>
-  );
+    };
 
     return (
         <div className="container">
@@ -236,7 +203,6 @@ const handleRegister = async () => {
             </div>
         </div>
     );
-
 };
 
 export default Register;

@@ -1,9 +1,9 @@
 body{
   margin: 0;
   padding-top: 0;
-  min-height: 100vh; 
+  min-height: 100vh; /* ✅ Ensures body fills the screen height */
 }
-
+/* Container for authentication forms (Login & Register) */
 .auth-container {
   background: white;
   padding: 20px;
@@ -21,16 +21,12 @@ body{
   to { opacity: 1; transform: scale(1); }
 }
 
-
-
-
 .heading{
   font-size: 24px;
   font-weight: 600;
   color: black;
 }
 /* Input Fields */
-
 input {
   width: 90%;
   padding: 10px;
@@ -44,7 +40,7 @@ input:focus {
   box-shadow: 0 0 0 2px #007bff55;
 }
 
-
+/* Buttons */
 button {
   width: 90%;
   padding: 8px;
@@ -105,26 +101,6 @@ margin-left: 20px;
 }
 
 
-
-.google-auth-section {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid #eee;
-}
-
-.google-auth-section p {
-  margin: 10px 0;
-  color: #666;
-  font-size: 14px;
-}
-
-
-.google-auth-section > div {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
 :root {
   --primary-color: #007bff;
   --hover-color: #0056b3;
@@ -163,8 +139,8 @@ input:focus {
 
 .carousel-item img {
   width: 100%;
-  height: 500px; 
-  object-fit: cover; 
+  height: 500px; /* Adjust as per your requirement */
+  object-fit: cover; /* Ensures the image covers the space without distortion */
 }
 
 .carousel-item img:hover {
@@ -173,8 +149,8 @@ input:focus {
 
 .card-img-top {
   width: 100%;
-  height: 400px; 
-  object-fit: cover; 
+  height: 400px; /* Adjust height as needed */
+  object-fit: cover; /* Ensures images are properly cropped to fit */
 }
 .recipe-footer {
   background-color: #333;

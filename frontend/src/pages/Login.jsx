@@ -1,13 +1,7 @@
-import React, {useState} from 'react'
-import axios from 'axios'
-import {Link,useNavigate} from 'react-router-dom'
-import '../App.css'
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-
-
-const Login = ({setIsLoggedIn}) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import '../App.css';
 
 const Login = ({ setIsLoggedIn }) => {
     const [formData, setFormData] = useState({
@@ -17,87 +11,88 @@ const Login = ({ setIsLoggedIn }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [agreeTerms, setAgreeTerms] = useState(false);
-
     const navigate = useNavigate();
 
-    const handleLogin = async () => {
-        try {
-          const res = await axios.post("http://localhost:5000/login", { email, password });
-          localStorage.setItem("username", res.data.username);
-          setIsLoggedIn(true);
-          navigate("/home");
-        } catch (error) {
-          alert("Invalid Credentials");
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+        // Clear error when user starts typing
+        if (error) setError("");
+    };
+
+    const validateForm = () => {
+        const { email, password } = formData;
+        
+        if (!email || !password) {
+            return "Please fill in all fields";
         }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return "Please enter a valid email address";
+        }
+        
+        return null;
+    };
 
-    }
-
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        
+        const validationError = validateForm();
+        if (validationError) {
+            setError(validationError);
+            return;
+        }
         
         if (!agreeTerms) {
              setError("Please agree to the Terms of Use & Privacy Policy");
               return;
             }
 
-          }
-    
-    const handleGoogleLogin = async (credentialResponse) => {
+        setLoading(true);
+        setError("");
+
         try {
-
-            const idToken = credentialResponse.credential;
-            const res = await axios.post("http://localhost:5000/auth/google", { idToken });
-
             console.log('Attempting login with:', { email: formData.email });
             
             const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, {
                 email: formData.email.trim().toLowerCase(),
                 password: formData.password
             });
-
             
-           
-            if (res.data.username) {
-                localStorage.setItem("username", res.data.username);
-                if (res.data.token) {
-                    localStorage.setItem("token", res.data.token);
-                }
-                setIsLoggedIn(true);
-                navigate("/home");
-            } else {
-                throw new Error("No username received from server");
-            }
+            console.log('Login successful:', response.data);
+            
+            // Store authentication data
+            const { token, user } = response.data;
+            sessionStorage.setItem("token", token);
+            sessionStorage.setItem("user", JSON.stringify(user));
+            
+            setIsLoggedIn(true);
+            navigate("/home");
         } catch (error) {
-            console.error("Google login failed:", error);
-            alert("Google login failed. Please try again.");
+            console.error("Login error:", error);
+            console.error("Error response:", error.response?.data);
+            
+            if (error.response) {
+                // Server responded with error status
+                const errorMessage = error.response.data?.message || "Login failed";
+                setError(errorMessage);
+                console.log("Server error message:", errorMessage);
+            } else if (error.request) {
+                // Request was made but no response received
+                setError("Cannot connect to server. Please check if the server is running.");
+            } else {
+                // Something else happened
+                setError("Login failed. Please try again.");
+            }
+        } finally {
+            setLoading(false);
         }
     };
 
-    const handleGoogleError = () => {
-        console.log("Google Login Failed");
-        alert("Google login failed. Please try again.");
-    };
-
-
-  return (
-    <div>
-     <div className="auth-container">
-      <h2>Login</h2>
-      <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>Login</button>
-      
-      <div className="google-auth-section">
-        <p>Or login with Google:</p>
-        <GoogleOAuthProvider clientId="740849859932-6jfi3j7j4pi4ou19tvdo7a3gpj6sp4s2.apps.googleusercontent.com">
-          <GoogleLogin
-            onSuccess={handleGoogleLogin}
-            onError={handleGoogleError}
-            theme="outline"
-            size="large"
-            text="signin_with"
-            shape="rectangular"
-          />
-        </GoogleOAuthProvider>
-      </div>
 
     return (
         <div className="container">
@@ -145,13 +140,7 @@ const Login = ({ setIsLoggedIn }) => {
 </div>
         </div>
     );
-  
+};
 
-
-      <p>New user? <Link to="/register">Register</Link></p>
-    </div>
-    </div>
-  )
-}
 
 export default Login;
