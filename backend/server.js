@@ -17,9 +17,9 @@ const port = 5000;
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+const port = process.env.PORT || 30
 
-
-app.use(
+app.us
   cors({
     origin: process.env.CLIENT_URL,
     credentials: true,
