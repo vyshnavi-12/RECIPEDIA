@@ -1,6 +1,6 @@
-/* Full-page Background */
-body, html {
-    height: 100%;
+/* Full-page Background - Scoped to AddRecipe only */
+.add-recipe-bg {
+    min-height: 100vh;
     margin: 0;
     padding: 0;
     background: linear-gradient(to bottom, #ffafbd, #ffc3a0); /* Smooth gradient */
@@ -102,22 +102,25 @@ body, html {
     gap: 10px;
 }
 .recipe-actions button {
-    padding: 8px 15px;
-    margin-right: 10px;
+    padding: 5px 10px;
+    background: #f0f0f0;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
 }
-
 .recipe-actions button:first-child {
-    background-color: #90EE90;
-    color: #333;
-}
-
-.recipe-actions .delete {
-    background-color: #ff4444;
+    background: #4CAF50;
     color: white;
 }
+.recipe-actions .delete {
+    background: #ff6f61;
+    color: white;
+}
+.recipe-actions .delete:hover {
+    background: #e55b50;
+}
+
 /* Recipe Meta */
 .recipe-meta {
     display: flex;
