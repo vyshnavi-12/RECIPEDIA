@@ -1,28 +1,6 @@
 import React, { useEffect } from 'react';
-
+import { PlusSquare , Search , UserPlus } from "lucide-react"
 const RecipeHome = () => {
-
-  useEffect(() => {
-    // Initialize Lucide icons if available
-    if (window.lucide && window.lucide.createIcons) {
-      window.lucide.createIcons();
-    }
-
-    // Mobile menu toggle for the header copied from recipe.html
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    if (mobileMenuButton && mobileMenu) {
-      const toggleMenu = () => mobileMenu.classList.toggle('hidden');
-      mobileMenuButton.addEventListener('click', toggleMenu);
-
-      // Cleanup on unmount
-      return () => {
-        mobileMenuButton.removeEventListener('click', toggleMenu);
-      };
-    }
-  }, []);
-
   return (
     <div>
       <div>
@@ -94,7 +72,7 @@ const RecipeHome = () => {
               {/* Step 1 */}
               <div className="p-6">
                 <div className="bg-red-100 text-red-500 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-md">
-                  <i data-lucide="user-plus" className="w-10 h-10"></i>
+                 <UserPlus className="w-10 h-10"/>
                 </div>
                 <h3 className="text-xl font-bold mb-3">Create an Account</h3>
                 <p className="text-gray-600">Sign up for free to get your personalized profile and start your collection.</p>
@@ -102,15 +80,16 @@ const RecipeHome = () => {
               {/* Step 2 */}
               <div className="p-6">
                 <div className="bg-yellow-100 text-yellow-500 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-md">
-                  <i data-lucide="plus-square" className="w-10 h-10"></i>
+                  <PlusSquare className="w-10 h-10" />
                 </div>
+
                 <h3 className="text-xl font-bold mb-3">Add Your Recipes</h3>
                 <p className="text-gray-600">Share your favorite dishes with our community using our simple recipe editor.</p>
               </div>
               {/* Step 3 */}
               <div className="p-6">
                 <div className="bg-green-100 text-green-500 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-md">
-                  <i data-lucide="search" className="w-10 h-10"></i>
+                  <Search className="w-10 h-10"/>
                 </div>
                 <h3 className="text-xl font-bold mb-3">Explore & Interact</h3>
                 <p className="text-gray-600">Discover new meals, leave comments, and like the recipes that inspire you.</p>
@@ -118,7 +97,7 @@ const RecipeHome = () => {
             </div>
           </div>
         </section>
-        
+
         {/* Features Section */}
         <section id="features" className="py-20 !bg-white dark:!bg-slate-800">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
