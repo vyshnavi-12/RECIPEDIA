@@ -1,9 +1,9 @@
 .recipe-detail-container {
-  background-color: #FFEBCD;
+  background-color: #ffebcd; /* light cream */
   min-height: 100vh;
-  padding: 120px 20px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin: auto;
 }
 
 .back-button {
@@ -11,140 +11,11 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px;/* Full-page Background */
-  body, html {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom, #ffafbd, #ffc3a0); /* Smooth gradient */
-      font-family: Arial, sans-serif;
-      overflow-y: auto;  /* Allows full scrolling */
-  }
-  
-  /* Container */
-  .recipe-container {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-      min-height: 100vh;  /* Ensure it stretches fully */
-      display: flex;
-      flex-direction: column;
-  }
-  
-  /* Back Button */
-  .back-button {
-      display: inline-block;
-      margin-bottom: 15px;
-      color: #555;
-      font-size: 18px;
-      text-decoration: none;
-      transition: color 0.3s ease;
-  }
-  .back-button:hover {
-      color: #222;
-  }
-  
-  /* Recipe Form */
-  .recipe-form {
-      background: #f9f9f9;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-  }
-  .recipe-form h2 {
-      margin-bottom: 10px;
-  }
-  .recipe-form input, .recipe-form textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-  }
-  .recipe-form button {
-      width: 100%;
-      padding: 10px;
-      background: #ff6f61;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-  }
-  .recipe-form button:hover {
-      background: #e55b50;
-  }
-  
-  /* Recipe List */
-  .recipe-list {
-      margin-bottom: 20px;
-      overflow-y: auto;  /* Allows the recipe list to scroll separately if needed */
-      max-height: 70vh; /* Prevents it from taking full height */
-  }
-  .recipe-list h2 {
-      border-bottom: 2px solid #ff6f61;
-      padding-bottom: 5px;
-  }
-  
-  /* Recipe Card */
-  .recipe-card {
-      display: flex;
-      background: #fff;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  .recipe-card img {
-      width: 100px;
-      height: 100px;
-      border-radius: 8px;
-      object-fit: cover;
-      margin-right: 10px;
-  }
-  .recipe-info {
-      flex-grow: 1;
-  }
-  .recipe-info h3 {
-      margin: 0;
-  }
-  .recipe-actions {
-      display: flex;
-      gap: 10px;
-  }
-  .recipe-actions button {
-      padding: 5px 10px;
-      background: #f0f0f0;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 14px;
-  }
-  .recipe-actions .delete {
-      background: #ff6f61;
-      color: white;
-  }
-  .recipe-actions .delete:hover {
-      background: #e55b50;
-  }
-  
-  /* Recipe Meta */
-  .recipe-meta {
-      display: flex;
-      gap: 15px;
-      margin-top: 5px;
-      color: #666;
-      font-size: 14px;
-  }
-  .recipe-meta span {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-  }
-  
-  margin-bottom: 20px;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+.back-button:hover {
+  color: #222;
 }
 
 .recipe-image img {
@@ -154,64 +25,10 @@
   border-radius: 8px;
 }
 
-.recipe-info {
-  margin: 20px 0;
-}
-
-.recipe-info h2 {
-  color: #333;
-  margin: 20px 0 10px;
-}
-
-.recipe-info ul, .recipe-info ol {
-  padding-left: 20px;
-  margin: 10px 0;
-}
-
-.user-interaction {
-  margin-top: 40px;
-  border-top: 1px solid #eee;
-  padding-top: 20px;
-}
-
-.like-section button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.comment-section {
-  margin-top: 20px;
-}
-
 .comment-section textarea {
-  width: 100%;
-  min-height: 100px;
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  resize: vertical;
 }
 
 .comment-section button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
   cursor: pointer;
-}
-
-.comments-list {
-  margin-top: 20px;
-}
-
-.comment {
-  border-bottom: 1px solid #eee;
-  padding: 10px 0;
 }
