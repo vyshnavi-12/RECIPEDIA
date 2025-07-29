@@ -1,13 +1,20 @@
+<<<<<<< HEAD
 /* Reset default body styles here if needed, keeping them minimal to let Tailwind drive the look */
 html,body{
   margin: 0;
   padding: 0;
   height: 100%;
   padding-top:30px;
+=======
+body{
+  margin: 0;
+  padding-top: 0;
+  min-height: 100vh; /* ✅ Ensures body fills the screen height */
+>>>>>>> upstream/main
 }
-
 /* Container for authentication forms (Login & Register) */
 .auth-container {
+<<<<<<< HEAD
 background: white;
 padding: 30px;
 width: 320px;
@@ -34,35 +41,103 @@ gap:15px;
   width: 100%;
   position: relative;
 
+=======
+  background: white;
+  padding: 20px;
+  width: 320px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+>>>>>>> upstream/main
 }
 
+.heading{
+  font-size: 24px;
+  font-weight: 600;
+  color: black;
+}
 /* Input Fields */
 input {
   width: 90%;
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid #ccc;
+  border: 1px solid #666;
   border-radius: 5px;
   font-size: 16px;
+}
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #007bff55;
 }
 
 /* Buttons */
 button {
-  width: 100%;
-  padding: 10px;
+  width: 90%;
+  padding: 8px;
   margin-top: 10px;
   border: none;
   border-radius: 5px;
   font-size: 16px;
-  background-color: #007bff;
+  font-weight: 600;
+  background-color: #0056b3;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #007bff;
 }
+
+.termsandconditions {
+  display: flex;
+  align-items: center;
+  gap: 3px; 
+  margin-top: 2px;
+  font-size: 14px;
+  color: #444;
+}
+
+.termsandconditions input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: #666; /*chage checkbox color */
+}
+.termsandconditions h6 {
+  margin: 0;
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.swap_state {
+  margin-top: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #444;
+text-align: justify;
+margin-left: 20px;
+}
+
+.link a {
+  color:#ef102d;
+  font-weight: 500;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.link a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
 
 :root {
   --primary-color: #007bff;

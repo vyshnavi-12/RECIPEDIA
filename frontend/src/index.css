@@ -1,4 +1,3 @@
-
 html {
   scroll-behavior: smooth;
 }
@@ -8,6 +7,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  background-color: #FFF8F0; /* A warm, creamy background */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -18,11 +18,6 @@ code {
 }
 
 /* Recipedia custom styles */
-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #FFF8F0; /* A warm, creamy background */
-}
-
 .hero-bg {
   background-image: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.2)), url('https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3B4MTM2OTgxMy1pbWFnZS1rd3Z4eHA5MS5qcGc.jpg');
   background-size: cover;
@@ -47,4 +42,17 @@ body {
 /* Remove underline from all anchor tags */
 a {
   text-decoration: none;
+}
+
+.ingrdientsDiv{
+  @apply dark:bg-slate-800 !text-black dark:!text-white
+}
+.ingredientsH{
+  @apply  text-xl
+}
+.ingredientsH2{
+  @apply !text-red-500 text-xl
+}
+.ingredientsUl{
+  @apply list-disc ml-6 marker:text-black dark:marker:text-white
 }

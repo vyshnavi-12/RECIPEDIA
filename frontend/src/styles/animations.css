@@ -5,16 +5,26 @@
   animation: gradient 15s ease infinite;
 }
 
-.login-bg {
+/* Removed This
+/* .login-bg {
   min-height: 100vh;
-  background: linear-gradient(-45deg, #2196F3, #00BCD4, #3F51B5, #673AB7);
+  background: linear-gradient(-45deg, #f0f0f0, #f45969, #f0a0a0, #F6B17A );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+} */
+
+.register-bg {
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #f0f0f0, #f45969, #f0a0a0, #F6B17A);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
-.register-bg {
+.login-bg, .register-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-height: 100vh;
-  background: linear-gradient(-45deg, #4CAF50, #8BC34A, #009688, #00BCD4);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
