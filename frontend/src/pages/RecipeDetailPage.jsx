@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaHeart, FaRegHeart, FaPlay } from 'react-icons/fa';
-import { IoPlaySkipForwardSharp, IoPlaySkipBackSharp, IoMdSettings, IoMdPause } from 'react-icons/io';
+import { IoPlaySkipForwardSharp, IoPlaySkipBackSharp } from 'react-icons/io5';
+import { IoMdSettings, IoMdPause } from 'react-icons/io';
+
 import allRecipes from '../data/recipes.json';
 import NotFoundPage from './NotFound.jsx';
 import '../styles/RecipeDetail.css';
