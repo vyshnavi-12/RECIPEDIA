@@ -44,9 +44,9 @@ const HeroSection = () => {
   useEffect(() => {
     const slideInterval = setInterval(() => {
       nextSlide();
-    }, 4000);
+    }, 5000);
     return () => clearInterval(slideInterval);
-  }, [currentSlide]);
+  }, []);
 
   const nextSlide = () => {
     if (isAnimating) return;
