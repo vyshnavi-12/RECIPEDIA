@@ -1,5 +1,7 @@
 html {
   scroll-behavior: smooth;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -10,6 +12,14 @@ body {
   background-color: #FFF8F0; /* A warm, creamy background */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 code {

@@ -1,5 +1,5 @@
-/* About Page Container */
 .about-container {
+
     max-width: 800px;
     margin: auto;
     padding: 20px;
@@ -47,3 +47,27 @@
     margin: 5px 0;
   }
   
+=======
+  max-width: 800px;
+  margin: auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dark .about-container {
+  background: #334155; /* slate-700 */
+}
+
+.back-button {
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  background-color: #f59e0b; /* darker amber */
+}
+
+/* Remove hardcoded text colors in p and li to let Tailwind dark mode work */
