@@ -4,108 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 
 const Login = ({ setIsLoggedIn }) => {
-
-    const [formData, setFormData] = useState({
-        email: "",
-        password: ""
-    });
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
-    const [agreeTerms, setAgreeTerms] = useState(false);
-    const navigate = useNavigate();
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-        // Clear error when user starts typing
-        if (error) setError("");
-    };
-
-    const validateForm = () => {
-        const { email, password } = formData;
-        
-        if (!email || !password) {
-            return "Please fill in all fields";
-        }
-        
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return "Please enter a valid email address";
-        }
-        
-        return null;
-    };
-
-
-  return (
-    <div>
-     <div className="auth-container">
-      <h2 className='auth-title'>Login</h2>
-      <input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-      <button onClick={handleLogin}>Login</button> <br />
-      <p> New user? <Link to="/register">Register</Link></p>
-    </div>
-    </div>
-  )
-}
-
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        
-        const validationError = validateForm();
-        if (validationError) {
-            setError(validationError);
-            return;
-        }
-        
-        if (!agreeTerms) {
-             setError("Please agree to the Terms of Use & Privacy Policy");
-              return;
-            }
-
-
-        setLoading(true);
-        setError("");
-
-        try {
-            console.log('Attempting login with:', { email: formData.email });
-            
-            const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/login`, {
-                email: formData.email.trim().toLowerCase(),
-                password: formData.password
-            });
-            
-            console.log('Login successful:', response.data);
-            
-            // Store authentication data
-            const { token, user } = response.data;
-            sessionStorage.setItem("token", token);
-            sessionStorage.setItem("user", JSON.stringify(user));
-            
-            setIsLoggedIn(true);
-            navigate("/home");
-        } catch (error) {
-            console.error("Login error:", error);
-            console.error("Error response:", error.response?.data);
-            
-            if (error.response) {
-                // Server responded with error status
-                const errorMessage = error.response.data?.message || "Login failed";
-                setError(errorMessage);
-                console.log("Server error message:", errorMessage);
-            } else if (error.request) {
-                // Request was made but no response received
-                setError("Cannot connect to server. Please check if the server is running.");
-            } else {
-                // Something else happened
-                setError("Login failed. Please try again.");
-            }
-        } finally {
-
   const navigate = useNavigate();
 
   // Form state
@@ -159,7 +57,6 @@ const Login = ({ setIsLoggedIn }) => {
         {
           email: formData.email.trim().toLowerCase(),
           password: formData.password,
-
         }
       );
 
