@@ -1,4 +1,17 @@
 
+/* Reset default body styles here if needed, keeping them minimal to let Tailwind drive the look */
+html,body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  padding-top:30px;
+
+body{
+  margin: 0;
+  padding-top: 0;
+  min-height: 100vh; /* ✅ Ensures body fills the screen height */
+
+
 /* Container for authentication forms (Login & Register) */
 /* === Global === */
 :root {
@@ -14,21 +27,61 @@ body {
   min-height: 100vh;
   background-color: #f9f9f9;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
 }
 
 /* === Auth Forms (Login & Register) === */
 .auth-container {
+
+background: white;
+padding: 30px;
+width: 320px;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+text-align: center;
+justify-content: center;
+display: flex;
+align-items: center;
+position:absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+flex-direction: column;
+gap:15px;
+}
+.auth-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.auth-wrap{
+  height: 100vh;
+  width: 100%;
+  position: relative;
+
+  background: white;
+  padding: 20px;
+  width: 320px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
   background: #fff;
   padding: 30px;
   max-width: 380px;
   margin: 50px auto;
   border-radius: 10px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+
   text-align: center;
   animation: fadeIn 0.6s ease-in-out;
 }
 
 @keyframes fadeIn {
+
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+
+
   from {
     opacity: 0;
     transform: scale(0.95);
@@ -37,6 +90,7 @@ body {
     opacity: 1;
     transform: scale(1);
   }
+
 }
 
 .heading {

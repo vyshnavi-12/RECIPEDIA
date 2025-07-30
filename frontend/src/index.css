@@ -29,7 +29,7 @@ code {
 
 /* Recipedia custom styles */
 .hero-bg {
-  background-image: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.2)), url('https://placehold.co/1600x900/f87171/ffffff?text=Delicious+Food');
+  background-image: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.2)), url('https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3B4MTM2OTgxMy1pbWFnZS1rd3Z4eHA5MS5qcGc.jpg');
   background-size: cover;
   background-position: center;
 }
