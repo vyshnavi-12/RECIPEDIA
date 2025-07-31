@@ -1,27 +1,13 @@
 import React, { useEffect } from 'react';
 import { PlusSquare , Search , UserPlus } from "lucide-react"
+import HeroSection from '../components/HeroSection.jsx';
+
+
 const RecipeHome = () => {
   return (
     <div>
       <div>
-        {/* Hero Section */}
-        <section id="home" className="hero-bg pt-32">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center min-h-[calc(100vh-80px)]">
-            <div className="max-w-3xl text-white py-20">
-              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4">
-                Discover, Share & Cook <br /> <span className="gradient-text">Amazing Recipes</span>
-              </h1>
-              <p className="text-lg md:text-xl text-gray-200 mb-8">
-                Join our community of food lovers! Add your own creations, explore dishes from around the world, and manage your favorite recipes all in one place.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <a href="#categories" className="bg-red-500 text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-red-600 transition shadow-lg transform hover:scale-105">Explore Recipes</a>
-                <a href="/register" className="bg-white text-red-500 px-8 py-3 rounded-full font-bold text-lg hover:bg-gray-100 transition shadow-lg transform hover:scale-105">Join Now</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
+      <HeroSection />        
         {/* Categories Section */}
         <section id="categories" className="py-20 bg-gray-50 dark:bg-slate-800">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
