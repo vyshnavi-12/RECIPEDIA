@@ -153,7 +153,7 @@ const RecipeDetailPage = () => {
       <span className="font-medium text-base">Back to {recipe.category}</span>
     </button>
 
-    <h1 className="text-4xl font-bold text-center my-10">{recipe.name}</h1>
+    <h1 className="text-4xl font-bold text-center my-10 text-[#d35400]">{recipe.name}</h1>
 
     <img
       src={recipe.image}
@@ -217,16 +217,16 @@ const RecipeDetailPage = () => {
     </div>
 
     <section className="prose max-w-none dark:prose-invert">
-      <h2 className="text-2xl font-semibold">About this Recipe</h2>
-      <p>{recipe.about}</p>
-      <h2 className="text-2xl font-semibold mt-6">Ingredients</h2>
-      <ul className="list-disc pl-6 marker:text-red-500">
+      <h2 className="text-2xl font-semibold text-[#d35400] pb-2">About this Recipe</h2>
+      <p className='dark:text-white text-red-500'>{recipe.about}</p>
+      <h2 className="text-2xl font-semibold mt-6 text-[#d35400] pb-2">Ingredients</h2> 
+      <ul className="list-disc dark:text-white pl-6 marker:text-red-500 text-red-500">
         {recipe.ingredients.map((item, i) => (
           <li key={i}>{item}</li>
         ))}
       </ul>
-      <h2 className="text-2xl font-semibold mt-6">Preparation Steps</h2>
-      <ol className="list-decimal pl-6 space-y-2">
+      <h2 className="text-2xl font-semibold mt-6 text-[#d35400] pb-2">Preparation Steps</h2>
+      <ol className="list-decimal pl-6 space-y-2 dark:text-white  text-red-500">
         {recipe.preparationSteps.map((step, i) => (
           <li key={i}>{step}</li>
         ))}
@@ -245,7 +245,7 @@ const RecipeDetailPage = () => {
     </div>
 
     <div className="mt-12">
-      <h3 className="text-2xl font-semibold mb-4">Comments</h3>
+      <h3 className="text-2xl font-semibold mb-4 text-[#d35400]">Comments</h3>
       <form onSubmit={handleComment}>
         <textarea
           value={newComment}
@@ -270,7 +270,7 @@ const RecipeDetailPage = () => {
             </div>
           ))
         ) : (
-          <div className="bg-gray-100 dark:bg-slate-700 p-4 rounded-lg shadow text-center text-gray-500 dark:text-gray-300">
+          <div className="bg-gray-100 dark:bg-slate-700 p-4 rounded-lg shadow text-center text-gray-500 dark:text-white">
             No comments yet. Be the first to share your thoughts!
           </div>
         )}
