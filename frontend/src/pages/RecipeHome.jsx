@@ -5,6 +5,7 @@ import CategoriesSection from '../components/CategoriesSection.jsx';
 import HowItWorksSection from '../components/HowItWorksSection.jsx';
 import FeaturesSection from '../components/FeaturesSection.jsx';
 import CTASection from '../components/CTASection.jsx';
+import Footer from '../components/FooterSection.jsx';
 
 
 const RecipeHome = () => {
@@ -16,14 +17,7 @@ const RecipeHome = () => {
       <HowItWorksSection />
       <FeaturesSection />
       <CTASection />
-        {/* CTA Section */}
-        <section className="bg-red-600">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-            <h2 className="text-3xl font-bold text-white mb-4">Ready to Share Your Culinary Genius?</h2>
-            <p className="text-red-100 text-lg mb-8 max-w-2xl mx-auto">Create your free account today and become part of the Recipedia family. Your next favorite dish is just a click away.</p>
-            <a href="/register" className="bg-white text-red-600 font-bold py-4 px-8 rounded-full text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-lg">Sign Up Now</a>
-          </div>
-        </section>
+      <Footer/>
       </div>
       {/* Footer */}
       <footer className="bg-gray-800 text-white">
