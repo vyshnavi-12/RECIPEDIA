@@ -4,9 +4,27 @@ import { motion } from 'framer-motion';
 
 const AboutMissionSection = () => {
   const goals = [
-    { icon: Target, title: 'Build Community', description: 'Create spaces for meaningful interactions among food lovers.', color: 'text-blue-500', bgColor: 'from-blue-100 to-blue-200 dark:from-blue-900/20 dark:to-blue-800/20' },
-    { icon: Globe, title: 'Promote Diversity', description: 'Showcase recipes from all cultures and cuisines.', color: 'text-green-500', bgColor: 'from-green-100 to-green-200 dark:from-green-900/20 dark:to-green-800/20' },
-    { icon: Users, title: 'Empower Users', description: 'Provide tools for easy creation and collaboration.', color: 'text-purple-500', bgColor: 'from-purple-100 to-purple-200 dark:from-purple-900/20 dark:to-purple-800/20' },
+    { 
+      icon: Target, 
+      title: 'Foster Culinary Community', 
+      description: 'Create a vibrant space where home cooks, professional chefs, and food enthusiasts connect, share experiences, and inspire each other\'s culinary journeys.', 
+      color: 'text-blue-500', 
+      bgColor: 'from-blue-100 to-blue-200 dark:from-blue-900/20 dark:to-blue-800/20' 
+    },
+    { 
+      icon: Globe, 
+      title: 'Celebrate Global Cuisines', 
+      description: 'Preserve and showcase authentic recipes from every corner of the world, ensuring traditional cooking methods and family recipes are never lost.', 
+      color: 'text-green-500', 
+      bgColor: 'from-green-100 to-green-200 dark:from-green-900/20 dark:to-green-800/20' 
+    },
+    { 
+      icon: Users, 
+      title: 'Empower Every Cook', 
+      description: 'Provide intuitive tools and resources that make recipe creation, sharing, and discovery accessible to cooks of all skill levels and backgrounds.', 
+      color: 'text-purple-500', 
+      bgColor: 'from-purple-100 to-purple-200 dark:from-purple-900/20 dark:to-purple-800/20' 
+    },
   ];
 
   const containerVariants = {
@@ -71,8 +89,11 @@ const AboutMissionSection = () => {
                   viewport={{ once: true }}
                 />
               </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                At Recipedia, we believe that food is the universal language that brings people together. Our mission is to create the world's most comprehensive and inclusive platform for culinary discovery, where every recipe tells a story and every cook has a voice.
+              </p>
               <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                At Recipedia, our mission is to connect food enthusiasts worldwide by providing a seamless platform for sharing, discovering, and preserving culinary traditions. We aim to inspire creativity in the kitchen and foster a supportive community where every cook feels empowered.
+                We're committed to preserving culinary heritage while inspiring innovation, making cooking accessible to everyone, and building bridges between cultures through the shared love of food.
               </p>
             </div>
             
@@ -84,8 +105,8 @@ const AboutMissionSection = () => {
             >
               <Quote className="absolute -top-2 -left-2 w-8 h-8 text-red-500 opacity-50" />
               <blockquote className="border-l-4 border-red-500 pl-6 italic text-gray-700 dark:text-gray-200 text-lg font-medium bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 p-4 rounded-r-lg">
-                "Food is the ingredient that binds us together."
-                <cite className="block text-sm text-gray-500 dark:text-gray-400 mt-2 not-italic">– Recipedia Team</cite>
+                "Every recipe shared is a story told, every dish created is a memory made, and every cook empowered makes the world a little more delicious."
+                <cite className="block text-sm text-gray-500 dark:text-gray-400 mt-2 not-italic">– Recipedia Founders</cite>
               </blockquote>
             </motion.div>
           </motion.div>
@@ -93,7 +114,7 @@ const AboutMissionSection = () => {
           {/* Platform Goals */}
           <motion.div variants={rightVariants}>
             <h3 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center lg:text-left">
-              Platform Goals
+              Our Core Values
             </h3>
             <motion.div 
               className="space-y-8"

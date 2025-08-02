@@ -6,21 +6,21 @@ const values = [
   { 
     icon: HeartHandshake, 
     title: 'Community First', 
-    description: 'We prioritize connections and shared experiences.',
+    description: 'Building meaningful connections through shared culinary experiences and inspiring home cooks worldwide.',
     gradient: 'from-pink-500 to-rose-500',
     bgGradient: 'from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20'
   },
   { 
     icon: Sparkles, 
-    title: 'Innovation', 
-    description: 'Constantly improving tools for better creativity.',
+    title: 'Culinary Innovation', 
+    description: 'Empowering creativity in the kitchen with intuitive tools and features that make cooking accessible to everyone.',
     gradient: 'from-yellow-500 to-orange-500',
     bgGradient: 'from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20'
   },
   { 
     icon: Globe2, 
-    title: 'Inclusivity', 
-    description: 'Welcoming all cultures and skill levels.',
+    title: 'Cultural Diversity', 
+    description: 'Celebrating global cuisines and welcoming cooks of all backgrounds, skill levels, and culinary traditions.',
     gradient: 'from-blue-500 to-cyan-500',
     bgGradient: 'from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20'
   },
@@ -102,7 +102,7 @@ const AboutValuesSection = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-6">
-            Why Choose{' '}
+            What Makes{' '}
             <motion.span 
               className="bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent"
               animate={{
@@ -117,7 +117,7 @@ const AboutValuesSection = () => {
             >
               Recipedia
             </motion.span>
-            ?
+            {' '}Special?
           </h2>
           <motion.div 
             className="w-24 h-1 bg-gradient-to-r from-red-500 to-pink-500 mx-auto rounded-full mb-6"
@@ -127,7 +127,7 @@ const AboutValuesSection = () => {
             viewport={{ once: true }}
           />
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            Our app fosters a vibrant community where food unites people. With user-friendly tools and a focus on inspiration, we help you turn every meal into a masterpiece.
+            Recipedia is more than just a recipe platform—it's a thriving community where food lovers discover, share, and celebrate the art of cooking. Join thousands of passionate cooks who are transforming their kitchens into creative spaces.
           </p>
         </motion.div>
 

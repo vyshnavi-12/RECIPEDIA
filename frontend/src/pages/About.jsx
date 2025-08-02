@@ -21,7 +21,7 @@ const About = () => {
 
   return (
     <motion.div 
-      className="mt-28 dark:bg-slate-700 transition-colors duration-300"
+      className="mt-25 dark:bg-slate-700 transition-colors duration-300"
       initial="initial"
       animate="in"
       exit="out"
