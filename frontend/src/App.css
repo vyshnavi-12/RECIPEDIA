@@ -181,93 +181,60 @@ body {
 }
 
 /* === Footer === */
-.recipe-footer {
-  background-color: #333;
-  color: #fff;
-  padding: 40px 0 20px;
-  margin-top: 50px;
+footer.bg-red-600 {
+  background-color: #dc2626;
+  color: #fef2f2;
+  padding: 2rem 0;
 }
 
-.footer-content {
-  max-width: 1200px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  padding: 0 20px;
+footer h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
 }
 
-.footer-section {
+footer p {
+  color: #fecaca;
+  margin-top: 0.25rem;
+}
+
+footer nav a {
+  color: #fef2f2;
+  text-decoration: none;
+  margin-right: 1.5rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+footer nav a:hover {
+  color: #f87171;
+  text-decoration: underline;
+}
+
+footer .flex.space-x-4 a {
+  color: #fef2f2;
+  transition: color 0.3s ease;
+}
+
+footer .flex.space-x-4 a:hover {
+  color: #fca5a5;
+}
+
+footer .container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.footer-section h4 {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
-.footer-section a {
-  color: #ddd;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.footer-section a:hover {
-  color: #fff;
-}
-
-.footer-section input {
-  padding: 8px;
-  border: none;
-  border-radius: 4px;
-  margin-bottom: 8px;
-}
-
-.subscribe-btn {
-  background-color: #4caf50;
-  color: #fff;
-  padding: 8px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.subscribe-btn:hover {
-  background-color: #45a049;
-}
-
-.footer-bottom {
-  text-align: center;
-  padding-top: 20px;
-  margin-top: 30px;
-  border-top: 1px solid #555;
-  font-size: 14px;
-}
-
-/* === Utility & Other === */
-.bg-dark {
-  background-color: #212529 !important;
-}
-.text-light {
-  color: #f8f9fa !important;
-}
-
-@media (max-width: 768px) {
-  .footer-content {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .footer-section {
-    align-items: center;
+@media (min-width: 768px) {
+  footer .container {
+    flex-direction: row;
   }
 }
 
-@media (max-width: 480px) {
-  .auth-container {
-    width: 90%;
-    padding: 20px;
-  }
+footer .text-center.text-red-200 {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #fecaca;
 }
