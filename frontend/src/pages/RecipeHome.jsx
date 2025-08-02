@@ -5,7 +5,7 @@ import CategoriesSection from '../components/CategoriesSection.jsx';
 import HowItWorksSection from '../components/HowItWorksSection.jsx';
 import FeaturesSection from '../components/FeaturesSection.jsx';
 import CTASection from '../components/CTASection.jsx';
-import Footer from '../components/FooterSection.jsx';
+// import Footer from '../components/FooterSection.jsx';
 
 
 const RecipeHome = () => {
@@ -17,7 +17,7 @@ const RecipeHome = () => {
       <HowItWorksSection />
       <FeaturesSection />
       <CTASection />
-      <Footer/>
+      {/* <Footer/> */}
       </div>
       {/* Footer */}
       <footer className="bg-gray-800 text-white">
