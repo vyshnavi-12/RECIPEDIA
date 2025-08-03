@@ -1,19 +1,9 @@
-
-/* Container for authentication forms (Login & Register) */
 /* === Global === */
 :root {
-  --primary-color: #007bff;
-  --hover-color: #0056b3;
-  --shadow-color: rgba(0, 0, 0, 0.2);
-  --border-color: #ccc;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  background-color: #f9f9f9;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --auth-primary-color: #007bff;
+  --auth-hover-color: #0056b3;
+  --auth-shadow-color: rgba(0, 0, 0, 0.2);
+  --auth-border-color: #ccc;
 }
 
 /* === Auth Forms (Login & Register) === */
@@ -39,15 +29,14 @@ body {
   }
 }
 
-.heading {
+.auth-container .heading {
   font-size: 24px;
   font-weight: 600;
-  color: var(--primary-color);
+  color: var(--auth-primary-color);
   margin-bottom: 15px;
   margin-top: 24px;
 }
 
-/* Inputs, selects & textarea unified */
 .auth-container input[type="text"],
 .auth-container input[type="email"],
 .auth-container input[type="password"],
@@ -58,28 +47,28 @@ body {
   width: 100%;
   padding: 10px 12px;
   margin: 8px 0;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--auth-border-color);
   border-radius: 5px;
   font-size: 15px;
   transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
 }
 
 .auth-container input:focus,
 .auth-container select:focus,
 .auth-container textarea:focus {
   outline: none;
-  border-color: var(--primary-color);
+  border-color: var(--auth-primary-color);
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
 }
 
-/* Button */
 .auth-container button {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
   border: none;
   border-radius: 5px;
-  background-color: var(--primary-color);
+  background-color: var(--auth-primary-color);
   color: #fff;
   font-size: 16px;
   font-weight: 500;
@@ -88,7 +77,7 @@ body {
 }
 
 .auth-container button:hover {
-  background-color: var(--hover-color);
+  background-color: var(--auth-hover-color);
 }
 
 .auth-container button:disabled {
@@ -97,8 +86,7 @@ body {
   opacity: 0.7;
 }
 
-/* Error message */
-.error-message {
+.auth-container .error-message {
   background: #ffd2d2;
   color: #d8000c;
   padding: 8px;
@@ -107,8 +95,7 @@ body {
   margin-bottom: 10px;
 }
 
-/* Terms & switch link */
-.termsandconditions {
+.auth-container .termsandconditions {
   display: flex;
   align-items: flex-start;
   margin-top: 8px;
@@ -117,70 +104,70 @@ body {
   text-align: left;
 }
 
-.termsandconditions input[type="checkbox"] {
+.auth-container .termsandconditions input[type="checkbox"] {
   margin-right: 6px;
   margin-top: 2px;
-  accent-color: var(--primary-color);
+  accent-color: var(--auth-primary-color);
 }
 
-.termsandconditions h6 {
+.auth-container .termsandconditions h6 {
   margin: 0;
   font-weight: normal;
 }
 
-.swap_state {
+.auth-container .swap_state {
   margin-top: 10px;
   font-size: 13px;
   color: #444;
 }
 
-.link a {
-  color: var(--primary-color);
+.auth-container .link a {
+  color: var(--auth-primary-color);
   text-decoration: none;
   font-weight: 500;
 }
 
-.link a:hover {
+.auth-container .link a:hover {
   text-decoration: underline;
-  color: var(--hover-color);
+  color: var(--auth-hover-color);
 }
 
-/* === Carousel === */
-.carousel img {
+/* === Carousel - scoped to specific carousel classes === */
+.recipe-carousel img {
   border: none;
   outline: none;
 }
 
-.carousel-item img {
+.recipe-carousel .carousel-item img {
   width: 100%;
   height: 500px;
   object-fit: cover;
 }
 
-.carousel-control-prev,
-.carousel-control-next {
+.recipe-carousel .carousel-control-prev,
+.recipe-carousel .carousel-control-next {
   border: none;
   outline: none;
   box-shadow: none !important;
 }
 
-/* === Cards === */
-.card-img-top {
+/* === Recipe Cards - scoped === */
+.recipe-card .card-img-top {
   width: 100%;
   height: 400px;
   object-fit: cover;
 }
 
-.animate-card {
+.recipe-card.animate-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.animate-card:hover {
+.recipe-card.animate-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* === Footer === */
+/* === Footer: Red Themed Footer (e.g. for general pages) === */
 footer.bg-red-600 {
   background-color: #dc2626;
   color: #fef2f2;
@@ -237,4 +224,82 @@ footer .text-center.text-red-200 {
   margin-top: 1rem;
   font-size: 0.875rem;
   color: #fecaca;
+}
+
+/* === Footer: Recipe Footer (e.g. for recipe-specific pages) === */
+.recipe-footer {
+  background-color: #333;
+  color: #fff;
+  padding: 40px 0 20px;
+  margin-top: 50px;
+}
+
+.recipe-footer .footer-content {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.recipe-footer .footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.recipe-footer .footer-section h4 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.recipe-footer .footer-section a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.recipe-footer .footer-section a:hover {
+  color: #fff;
+}
+
+.recipe-footer .footer-section input {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.recipe-footer .subscribe-btn {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.recipe-footer .subscribe-btn:hover {
+  background-color: #45a049;
+}
+
+.recipe-footer .footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  margin-top: 30px;
+  border-top: 1px solid #555;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .recipe-footer .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .recipe-footer .footer-section {
+    align-items: center;
+  }
 }
