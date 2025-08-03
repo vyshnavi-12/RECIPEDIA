@@ -34,6 +34,12 @@ code {
   background-position: center;
 }
 
+/* Fixed header spacing */
+.app-container {
+  padding-top: 80px; /* Account for fixed header height */
+}
+
+/* Recipe card hover effects */
 .recipe-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { PlusSquare , Search , UserPlus } from "lucide-react"
+import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection.jsx';
 import CategoriesSection from '../components/CategoriesSection.jsx';
 import HowItWorksSection from '../components/HowItWorksSection.jsx';
@@ -32,27 +33,35 @@ const RecipeHome = () => {
             <div>
               <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
-                <li><a href="#recipes" className="text-gray-400 hover:text-white">Explore</a></li>
-                <li><a href="#features" className="text-gray-400 hover:text-white">Features</a></li>
-                <li><a href="/add-recipe" className="text-gray-400 hover:text-white">Add Recipe</a></li>
+                <li><Link to="/explore" className="text-gray-400 hover:text-white transition-colors duration-200">Explore</Link></li>
+                <li><Link to="/features" className="text-gray-400 hover:text-white transition-colors duration-200">Features</Link></li>
+                <li><Link to="/add-recipe" className="text-gray-400 hover:text-white transition-colors duration-200">Add Recipe</Link></li>
               </ul>
             </div>
             {/* Legal */}
             <div>
               <h4 className="text-lg font-semibold mb-4">Legal</h4>
               <ul className="space-y-2">
-                <li><a href="#" className="text-gray-400 hover:text-white">Privacy Policy</a></li>
-                <li><a href="#" className="text-gray-400 hover:text-white">Terms of Service</a></li>
+                <li><Link to="/privacy-policy" className="text-gray-400 hover:text-white transition-colors duration-200">Privacy Policy</Link></li>
+                <li><Link to="/terms-of-service" className="text-gray-400 hover:text-white transition-colors duration-200">Terms of Service</Link></li>
               </ul>
             </div>
             {/* Social */}
             <div>
               <h4 className="text-lg font-semibold mb-4">Follow Us</h4>
               <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-white"><i data-lucide="facebook" className="w-6 h-6"></i></a>
-                <a href="#" className="text-gray-400 hover:text-white"><i data-lucide="instagram" className="w-6 h-6"></i></a>
-                <a href="#" className="text-gray-400 hover:text-white"><i data-lucide="twitter" className="w-6 h-6"></i></a>
-                <a href="#" className="text-gray-400 hover:text-white"><i data-lucide="youtube" className="w-6 h-6"></i></a>
+                <a href="https://facebook.com/recipedia" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
+                  <i data-lucide="facebook" className="w-6 h-6"></i>
+                </a>
+                <a href="https://instagram.com/recipedia" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
+                  <i data-lucide="instagram" className="w-6 h-6"></i>
+                </a>
+                <a href="https://twitter.com/recipedia" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
+                  <i data-lucide="twitter" className="w-6 h-6"></i>
+                </a>
+                <a href="https://youtube.com/recipedia" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors duration-200">
+                  <i data-lucide="youtube" className="w-6 h-6"></i>
+                </a>
               </div>
             </div>
           </div>

@@ -12,6 +12,10 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import AddRecipe from "./pages/AddRecipe.jsx";
 import About from "./pages/About.jsx";
+import Explore from "./pages/Explore.jsx";
+import Features from "./pages/Features.jsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
+import TermsOfService from "./pages/TermsOfService.jsx";
 import NotFound from './pages/NotFound.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 
@@ -42,6 +46,10 @@ function App() {
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/add-recipe" element={<AddRecipe />} />
           <Route path="/about" element={<About />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
           
           {/* Dynamic Category List Pages */}
           <Route path="/veg" element={<RecipeListPage category="veg" />} />

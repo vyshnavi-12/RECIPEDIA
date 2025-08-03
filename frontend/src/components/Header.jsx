@@ -218,7 +218,7 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
       {/* Updated mobile menu: translate + opacity */}
       <div
         id="mobile-menu"
-        className={`md:hidden fixed top-20 left-0 w-full bg-white dark:bg-slate-800 shadow-lg transition-transform duration-300 ease-in-out ${
+        className={`md:hidden fixed top-20 left-0 w-full bg-white dark:bg-slate-800 shadow-lg transition-transform duration-300 ease-in-out z-40 ${
           mobileMenuOpen
             ? "translate-y-0 opacity-100"
             : "-translate-y-[150%] opacity-0"

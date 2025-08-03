@@ -173,9 +173,9 @@ const ForgotPassword = () => {
         <div className="mt-8 text-center animate-slideInUp">
           <p className="text-sm text-gray-600">
             Need help?{" "}
-            <Link to="/contact" className="login-link text-amber-600 hover:text-amber-500 font-medium">
+            <a href="mailto:support@recipedia.com" className="login-link text-amber-600 hover:text-amber-500 font-medium">
               Contact Support
-            </Link>
+            </a>
           </p>
         </div>
       </div>
