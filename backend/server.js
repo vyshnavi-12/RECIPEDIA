@@ -270,6 +270,68 @@ app.post("/login", async (req, res) => {
   }
 });
 
+// Forgot Password
+app.post("/forgot-password", async (req, res) => {
+  console.log("Forgot password request received:", { email: req.body.email });
+
+  const { email } = req.body;
+
+  try {
+    // Validate input
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res
+        .status(400)
+        .json({ message: "Please enter a valid email address" });
+    }
+
+    console.log("Looking for user with email:", email.toLowerCase().trim());
+
+    const user = await User.findOne({ email: email.toLowerCase().trim() });
+    if (!user) {
+      // For security reasons, don't reveal if the email exists or not
+      console.log("User not found for password reset");
+      return res.json({ 
+        message: "If an account with that email exists, we've sent password reset instructions." 
+      });
+    }
+
+    console.log("User found, generating reset token");
+
+    // Generate a simple reset token (in production, you'd want a more secure token)
+    const resetToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    
+    // Store the reset token and its expiration (24 hours from now)
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+    
+    await user.save();
+
+    // In a real application, you would send an email here
+    // For now, we'll just log the reset token
+    console.log("Password reset token generated:", resetToken);
+    console.log("Reset token expires:", new Date(user.resetPasswordExpires));
+
+    res.json({ 
+      message: "If an account with that email exists, we've sent password reset instructions." 
+    });
+  } catch (err) {
+    console.error("Forgot password error details:", err);
+    res.status(500).json({
+      message: "Error processing password reset request",
+      error:
+        process.env.NODE_ENV === "development"
+          ? err.message
+          : "Internal server error",
+    });
+  }
+});
+
 // Protected route - Get user profile
 app.get("/profile/:email", authenticateToken, async (req, res) => {
   try {

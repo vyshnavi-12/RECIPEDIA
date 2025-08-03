@@ -8,6 +8,7 @@ import RecipeDetailPage from "./pages/RecipeDetailPage.jsx";
 import RecipeHome from "./pages/RecipeHome.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import AddRecipe from "./pages/AddRecipe.jsx";
 import About from "./pages/About.jsx";
@@ -37,6 +38,7 @@ function App() {
           <Route path="/home" element={<RecipeHome />} />
           <Route path="/login" element={<div className="login-bg"><Login setIsLoggedIn={setIsLoggedIn} /></div>} />
           <Route path="/register" element={<div className="register-bg"><Register setIsLoggedIn={setIsLoggedIn} /></div>} />
+          <Route path="/forgot-password" element={<div className="login-bg"><ForgotPassword /></div>} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/add-recipe" element={<AddRecipe />} />
           <Route path="/about" element={<About />} />
