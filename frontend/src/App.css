@@ -1,4 +1,3 @@
-/* Container for authentication forms (Login & Register) */
 /* === Global === */
 :root {
   --auth-primary-color: #007bff;
@@ -6,7 +5,6 @@
   --auth-shadow-color: rgba(0, 0, 0, 0.2);
   --auth-border-color: #ccc;
 }
-
 
 /* === Auth Forms (Login & Register) === */
 .auth-container {
@@ -39,7 +37,6 @@
   margin-top: 24px;
 }
 
-/* Inputs, selects & textarea unified - scoped to auth-container */
 .auth-container input[type="text"],
 .auth-container input[type="email"],
 .auth-container input[type="password"],
@@ -65,7 +62,6 @@
   box-shadow: 0 0 4px rgba(0, 123, 255, 0.3);
 }
 
-/* Button - scoped to auth-container */
 .auth-container button {
   width: 100%;
   padding: 10px;
@@ -90,7 +86,6 @@
   opacity: 0.7;
 }
 
-/* Error message - scoped */
 .auth-container .error-message {
   background: #ffd2d2;
   color: #d8000c;
@@ -100,7 +95,6 @@
   margin-bottom: 10px;
 }
 
-/* Terms & switch link - scoped */
 .auth-container .termsandconditions {
   display: flex;
   align-items: flex-start;
@@ -173,7 +167,66 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* === Footer - more specific selector === */
+/* === Footer: Red Themed Footer (e.g. for general pages) === */
+footer.bg-red-600 {
+  background-color: #dc2626;
+  color: #fef2f2;
+  padding: 2rem 0;
+}
+
+footer h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+footer p {
+  color: #fecaca;
+  margin-top: 0.25rem;
+}
+
+footer nav a {
+  color: #fef2f2;
+  text-decoration: none;
+  margin-right: 1.5rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+footer nav a:hover {
+  color: #f87171;
+  text-decoration: underline;
+}
+
+footer .flex.space-x-4 a {
+  color: #fef2f2;
+  transition: color 0.3s ease;
+}
+
+footer .flex.space-x-4 a:hover {
+  color: #fca5a5;
+}
+
+footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  footer .container {
+    flex-direction: row;
+  }
+}
+
+footer .text-center.text-red-200 {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #fecaca;
+}
+
+/* === Footer: Recipe Footer (e.g. for recipe-specific pages) === */
 .recipe-footer {
   background-color: #333;
   color: #fff;
@@ -240,20 +293,13 @@
   font-size: 14px;
 }
 
-/* === Responsive Design === */
 @media (max-width: 768px) {
   .recipe-footer .footer-content {
     grid-template-columns: 1fr;
     text-align: center;
   }
+
   .recipe-footer .footer-section {
     align-items: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .auth-container {
-    width: 90%;
-    padding: 20px;
   }
 }
