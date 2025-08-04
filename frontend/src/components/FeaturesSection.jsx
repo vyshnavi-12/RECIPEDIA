@@ -116,7 +116,7 @@ const FeaturesSection = () => {
             {/* Main Image */}
             <div className="relative rounded-3xl overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500">
               <img 
-                src="https://placehold.co/600x450/fbbf24/ffffff?text=Recipedia+App" 
+                src="/Recipedia.png"
                 alt="Recipedia App Interface" 
                 className="w-full h-auto" 
               />
