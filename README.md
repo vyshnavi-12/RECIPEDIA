@@ -101,7 +101,7 @@ To customize Tailwind:
 
 5. **Build for production**
    ```bash
-   npm run build
+   node server.js
    ```
 
 ### 📁 Folder Structure Highlights
