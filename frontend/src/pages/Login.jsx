@@ -12,7 +12,6 @@ const Login = ({ setIsLoggedIn }) => {
     password: "",
   });
 
-  const [agreeTerms, setAgreeTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -31,7 +30,7 @@ const Login = ({ setIsLoggedIn }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) return "Please enter a valid email address";
 
-    if (!agreeTerms) return "Please agree to the Terms of Use & Privacy Policy";
+   
 
     return null;
   };
@@ -121,17 +120,7 @@ const Login = ({ setIsLoggedIn }) => {
         </span>
       </p>
 
-      <div className="termsandconditions">
-        <input
-          type="checkbox"
-          id="terms"
-          checked={agreeTerms}
-          onChange={(e) => setAgreeTerms(e.target.checked)}
-        />
-        <label htmlFor="terms">
-          <h6>By continuing, I agree to the Terms of Use & Privacy Policy</h6>
-        </label>
-      </div>
+      
     </div>
   );
 };
