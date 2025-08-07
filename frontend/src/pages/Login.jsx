@@ -18,6 +18,7 @@ const Login = ({ setIsLoggedIn }) => {
     password: "",
   });
 
+  const [agreeTerms, setAgreeTerms] = useState(false); // Added missing state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -36,7 +37,7 @@ const Login = ({ setIsLoggedIn }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) return "Please enter a valid email address";
 
-   
+    if (!agreeTerms) return "Please agree to the Terms of Use & Privacy Policy"; // Added back validation
 
     return null;
   };
@@ -95,103 +96,88 @@ const Login = ({ setIsLoggedIn }) => {
       >
         <ErrorAlert error={error} onDismiss={() => setError("")} />
 
-        {/* Form container with custom scrollbar */}
-        <div className="max-h-[70vh] overflow-y-auto pr-2 
-                        [&::-webkit-scrollbar]:w-2
-                        [&::-webkit-scrollbar-track]:bg-slate-100
-                        [&::-webkit-scrollbar-track]:dark:bg-slate-700
-                        [&::-webkit-scrollbar-track]:rounded-full
-                        [&::-webkit-scrollbar-thumb]:bg-red-500
-                        [&::-webkit-scrollbar-thumb]:rounded-full
-                        [&::-webkit-scrollbar-thumb]:hover:bg-red-600
-                        [&::-webkit-scrollbar-thumb]:transition-colors
-                        [&::-webkit-scrollbar-thumb]:duration-300
-                        scrollbar-thin scrollbar-track-slate-100 scrollbar-thumb-red-500
-                        dark:scrollbar-track-slate-700">
-          
-          <form onSubmit={handleLogin} className="space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.5 }}
-            >
-              <FormInput
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-                autoComplete="email"
-                icon={Mail}
-              />
-            </motion.div>
+        <form onSubmit={handleLogin} className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+          >
+            <FormInput
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+              autoComplete="email"
+              icon={Mail}
+            />
+          </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-            >
-              <FormInput
-                type="password"
-                name="password"
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleInputChange}
-                required
-                autoComplete="current-password"
-                icon={Lock}
-              />
-            </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            <FormInput
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+              autoComplete="current-password"
+              icon={Lock}
+            />
+          </motion.div>
 
-            {/* Terms and Conditions */}
-            <motion.div 
-              className="flex items-start gap-3"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-            >
-              <motion.input
-                type="checkbox"
-                id="terms"
-                checked={agreeTerms}
-                onChange={(e) => setAgreeTerms(e.target.checked)}
-                className="w-5 h-5 text-red-500 bg-gray-50 dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-600 rounded focus:ring-red-500 focus:ring-2 mt-0.5"
-                whileTap={{ scale: 0.9 }}
-              />
-              <label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                I agree to the{" "}
-                <span className="text-red-500 hover:text-red-600 cursor-pointer font-medium">
-                  Terms of Use
-                </span>{" "}
-                &{" "}
-                <span className="text-red-500 hover:text-red-600 cursor-pointer font-medium">
-                  Privacy Policy
-                </span>
-              </label>
-            </motion.div>
+          {/* Terms and Conditions */}
+          <motion.div 
+            className="flex items-start gap-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <motion.input
+              type="checkbox"
+              id="terms"
+              checked={agreeTerms}
+              onChange={(e) => setAgreeTerms(e.target.checked)}
+              className="w-5 h-5 text-red-500 bg-gray-50 dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-600 rounded focus:ring-red-500 focus:ring-2 mt-0.5"
+              whileTap={{ scale: 0.9 }}
+            />
+            <label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+              I agree to the{" "}
+              <span className="text-red-500 hover:text-red-600 cursor-pointer font-medium">
+                Terms of Use
+              </span>{" "}
+              &{" "}
+              <span className="text-red-500 hover:text-red-600 cursor-pointer font-medium">
+                Privacy Policy
+              </span>
+            </label>
+          </motion.div>
 
-            {/* Submit Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.5 }}
+          {/* Submit Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+          >
+            <AuthButton 
+              type="submit" 
+              loading={loading}
+              disabled={loading}
             >
-              <AuthButton 
-                type="submit" 
-                loading={loading}
-                disabled={loading}
-              >
-                {loading ? "Signing In..." : (
-                  <>
-                    Sign In
-                    <ArrowRight className="w-5 h-5" />
-                  </>
-                )}
-              </AuthButton>
-            </motion.div>
-          </form>
-        </div>
+              {loading ? "Signing In..." : (
+                <>
+                  Sign In
+                  <ArrowRight className="w-5 h-5" />
+                </>
+              )}
+            </AuthButton>
+          </motion.div>
+        </form>
 
         {/* Sign Up Link */}
         <motion.div 
