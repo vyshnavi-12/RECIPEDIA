@@ -18,7 +18,6 @@ const Login = ({ setIsLoggedIn }) => {
     password: "",
   });
 
-  const [agreeTerms, setAgreeTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -37,7 +36,7 @@ const Login = ({ setIsLoggedIn }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) return "Please enter a valid email address";
 
-    if (!agreeTerms) return "Please agree to the Terms of Use & Privacy Policy";
+   
 
     return null;
   };
