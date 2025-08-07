@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import RecipeCard from '../components/RecipeCard.jsx'; // Updated import
 import allRecipes from '../data/recipes.json';
 
+
 const RecipeListPage = ({ category }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -30,9 +31,10 @@ const RecipeListPage = ({ category }) => {
 
       {filteredRecipes.length > 0 ? (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredRecipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
+         {filteredRecipes.map((recipe) => (
+  <RecipeCard key={recipe.id} recipe={recipe} searchQuery={searchQuery} />
+))}
+
         </div>
       ) : (
         <p className="text-center text-gray-500 dark:text-gray-400 text-xl">
@@ -44,3 +46,5 @@ const RecipeListPage = ({ category }) => {
 };
 
 export default RecipeListPage;
+
+
