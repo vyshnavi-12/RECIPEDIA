@@ -29,14 +29,18 @@ const StepCard = ({ step, index, isActive, onHover }) => {
   const IconComponent = step.icon;
   
   return (
-    <div 
-      className={`relative p-8 rounded-2xl transition-all duration-700 transform hover:-translate-y-4 ${
-        isActive ? 'bg-white dark:bg-slate-800 shadow-2xl scale-105' : 'bg-white/50 dark:bg-slate-800/50 shadow-lg hover:shadow-xl'
-      }`}
-      onMouseEnter={() => onHover(index)}
-      onMouseLeave={() => onHover(-1)}
-      style={{ animationDelay: `${index * 200}ms` }}
-    >
+   <div
+  className={`relative p-8 rounded-2xl transition-all duration-700 transform hover:-translate-y-4 
+    ${isActive
+      ? 'bg-white dark:bg-slate-800 shadow-2xl scale-105'
+      : 'bg-white/70 dark:bg-slate-700/50 shadow-lg hover:bg-white hover:shadow-xl'
+    }`}
+  onMouseEnter={() => onHover(index)}
+  onMouseLeave={() => onHover(-1)}
+  style={{ animationDelay: `${index * 200}ms` }}
+>
+
+
       {/* Step Number */}
       <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-to-r from-gray-800 to-gray-700 dark:from-white dark:to-gray-200 rounded-full flex items-center justify-center border-4 border-white dark:border-slate-900 shadow-lg">
         <span className="text-white dark:text-gray-800 font-bold text-lg">{index + 1}</span>
@@ -55,10 +59,10 @@ const StepCard = ({ step, index, isActive, onHover }) => {
 
       {/* Content */}
       <div data-aos="flip-right" className="relative z-10 text-center">
-        <h3 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">
+        <h3 className="text-xl font-bold mb-4 text-gray-800">
           {step.title}
         </h3>
-        <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+       <p className="text-gray-600 mb-6 leading-relaxed">
           {step.description}
         </p>
 
@@ -109,7 +113,7 @@ const HowItWorksSection = () => {
             <span className="text-sm font-semibold text-blue-600 dark:text-blue-400">How It Works</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-800 dark:text-white mb-6">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-800 mb-6">
             Get Cooking in{' '}
             <span className="relative">
               <span className="bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">
@@ -119,7 +123,7 @@ const HowItWorksSection = () => {
             </span>
           </h2>
           
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+         <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
             Join our vibrant community and start your culinary journey today. It's simple, fun, and completely free!
           </p>
         </div>
