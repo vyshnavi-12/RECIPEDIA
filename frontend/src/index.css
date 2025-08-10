@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 html {
   scroll-behavior: smooth;
   height: 100%;
@@ -66,3 +69,4 @@ a {
 .ingredientsUl{
   @apply list-disc ml-6 marker:text-black dark:marker:text-white
 }
+
