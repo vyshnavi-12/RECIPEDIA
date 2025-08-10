@@ -62,7 +62,7 @@ const Footer = () => {
           <span> | </span>
           <a href="/terms-of-use">Terms of Use</a>
         </div>
-        <p>&copy; 2025 Recipedia. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Recipedia. All rights reserved.</p>
       </div>
     </footer>
   );
