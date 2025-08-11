@@ -103,20 +103,18 @@ const StepCard = ({ step, index, isActive, onHover, onIconClick }) => {
   type="button"
   onClick={(e) => {
     e.stopPropagation();
-    if (step.title === "Create an Account") {
-      onIconClick && onIconClick();
-    }
+    if (onIconClick) onIconClick();
   }}
   onKeyDown={(e) => {
-    if ((e.key === "Enter" || e.key === " ") && step.title === "Create an Account") {
+    if ((e.key === "Enter" || e.key === " ") && onIconClick) {
       e.preventDefault();
-      onIconClick && onIconClick();
+      onIconClick();
     }
   }}
-  aria-label={step.title === "Create an Account" ? "Go to sign up" : undefined}
+  aria-label={onIconClick ? `Go to ${step.title}` : undefined}
   className={`absolute bottom-6 right-6 w-10 h-10 bg-gradient-to-r ${step.bgColor} rounded-full flex items-center justify-center transition-all duration-300 ${
     isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
-  } ${step.title === "Create an Account" ? 'cursor-pointer' : 'cursor-default'} z-20`}
+  } ${onIconClick ? 'cursor-pointer' : 'cursor-default'} z-20`}
 >
   <ArrowRight className="w-5 h-5 text-white" />
 </button>
@@ -171,17 +169,22 @@ const HowItWorksSection = () => {
         {/* Steps Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {steps.map((step, index) => (
-            <StepCard 
-              key={index} 
-              step={step} 
-              index={index}
-              isActive={activeStep === index || currentStep === index}
-              onHover={setActiveStep}
-               onIconClick={
-              step.title === "Create an Account" ? () => navigate('/register') : undefined
-            }
-            />
-          ))}
+  <StepCard 
+    key={index} 
+    step={step} 
+    index={index}
+    isActive={activeStep === index || currentStep === index}
+    onHover={setActiveStep}
+    onIconClick={
+      step.title === "Create an Account"
+        ? () => navigate('/register')
+        : step.title === "Add Your Recipes"
+        ? () => navigate('/recipes')
+        : undefined
+    }
+  />
+))}
+
         </div>
 
         {/* Connecting Lines (Desktop) */}
