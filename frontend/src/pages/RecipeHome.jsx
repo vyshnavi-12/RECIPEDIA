@@ -20,6 +20,7 @@ const RecipeHome = () => {
       <CTASection />
       {/* <Footer/> */}
       </div>
+
       {/* Footer */}
       <footer className="bg-gray-800 text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -70,8 +71,9 @@ const RecipeHome = () => {
           </div>
         </div>
       </footer>
+
     </div>
   );
 };
 
-export default RecipeHome; 
+export default RecipeHome;
