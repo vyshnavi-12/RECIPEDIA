@@ -40,6 +40,21 @@ const heroSlides = [
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [showButton, setShowButton] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroHeight = document.getElementById("hero-section")?.offsetHeight || 0;
+      if (window.scrollY > heroHeight) {
+        setShowButton(false); // hide when past hero
+      } else {
+        setShowButton(true); // show inside hero
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const slideInterval = setInterval(() => {
@@ -228,16 +243,20 @@ const HeroSection = () => {
       {/* Mobile Side Navigation Buttons (visible below lg) */}
       <div className="lg:hidden">
         {/* Prev Button Left Side */}
-        <button
-          onClick={prevSlide}
-          disabled={isAnimating}
-          aria-label="Previous Slide"
-          className="fixed top-1/2 left-4 -translate-y-1/2 z-30 bg-black/30 hover:bg-black/50 text-white rounded-full p-3 transition"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
+      {showButton && ( // change this condition based on your requirement
+  <button
+    onClick={prevSlide}
+    disabled={isAnimating}
+    aria-label="Previous Slide"
+    className="fixed top-1/2 left-4 -translate-y-1/2 z-30 bg-black/30 hover:bg-black/50 text-white rounded-full p-3 transition"
+  >
+    <ChevronLeft className="w-6 h-6" />
+  </button>
+)}
+
 
         {/* Next Button Right Side */}
+        {showButton && (
         <button
           onClick={nextSlide}
           disabled={isAnimating}
@@ -246,14 +265,7 @@ const HeroSection = () => {
         >
           <ChevronRight className="w-6 h-6" />
         </button>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 right-8 z-20">
-        <div className="flex flex-col items-center gap-2 text-white/60">
-          <span className="text-sm font-medium rotate-90 transform origin-center">Scroll</span>
-          <div className="w-px h-12 bg-white/30 animate-pulse" />
-        </div>
+        )}
       </div>
     </section>
   );
