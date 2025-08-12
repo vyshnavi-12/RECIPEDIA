@@ -13,6 +13,7 @@ import AddRecipe from "./pages/AddRecipe.jsx";
 import About from "./pages/About.jsx";
 import NotFound from './pages/NotFound.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
+import Explore from './pages/Explore.jsx';
 
 // Component Imports with .jsx extension
 import Header from "./components/Header.jsx";
@@ -56,6 +57,7 @@ function App() {
           {/* Error and Fallback Routes */}
           <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<NotFound />} />
+           <Route path="/explore" element={<Explore />} />
         </Routes>
         <Footer />
       </div>
