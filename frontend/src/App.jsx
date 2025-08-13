@@ -8,9 +8,14 @@ import RecipeDetailPage from "./pages/RecipeDetailPage.jsx";
 import RecipeHome from "./pages/RecipeHome.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import AddRecipe from "./pages/AddRecipe.jsx";
 import About from "./pages/About.jsx";
+import Explore from "./pages/Explore.jsx";
+import Features from "./pages/Features.jsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
+import TermsOfService from "./pages/TermsOfService.jsx";
 import NotFound from './pages/NotFound.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 
@@ -95,7 +100,43 @@ function AppContent() {
 function App() {
   return (
     <Router>
+
+      <div className="app-container">
+        <ScrollToTop />
+        <Header />
+        <Routes>
+          {/* Core Routes */}
+          <Route path="/" element={<RecipeHome />} />
+          <Route path="/home" element={<RecipeHome />} />
+          <Route path="/login" element={<div className="login-bg"><Login setIsLoggedIn={setIsLoggedIn} /></div>} />
+          <Route path="/register" element={<div className="register-bg"><Register setIsLoggedIn={setIsLoggedIn} /></div>} />
+          <Route path="/forgot-password" element={<div className="login-bg"><ForgotPassword /></div>} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/add-recipe" element={<AddRecipe />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          
+          {/* Dynamic Category List Pages */}
+          <Route path="/veg" element={<RecipeListPage category="veg" />} />
+          <Route path="/nonveg" element={<RecipeListPage category="nonveg" />} />
+          <Route path="/dessert" element={<RecipeListPage category="dessert" />} />
+          <Route path="/beverages" element={<RecipeListPage category="beverages" />} />
+
+          {/* Dynamic Recipe Detail Page */}
+          {/* This one route handles ALL recipe details */}
+          <Route path="/recipes/:category/:recipeId" element={<RecipeDetailPage />} />
+          
+          {/* Error and Fallback Routes */}
+          <Route path="/error" element={<ErrorPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+
       <AppContent />
+
     </Router>
   );
 }
