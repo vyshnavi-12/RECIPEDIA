@@ -47,11 +47,8 @@ const AddRecipe = () => {
   // Redirect to login if not authenticated
   useEffect(() => {
     if (!isAuthenticated()) {
-      // Don't redirect immediately, let the user see the page with a message
-      setError('Please log in to add and manage recipes');
-      setLoading(false); // Set loading to false for non-authenticated users
-    } else {
-      fetchRecipes();
+      navigate('/login');
+      return;
     }
   }, [navigate]);
 
@@ -69,6 +66,13 @@ const AddRecipe = () => {
       setLoading(false);
     }
   };
+
+  // Load recipes on component mount
+  useEffect(() => {
+    if (isAuthenticated()) {
+      fetchRecipes();
+    }
+  }, []);
 
   // Handle input changes
   const handleChange = (e) => {
@@ -282,30 +286,6 @@ const AddRecipe = () => {
   };
 
   if (loading) return <div className="loading">Loading recipes...</div>;
-
-  // Show authentication message if not logged in
-  if (!isAuthenticated()) {
-    return (
-      <div className="add-recipe-bg">
-        <div className="recipe-container">
-          <Link to="/home" className="back-button">← Back to Home</Link>
-          
-          <div className="auth-message">
-            <h2>Add Recipe</h2>
-            <p>You need to be logged in to add and manage recipes.</p>
-            <div className="auth-actions">
-              <Link to="/login" className="auth-button login">
-                Login
-              </Link>
-              <Link to="/register" className="auth-button register">
-                Sign Up
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="add-recipe-bg">
