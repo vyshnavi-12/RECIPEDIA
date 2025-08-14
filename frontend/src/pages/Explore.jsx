@@ -85,7 +85,7 @@ const ExplorePage = () => {
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="text-center">
           <h1 className="text-4xl mt-5 sm:text-5xl lg:text-6xl font-black leading-tight text-white">
-            Explore Recipes
+            Explore Recipes 
           </h1>
         </div>
 
