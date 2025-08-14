@@ -40,12 +40,32 @@ const heroSlides = [
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [showButton, setShowButton] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroHeight = document.getElementById("hero-section")?.offsetHeight || 0;
+      setShowButton(window.scrollY <= heroHeight);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const slideInterval = setInterval(() => {
       nextSlide();
     }, 5000);
     return () => clearInterval(slideInterval);
+  }, []);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "ArrowRight") nextSlide();
+      if (e.key === "ArrowLeft") prevSlide();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   const nextSlide = () => {
@@ -92,7 +112,7 @@ const HeroSection = () => {
   );
 
   return (
-    <section className="relative h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <section id="hero-section" className="relative h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Background Slider */}
       <div className="absolute inset-0">
         {heroSlides.map((slide, index) => (
@@ -160,14 +180,14 @@ const HeroSection = () => {
               <div className={`flex flex-col sm:flex-row gap-4 transform transition-all duration-700 delay-500 ${isAnimating ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'}`}>
                 <a
                   href={currentSlideData.buttonLink}
-                  className={`group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r ${currentSlideData.accent} text-white font-bold text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 hover:-translate-y-1`}
+                  className={`group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r ${currentSlideData.accent} text-white font-bold text-lg rounded-full hover:shadow-2xl transform hover:scale-105 active:scale-90 transition-all duration-300 hover:-translate-y-1`}
                 >
                   {currentSlideData.buttonText}
                   <Play className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </a>
                 <a
                   href="/register"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold text-lg rounded-full border-2 border-white/30 hover:bg-white hover:text-gray-900 transform hover:scale-105 transition-all duration-300 hover:-translate-y-1"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold text-lg rounded-full border-2 border-white/30 hover:bg-white hover:text-gray-900 transform hover:scale-105 active:scale-90 transition-all duration-300 hover:-translate-y-1"
                 >
                   Join Community
                   <Users className="w-5 h-5 ml-2" />
@@ -175,7 +195,7 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Desktop Featured Card - visible on large screens */}
+            {/* Desktop Featured Card */}
             <div className="hidden lg:block lg:col-span-5 lg:pl-8">
               {FeaturedRecipeCard}
             </div>
@@ -183,32 +203,34 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Mobile Featured Card - visible below hero content */}
+      {/* Mobile Featured Card */}
       <div className="block lg:hidden mt-8 px-4">
         {FeaturedRecipeCard}
       </div>
 
-      {/* Desktop Bottom Navigation (visible lg+) */}
+      {/* Desktop Bottom Navigation */}
       <div className="hidden lg:flex absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 items-center gap-4 bg-white/10 backdrop-blur-lg rounded-full p-2 border border-white/20">
         {/* Previous Button */}
         <button
           onClick={prevSlide}
           disabled={isAnimating}
-          className="w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all duration-300 disabled:opacity-50 group"
+          aria-label="Previous Slide"
+          className="w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 active:scale-90 flex items-center justify-center transition-all duration-300 disabled:opacity-50 group"
         >
           <ChevronLeft className="w-6 h-6 text-white group-hover:-translate-x-1 transition-transform duration-300" />
         </button>
 
         {/* Slide Indicators */}
         <div className="flex gap-2">
-          {heroSlides.map((_, index) => (
+          {heroSlides.map((slide, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
               disabled={isAnimating}
+              aria-label={`Go to slide ${index + 1}`}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentSlide
-                  ? `bg-gradient-to-r ${currentSlideData.accent} scale-125`
+                  ? `bg-gradient-to-r ${slide.accent} scale-125`
                   : 'bg-white/40 hover:bg-white/60'
               }`}
             />
@@ -219,41 +241,35 @@ const HeroSection = () => {
         <button
           onClick={nextSlide}
           disabled={isAnimating}
-          className="w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all duration-300 disabled:opacity-50 group"
+          aria-label="Next Slide"
+          className="w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 active:scale-90 flex items-center justify-center transition-all duration-300 disabled:opacity-50 group"
         >
           <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform duration-300" />
         </button>
       </div>
 
-      {/* Mobile Side Navigation Buttons (visible below lg) */}
+      {/* Mobile Side Navigation */}
       <div className="lg:hidden">
-        {/* Prev Button Left Side */}
-        <button
-          onClick={prevSlide}
-          disabled={isAnimating}
-          aria-label="Previous Slide"
-          className="fixed top-1/2 left-4 -translate-y-1/2 z-30 bg-black/30 hover:bg-black/50 text-white rounded-full p-3 transition"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-
-        {/* Next Button Right Side */}
-        <button
-          onClick={nextSlide}
-          disabled={isAnimating}
-          aria-label="Next Slide"
-          className="fixed top-1/2 right-4 -translate-y-1/2 z-30 bg-black/30 hover:bg-black/50 text-white rounded-full p-3 transition"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 right-8 z-20">
-        <div className="flex flex-col items-center gap-2 text-white/60">
-          <span className="text-sm font-medium rotate-90 transform origin-center">Scroll</span>
-          <div className="w-px h-12 bg-white/30 animate-pulse" />
-        </div>
+        {showButton && (
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-4 bg-white/10 backdrop-blur-lg rounded-full p-2 border border-white/20">
+            <button
+              onClick={prevSlide}
+              disabled={isAnimating}
+              aria-label="Previous Slide"
+              className="w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 active:scale-90 flex items-center justify-center transition-all duration-300 disabled:opacity-50 group border border-white/20"
+            >
+              <ChevronLeft className="w-6 h-6 text-white group-hover:-translate-x-1 transition-transform duration-300" />
+            </button>
+            <button
+              onClick={nextSlide}
+              disabled={isAnimating}
+              aria-label="Next Slide"
+              className="w-12 h-12 rounded-full bg-white/20 hover:bg-white/30 active:scale-90 flex items-center justify-center transition-all duration-300 disabled:opacity-50 group border border-white/20"
+            >
+              <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform duration-300" />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
