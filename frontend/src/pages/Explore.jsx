@@ -1,12 +1,12 @@
+// Explore.jsx
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const ExplorePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-  // SECTION DATA
   const vegetarianRecipes = [
     { id: 1, title: "Paneer Butter Masala", description: "Rich and creamy paneer curry.", imageUrl: "/paneer.jpg",category: "veg", slug: "paneer-butter-masala" },
     { id: 2, title: "Vegetable Biryani", description: "Fragrant rice with mixed vegetables.", imageUrl: "/vegbiriyani.jpg",category: "veg", slug: "vegetable-biryani" },
@@ -73,62 +73,116 @@ const ExplorePage = () => {
     ),
   }));
 
+  const accentByTitle = {
+    "Vegetarian Recipes 🥗": "from-emerald-500 to-green-600",
+    "Non-Vegetarian Recipes 🍗": "from-rose-500 to-red-600",
+    "Desserts 🍨": "from-amber-500 to-orange-600",
+    "Beverages 🥤": "from-sky-500 to-indigo-600",
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-10">
-      <h1 className="text-4xl font-bold mb-6 mt-4 text-center text-gray-800">
-        Explore Recipes 🍽
-      </h1>
+    <section className="relative min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="text-center">
+          <h1 className="text-4xl mt-5 sm:text-5xl lg:text-6xl font-black leading-tight text-white">
+            Explore Recipes
+          </h1>
+        </div>
 
-      {/* Search */}
-      <div className="max-w-xl mx-auto mb-8">
-        <input
-          type="text"
-          placeholder="Search recipes..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-orange-400"
-        />
-      </div>
-
-      {/* Sections */}
-      {filteredSections.map((section) => (
-        <div key={section.title} className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800">
-            {section.title}
-          </h2>
-          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {section.data.length > 0 ? (
-              section.data.map((recipe) => (
-                <motion.div
-                  key={recipe.id}
-                  className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition cursor-pointer"
-                  whileHover={{ scale: 1.03 }}
-                  onClick={() => navigate(`/recipes/${recipe.category}/${recipe.slug}`)}
-                >
-                  <img
-                    src={`${recipe.imageUrl}?auto=format&fit=crop&w=500&h=300&q=80`}
-                    alt={recipe.title}
-                    className="w-full h-40 object-cover"
-                  />
-                  <div className="p-4">
-                    <h2 className="text-lg font-semibold text-gray-800">
-                      {recipe.title}
-                    </h2>
-                    <p className="text-sm text-gray-600 mt-1 truncate">
-                      {recipe.description}
-                    </p>
-                  </div>
-                </motion.div>
-              ))
-            ) : (
-              <p className="text-gray-500 col-span-full text-center">
-                No recipes found in this category.
-              </p>
-            )}
+        <div className="max-w-2xl mx-auto mt-8">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search recipes..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-6 py-3 rounded-full bg-white/10 text-white placeholder-white/60 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/40"
+            />
           </div>
         </div>
-      ))}
-    </div>
+      </div>
+
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        {filteredSections.map((section) => {
+          const accent = accentByTitle[section.title] || "from-orange-500 to-red-600";
+
+          return (
+            <div key={section.title} className="mb-12">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+                  <span
+                    className={`bg-clip-text text-transparent bg-gradient-to-r ${accent}`}
+                  >
+                    {section.title}
+                  </span>
+                </h2>
+                <div
+                  className={`hidden sm:block h-1 w-24 rounded-full bg-gradient-to-r ${accent} opacity-70`}
+                />
+              </div>
+
+              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                {section.data.length > 0 ? (
+                  section.data.map((recipe) => (
+                    <motion.div
+                      key={recipe.id}
+                      whileHover={{ y: -6 }}
+                      transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                      onClick={() =>
+                        navigate(`/recipes/${recipe.category}/${recipe.slug}`)
+                      }
+                      className="group cursor-pointer rounded-2xl overflow-hidden bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/15 transition-all duration-300 shadow-lg hover:shadow-2xl flex flex-col"
+                    >
+                      <div className="relative">
+                        <img
+                          src={`${recipe.imageUrl}?auto=format&fit=crop&w=800&h=450&q=80`}
+                          alt={recipe.title}
+                          className="w-full h-44 md:h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <span
+                          className={`absolute top-3 left-3 px-3 py-1 text-xs font-semibold rounded-full text-white shadow-md bg-gradient-to-r ${accent}`}
+                        >
+                          {recipe.category}
+                        </span>
+                      </div>
+                      <div className="p-5 flex flex-col flex-grow">
+                        <h3 className="text-lg font-bold text-white mb-1">
+                          {recipe.title}
+                        </h3>
+                        <p className="text-sm text-gray-200 line-clamp-2 flex-grow">
+                          {recipe.description}
+                        </p>
+
+                        <div className="mt-4">
+                          <span
+                            className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r ${accent} border border-white/10 group-hover:shadow-xl transition`}
+                          >
+                            View Recipe
+                            <svg
+                              className="ml-2 w-4 h-4 transform group-hover:translate-x-0.5 transition-transform"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))
+                ) : (
+                  <p className="text-gray-300 col-span-full text-center">
+                    No recipes found in this category.
+                  </p>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 };
 
