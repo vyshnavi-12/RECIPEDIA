@@ -9,7 +9,7 @@ const Footer = () => {
 
         {/* Logo & Mission */}
         <div className="footer-section about">
-          <h3>Recipedia</h3>
+          <h4>Recipedia</h4>
           <p>Your go-to platform for sharing and discovering delicious recipes from around the world. Join our food-loving community!</p>
         </div>
 
