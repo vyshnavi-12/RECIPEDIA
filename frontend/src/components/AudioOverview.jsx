@@ -19,6 +19,7 @@ const AudioOverview = ({
   const [showSettings, setShowSettings] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Speak function
   const speak = (index) => {
@@ -39,6 +40,7 @@ const AudioOverview = ({
         setSpeechIndex((prev) => prev + 1);
       } else {
         setIsSpeaking(false);
+        setIsPaused(false);
         setSpeechIndex(0);
         setSpokenChars(0);
       }
@@ -47,11 +49,17 @@ const AudioOverview = ({
     window.speechSynthesis.speak(utterance);
   };
 
-  // Play handler
+  // Play handler with resume support
   const handlePlay = () => {
-    if (!isSpeaking) {
+    if (isPaused) {
+      // Resume from paused state
+      window.speechSynthesis.resume();
+      setIsPaused(false);
+      setIsSpeaking(true);
+    } else if (!isSpeaking) {
       window.speechSynthesis.cancel();
       setIsSpeaking(true);
+      setIsPaused(false);
       speak(speechIndex);
     }
   };
@@ -59,6 +67,7 @@ const AudioOverview = ({
   // Pause handler
   const handlePause = () => {
     window.speechSynthesis.pause();
+    setIsPaused(true);
     setIsSpeaking(false);
   };
 
@@ -66,6 +75,7 @@ const AudioOverview = ({
   const handleCancel = () => {
     window.speechSynthesis.cancel();
     setIsSpeaking(false);
+    setIsPaused(false);
   };
 
   // Skip forward
@@ -124,6 +134,7 @@ const AudioOverview = ({
       // Collapsing: pause speech
       window.speechSynthesis.pause();
       setIsSpeaking(false);
+      setIsPaused(true);
       setCollapsed(true);
     }
   };
