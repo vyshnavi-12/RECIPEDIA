@@ -1,5 +1,4 @@
-// src/components/AudioOverview.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FaPlay } from "react-icons/fa";
 import { IoPlaySkipForwardSharp, IoPlaySkipBackSharp } from "react-icons/io5";
 import { IoMdSettings, IoMdPause } from "react-icons/io";
@@ -20,131 +19,188 @@ const AudioOverview = ({
   const [isDragging, setIsDragging] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+  const resumeIntervalRef = useRef(null);
 
-  // Speak function
+  const isAndroid = /Android/.test(navigator.userAgent);
+
+  // ✅ FIXED: The `speak` function now chains itself to play the next part automatically.
   const speak = (index) => {
-    if (index >= contentPartsRef.current.length) return;
-    const utterance = new SpeechSynthesisUtterance(contentPartsRef.current[index]);
+    // Stop if we're at the end or the content part is invalid
+    if (index >= contentPartsRef.current.length || !contentPartsRef.current[index]) {
+        setIsSpeaking(false);
+        setIsPaused(false);
+        // Optional: Reset to the beginning when finished
+        // setSpeechIndex(0);
+        // setSpokenChars(0);
+        return;
+    }
+
+    const text = contentPartsRef.current[index];
+    const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = speechRate;
 
     utterance.onboundary = (e) => {
       if (e.name === "word") {
-        const totalSpoken =
-          contentPartsRef.current.slice(0, index).join(" ").length + e.charIndex;
-        setSpokenChars(totalSpoken);
+        const charsBeforeCurrentPart = contentPartsRef.current
+          .slice(0, index)
+          .join(" ").length;
+        setSpokenChars(charsBeforeCurrentPart + e.charIndex);
       }
     };
 
+    // THIS IS THE KEY FIX: When one utterance ends, start the next one.
     utterance.onend = () => {
-      if (index + 1 < contentPartsRef.current.length) {
-        setSpeechIndex((prev) => prev + 1);
+      const nextIndex = index + 1;
+      if (nextIndex < contentPartsRef.current.length) {
+        setSpeechIndex(nextIndex); // Update state for UI
+        speak(nextIndex);          // Call speak for the next part
       } else {
+        // We've reached the end of all content
         setIsSpeaking(false);
         setIsPaused(false);
-        setSpeechIndex(0);
+        setSpeechIndex(0); // Reset for next play
         setSpokenChars(0);
       }
     };
 
+    utterance.onerror = (e) => {
+      console.error("Speech Synthesis Error:", e);
+      handleCancel(); // Stop on error
+    };
+    
     window.speechSynthesis.speak(utterance);
+    setupResumeInterval(); // Start the keep-alive interval
   };
 
-  // Play handler with resume support
+  // Enhanced workaround for Chrome's ~15s speech timeout
+  const setupResumeInterval = () => {
+    clearResumeInterval(); // Clear any existing interval
+    resumeIntervalRef.current = setInterval(() => {
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.pause();
+        window.speechSynthesis.resume();
+      }
+    }, 12000);
+  };
+
+  const clearResumeInterval = () => {
+    if (resumeIntervalRef.current) {
+      clearInterval(resumeIntervalRef.current);
+      resumeIntervalRef.current = null;
+    }
+  };
+
   const handlePlay = () => {
-    if (isPaused) {
-      // Resume from paused state
+    if (window.speechSynthesis.paused && !isAndroid) {
       window.speechSynthesis.resume();
       setIsPaused(false);
       setIsSpeaking(true);
-    } else if (!isSpeaking) {
-      window.speechSynthesis.cancel();
+      setupResumeInterval();
+    } else {
+      window.speechSynthesis.cancel(); // Clear any previous queue
       setIsSpeaking(true);
       setIsPaused(false);
       speak(speechIndex);
     }
   };
 
-  // Pause handler
   const handlePause = () => {
-    window.speechSynthesis.pause();
-    setIsPaused(true);
-    setIsSpeaking(false);
+    clearResumeInterval();
+    if (window.speechSynthesis.speaking) {
+      if (!isAndroid) {
+        window.speechSynthesis.pause();
+        setIsPaused(true);
+      } else {
+        window.speechSynthesis.cancel(); // Android doesn't handle pause well
+      }
+      setIsSpeaking(false);
+    }
   };
 
-  // Cancel speech synthesis
   const handleCancel = () => {
+    clearResumeInterval();
     window.speechSynthesis.cancel();
     setIsSpeaking(false);
     setIsPaused(false);
   };
 
-  // Skip forward
   const handleSkipForward = () => {
+    handleCancel();
     const newIndex = Math.min(speechIndex + 1, contentPartsRef.current.length - 1);
-    if (newIndex !== speechIndex) {
-      handleCancel();
-      setSpeechIndex(newIndex);
-      setIsSpeaking(true);
-      speak(newIndex);
-    }
+    setSpeechIndex(newIndex);
+    setIsSpeaking(true);
+    speak(newIndex);
   };
 
-  // Skip backward
   const handleSkipBack = () => {
+    handleCancel();
     const newIndex = Math.max(speechIndex - 1, 0);
-    if (newIndex !== speechIndex) {
-      handleCancel();
-      setSpeechIndex(newIndex);
-      setIsSpeaking(true);
-      speak(newIndex);
-    }
+    setSpeechIndex(newIndex);
+    setIsSpeaking(true);
+    speak(newIndex);
   };
 
-  // Seeking
   const handleSeek = (e) => {
     const newCharIndex = parseInt(e.target.value, 10);
     setSpokenChars(newCharIndex);
     let accumulated = 0;
     for (let i = 0; i < contentPartsRef.current.length; i++) {
-      if (accumulated + contentPartsRef.current[i].length >= newCharIndex) {
+      const partLength = contentPartsRef.current[i].length;
+      if (accumulated + partLength >= newCharIndex) {
         setSpeechIndex(i);
         break;
       }
-      accumulated += contentPartsRef.current[i].length;
+      accumulated += partLength + 1; // +1 for space between parts
     }
   };
 
-  // When user releases seek bar
+  const handleSeekStart = () => {
+    if (isSpeaking) {
+      handlePause();
+    }
+    setIsDragging(true);
+  };
+
   const handleSeekRelease = () => {
     if (isDragging) {
-      window.speechSynthesis.cancel();
-      setIsSpeaking(true);
-      speak(speechIndex);
+      handlePlay(); // Use handlePlay to resume from the new speechIndex
       setIsDragging(false);
     }
   };
 
-  // Toggle collapse / expand with auto-play on expand
   const toggleCollapse = () => {
     if (collapsed) {
-      // Expanding: auto-start playing
       setCollapsed(false);
       handlePlay();
     } else {
-      // Collapsing: pause speech
-      window.speechSynthesis.pause();
-      setIsSpeaking(false);
-      setIsPaused(true);
+      handlePause();
       setCollapsed(true);
     }
   };
 
+  useEffect(() => {
+    if (isSpeaking) {
+      handleCancel();
+      setIsSpeaking(true);
+      speak(speechIndex);
+    }
+  }, [speechRate]);
+
+  useEffect(() => {
+    return () => {
+      handleCancel(); // Cleanup on unmount
+    };
+  }, []);
+
   return (
-    <>
+    <AnimatePresence mode="wait">
       {collapsed ? (
         <motion.div
+          key="collapsed"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.3 }}
           className="flex flex-col items-center mx-auto my-4"
         >
           <motion.button
@@ -162,13 +218,12 @@ const AudioOverview = ({
         </motion.div>
       ) : (
         <motion.div
+          key="expanded"
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.4 }}
-          className="w-full max-w-lg mx-auto my-8 px-5 py-4 rounded-2xl shadow-xl flex flex-col items-center gap-5 
-          bg-gradient-to-br from-white via-red-50 to-pink-100 
-          dark:from-gray-800 dark:via-gray-700 dark:to-gray-800"
+          className="w-full max-w-lg mx-auto my-8 px-5 py-4 rounded-2xl shadow-xl flex flex-col items-center gap-5 bg-gradient-to-br from-white via-red-50 to-pink-100 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800"
           style={{ minWidth: 300 }}
         >
           <button
@@ -179,138 +234,67 @@ const AudioOverview = ({
             ✕
           </button>
 
-          {/* Title and Settings */}
           <div className="flex items-center justify-between w-full px-2">
             <h3 className="text-lg sm:text-xl md:text-xl font-bold bg-gradient-to-r from-red-600 to-pink-500 bg-clip-text text-transparent select-none">
               🎧 Audio Overview
             </h3>
             <div
               onClick={() => setShowSettings((p) => !p)}
-              className="text-xl md:text-2xl text-green-600 hover:text-green-800 cursor-pointer select-none"
+              className="text-xl md:text-2xl text-red-600 hover:text-red-800 cursor-pointer select-none"
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") setShowSettings((p) => !p);
-              }}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setShowSettings((p) => !p) }}
               aria-label="Toggle speed settings"
             >
               <IoMdSettings />
             </div>
           </div>
 
-          {/* Controls */}
           <div className="flex justify-center items-center gap-5 px-2">
-            <motion.button
-              whileTap={{ scale: 0.85 }}
-              onClick={handleSkipBack}
-              className="p-2 rounded-full shadow-lg bg-white dark:bg-gray-700 hover:bg-red-500 hover:text-white transition"
-              aria-label="Skip backward"
-              type="button"
-              style={{ width: 40, height: 40 }}
-            >
+            <motion.button whileTap={{ scale: 0.85 }} onClick={handleSkipBack} className="p-2 rounded-full shadow-lg bg-white dark:bg-gray-700 hover:bg-red-500 hover:text-white transition" aria-label="Skip backward" type="button" style={{ width: 40, height: 40 }}>
               <IoPlaySkipBackSharp size={20} />
             </motion.button>
-
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={isSpeaking ? handlePause : handlePlay}
-              className="p-4 rounded-full shadow-lg bg-gradient-to-br from-red-500 to-pink-500 text-white flex items-center justify-center"
-              aria-label={isSpeaking ? "Pause audio" : "Play audio"}
-              type="button"
-              style={{ width: 56, height: 56 }}
-            >
+            <motion.button whileTap={{ scale: 0.9 }} onClick={isSpeaking ? handlePause : handlePlay} className="p-4 rounded-full shadow-lg bg-gradient-to-br from-red-500 to-pink-500 text-white flex items-center justify-center" aria-label={isSpeaking ? "Pause audio" : "Play audio"} type="button" style={{ width: 56, height: 56 }}>
               {isSpeaking ? <IoMdPause size={24} /> : <FaPlay size={20} />}
             </motion.button>
-
-            <motion.button
-              whileTap={{ scale: 0.85 }}
-              onClick={handleSkipForward}
-              className="p-2 rounded-full shadow-lg bg-white dark:bg-gray-700 hover:bg-red-500 hover:text-white transition"
-              aria-label="Skip forward"
-              type="button"
-              style={{ width: 40, height: 40 }}
-            >
+            <motion.button whileTap={{ scale: 0.85 }} onClick={handleSkipForward} className="p-2 rounded-full shadow-lg bg-white dark:bg-gray-700 hover:bg-red-500 hover:text-white transition" aria-label="Skip forward" type="button" style={{ width: 40, height: 40 }}>
               <IoPlaySkipForwardSharp size={20} />
             </motion.button>
           </div>
 
-          {/* Seek Bar */}
           <motion.input
             type="range"
             min={0}
             step={1}
-            max={contentPartsRef.current.reduce((a, b) => a + b.length, 0)}
+            max={contentPartsRef.current.join(" ").length}
             value={spokenChars}
-            onChange={(e) => {
-              setIsDragging(true);
-              handleSeek(e);
-            }}
+            onChange={handleSeek}
+            onMouseDown={handleSeekStart}
+            onTouchStart={handleSeekStart}
             onMouseUp={handleSeekRelease}
             onTouchEnd={handleSeekRelease}
             className="w-full h-1 rounded-full cursor-pointer"
-            style={{
-              accentColor: "#ef4444",
-            }}
+            style={{ accentColor: "#ef4444" }}
             whileHover={{ scale: 1.02 }}
             aria-label="Seek audio progress"
           />
 
-          {/* Speed Control */}
           <AnimatePresence>
             {showSettings && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="flex w-full items-center justify-between px-2"
-              >
-                <label
-                  htmlFor="rate"
-                  className="text-sm font-medium text-gray-700 dark:text-gray-300 select-none"
-                >
-                  Speed:
-                </label>
-                <input
-                  id="rate"
-                  type="range"
-                  min="0.25"
-                  max="3"
-                  step="0.1"
-                  value={speechRate}
-                  onChange={(e) => setSpeechRate(parseFloat(e.target.value))}
-                  className="w-36"
-                  style={{ accentColor: "#d110f3ff" }}
-                  aria-valuemin={0.25}
-                  aria-valuemax={3}
-                  aria-valuenow={speechRate}
-                  aria-label="Adjust speech speed"
-                />
+              <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="flex w-full items-center justify-between px-2">
+                <label htmlFor="rate" className="text-sm font-medium text-gray-700 dark:text-gray-300 select-none">Speed:</label>
+                <input id="rate" type="range" min="0.25" max="3" step="0.1" value={speechRate} onChange={(e) => setSpeechRate(parseFloat(e.target.value))} className="w-36" style={{ accentColor: "#ef4444" }} aria-valuemin={0.25} aria-valuemax={3} aria-valuenow={speechRate} aria-label="Adjust speech speed" />
                 <span className="text-sm font-semibold select-none">{speechRate}x</span>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Subtitles */}
-          <motion.div
-            key={spokenChars}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="w-full text-center text-gray-700 dark:text-white text-sm font-medium min-h-[36px] select-text px-2"
-            aria-live="polite"
-          >
-            {(() => {
-              const fullText = contentPartsRef.current.join(" ");
-              const currentIndex = spokenChars;
-              const previewLength = 60;
-              const start = Math.max(0, currentIndex - 30);
-              const end = Math.min(fullText.length, currentIndex + previewLength);
-              return fullText.slice(start, end);
-            })()}
+          <motion.div key={speechIndex} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }} className="w-full text-center text-gray-700 dark:text-white text-sm font-medium min-h-[36px] select-text px-2" aria-live="polite">
+            {contentPartsRef.current[speechIndex]}
           </motion.div>
         </motion.div>
       )}
-    </>
+    </AnimatePresence>
   );
 };
 
