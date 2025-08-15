@@ -23,27 +23,44 @@ const RecipeDetailPage = () => {
   const [speechIndex, setSpeechIndex] = useState(0);
   const [spokenChars, setSpokenChars] = useState(0);
 
-  const utteranceRef = useRef(null);
   const contentPartsRef = useRef([]);
 
-  // Load recipe
+  // ✅ IMPROVED: Load recipe and prepare content with section titles
   useEffect(() => {
     const found = allRecipes.find(
       (r) => r.id === recipeId && r.category === category
     );
     setRecipe(found);
+
     if (found) {
-      const text = `${found.name}. ${found.about}. Ingredients Required, ${found.ingredients.join(
-        ', '
-      )}. Preparation Steps, ${found.preparationSteps.join('. ')}`;
-      contentPartsRef.current = text.split('.');
+      // Build a clean array of logical parts directly for smoother, more reliable audio flow.
+      const parts = [
+        found.name,
+        "About this Recipe",
+        found.about,
+        "Ingredients",
+        ...found.ingredients, // Spread ingredients as individual spoken lines
+        "Preparation Steps",
+        ...found.preparationSteps, // Spread steps as individual spoken lines
+      ];
+
+      // Filter out any empty strings to prevent silent gaps
+      contentPartsRef.current = parts.filter(p => p && p.trim().length > 0);
+
+      // Reset speech state for the new content
       setSpeechIndex(0);
+      setSpokenChars(0);
+      
+      // If speech was active on a previous page, cancel it.
+      // The user can press play again to start the new content.
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
     }
+    // Dependency array is now correct, only runs when the recipe changes.
   }, [recipeId, category]);
 
   // Cancel speech on unload
   useEffect(() => {
-    window.onbeforeunload = () => window.speechSynthesis.cancel();
     return () => window.speechSynthesis.cancel();
   }, []);
 
@@ -135,11 +152,7 @@ const RecipeDetailPage = () => {
           onClick={handleLike}
           className="flex items-center gap-2 px-4 py-2.5 bg-red-100 text-red-600 hover:text-white hover:bg-red-500 rounded-xl shadow w-fit transition-all duration-200 focus:outline-none"
         >
-          {liked ? (
-            <FaHeart className="text-inherit" />
-          ) : (
-            <FaRegHeart className="text-inherit" />
-          )}
+          {liked ? <FaHeart className="text-inherit" /> : <FaRegHeart className="text-inherit" />}
           {liked ? 'Liked' : 'Like'}
         </button>
       </div>
@@ -154,9 +167,7 @@ const RecipeDetailPage = () => {
             placeholder="Add a comment..."
             className="w-full border rounded-lg p-4 min-h-[120px] text-black bg-white dark:bg-slate-700 dark:text-white"
           />
-          {error && (
-            <p className="text-red-600 mt-2 font-semibold">{error}</p>
-          )}
+          {error && <p className="text-red-600 mt-2 font-semibold">{error}</p>}
           <button
             type="submit"
             className="mt-3 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-semibold"
@@ -167,10 +178,7 @@ const RecipeDetailPage = () => {
         <div className="space-y-4 mt-6">
           {comments.length > 0 ? (
             comments.map((c) => (
-              <div
-                key={c.id}
-                className="bg-gray-50 dark:bg-slate-700 p-4 rounded-lg shadow"
-              >
+              <div key={c.id} className="bg-gray-50 dark:bg-slate-700 p-4 rounded-lg shadow">
                 <strong>{c.user}</strong>
                 <p>{c.text}</p>
               </div>
