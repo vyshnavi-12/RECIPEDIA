@@ -17,12 +17,12 @@ const ThemeToggle = ({ theme, toggleTheme }) => (
   <button
     onClick={toggleTheme}
     aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-    className="flex items-center justify-center w-10 h-10 text-white rounded-full hover:bg-gray-700 transition border border-amber-500 bg-slate-800"
+    className="text-white rounded-full hover:bg-gray-700 transition border border-amber-500 mb-2 bg-slate-800"
   >
     {theme === "dark" ? (
-      <IoSunnySharp className="text-yellow-400 text-xl" />
+      <IoSunnySharp className="text-yellow-400 text-2xl my-1 mx-1" />
     ) : (
-      <FaMoon className="text-yellow-400 text-lg" />
+      <FaMoon className="text-yellow-400 text-xl my-2 mx-2" />
     )}
   </button>
 );
@@ -94,11 +94,17 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
       isActive ? "text-amber-500 font-semibold" : ""
     }`;
 
+  const getMobileNavLinkClass = ({ isActive }) =>
+    `block px-3 py-2 rounded-md text-base font-medium transition-all duration-200 dark:text-white text-center hover:scale-105 ${
+      isActive
+        ? "bg-amber-400 text-amber-600 font-semibold"
+        : "text-gray-700 hover:text-white hover:bg-amber-500"
+    }`;
+
   return (
     <header className="fixed top-0 left-0 w-full bg-white/80 dark:bg-slate-800 backdrop-blur-md shadow-sm z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
           <Link
             to="/"
             className="text-3xl font-bold text-red-500 hover:text-red-600 transition-colors duration-300"
@@ -106,7 +112,6 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
             Recipedia
           </Link>
 
-          {/* Desktop nav */}
           <nav className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <NavLink
@@ -120,7 +125,6 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
             ))}
           </nav>
 
-          {/* Desktop buttons */}
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <>
@@ -160,29 +164,45 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
                     </button>
                   </div>
                 </div>
+                <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
               </>
             ) : (
               <>
                 <Link
                   to="/login"
-                  className="px-4 py-2 hover:underline text-gray-700 hover:text-amber-500 font-medium transition-colors rounded-md dark:text-white"
+                  className="
+    px-3 py-2 md:px-4 md:py-2 lg:px-5 lg:py-2.5
+    text-sm md:text-base lg:text-lg
+    hover:underline text-gray-700 hover:text-amber-500
+    font-medium transition-colors
+    rounded-md dark:text-white
+  "
                 >
                   Login
                 </Link>
+
                 <Link
                   to="/register"
-                  className="bg-amber-400 text-white px-5 py-2.5 rounded-full font-semibold hover:bg-amber-500 transition-all duration-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 hover:scale-105 whitespace-nowrap"
+                  className="
+    bg-amber-400 text-white
+    px-4 py-2 md:px-5 md:py-2.5 lg:px-6 lg:py-3
+    text-sm md:text-base lg:text-lg
+    rounded-full font-semibold
+    hover:bg-amber-500 transition-all duration-300
+    shadow-sm hover:shadow-md
+    transform hover:-translate-y-0.5 hover:scale-105
+    whitespace-nowrap
+  "
                 >
                   Sign Up
                 </Link>
+
+                <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
               </>
             )}
-            <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
           </div>
 
-          {/* Mobile menu button */}
           <div className="md:hidden flex items-center gap-3">
-            <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
             <button
               onClick={toggleMobileMenu}
               aria-label="Open main menu"
@@ -190,11 +210,12 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
             >
               {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
             </button>
+            <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
           </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Updated mobile menu: translate + opacity */}
       <div
         id="mobile-menu"
         className={`md:hidden fixed top-20 left-0 w-full bg-white dark:bg-slate-800 shadow-lg transition-transform duration-300 ease-in-out ${
