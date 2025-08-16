@@ -8,9 +8,15 @@ const Footer = () => {
       <div className="footer-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
 
         {/* Logo & Mission */}
+
+        <div className="footer-section about">
+          <h4>Recipedia</h4>
+          <p>Your go-to platform for sharing and discovering delicious recipes from around the world. Join our food-loving community!</p>
+
         <div className="footer-section mb-4 links">
           <h3>Recipedia</h3>
           <p className="leading-relaxed text-sm">Your go-to platform for sharing and discovering delicious recipes from around the world. Join our food-loving community!</p>
+
         </div>
 
         {/* Quick Links */}
