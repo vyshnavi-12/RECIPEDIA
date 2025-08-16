@@ -32,7 +32,7 @@ function App() {
 ```
       <div className="app-container">
         <ScrollToTop />
-        <Header />
+        <Header  isAuthenticated={!!sessionStorage.getItem("token")  }  onLogout={() => setIsLoggedIn(false)} />
         <Routes>
 ```       {/* Core Routes */}
           <Route path="/" element={<RecipeHome />} />
