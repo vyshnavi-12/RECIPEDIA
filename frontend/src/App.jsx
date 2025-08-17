@@ -19,6 +19,7 @@ import Explore from './pages/Explore.jsx';
 import Header from "./components/Header.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import Footer from "./components/Footer.jsx";
+import ScrollReset from "./components/ScrollReset.jsx";
 
 // App Content Component (needed for useLocation hook)
 function AppContent() {
@@ -50,7 +51,8 @@ function AppContent() {
   return (
     <div className="app-container">
       <ScrollToTop />
-
+      <ScrollReset/>
+      {/* Only show Header if NOT on auth pages */}
       {!isAuthPage && <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
 
       <Routes>
