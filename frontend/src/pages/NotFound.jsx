@@ -1,6 +1,6 @@
 import { FaExclamationTriangle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import "./Error.css"
+import "../styles/Error.css"
 
 const NotFound = () => {
   return (

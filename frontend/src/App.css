@@ -1,145 +1,240 @@
-body{
-  margin: 0;
-  padding-top: 0;
-  min-height: 100vh; /* ✅ Ensures body fills the screen height */
-}
-/* Container for authentication forms (Login & Register) */
-.auth-container {
-  background: white;
-  padding: 20px;
-  width: 320px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 264px;
-}
-
-/* Input Fields */
-input {
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-/* Buttons */
-button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  /* background-color: #007bff;
-  color: white; */
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-
+/* === Global === */
 :root {
-  --primary-color: #007bff;
-  --hover-color: #0056b3;
-  --shadow-color: rgba(0, 0, 0, 0.2);
-  --border-color: #ccc;
+  --auth-primary-color: #007bff;
+  --auth-hover-color: #0056b3;
+  --auth-shadow-color: rgba(0, 0, 0, 0.2);
+  --auth-border-color: #ccc;
 }
 
-@media screen and (max-width: 480px) {
-  .auth-container {
-    width: 90%;
-    padding: 15px;
-  }
+/* === Auth Page Fixes === */
+.auth-page-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  overflow: hidden;
 }
 
-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-  opacity: 0.7;
+/* Hide navbar and other elements on auth pages */
+body.auth-page .navbar,
+body.auth-page nav,
+body.auth-page header,
+body.auth-page .header,
+body.auth-page footer,
+body.auth-page .footer {
+  display: none !important;
+  visibility: hidden !important;
 }
 
-input:focus {
-  outline: 2px solid var(--primary-color);
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+/* Prevent scrolling on auth pages */
+body.auth-page {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
-.carousel img {
-  outline: none;
+/* Ensure auth page takes full viewport */
+body.auth-page .auth-page-container {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 9999 !important;
+}
+
+/* Hide all other page content when on auth pages */
+body.auth-page > *:not(.auth-page-container) {
+  display: none !important;
+}
+
+/* Ensure auth components have highest z-index */
+.auth-page-container * {
+  position: relative;
+  z-index: 10000;
+}
+
+/* Custom Scrollbar for Auth Forms */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+  border-radius: 2px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: #a0aec0;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #4a5568;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: #2d3748;
+}
+
+
+/* === Carousel - scoped to specific carousel classes === */
+.recipe-carousel img {
   border: none;
+  outline: none;
 }
 
-.carousel-control-prev, .carousel-control-next {
-  outline: none;
+.recipe-carousel .carousel-item img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
+
+.recipe-carousel .carousel-control-prev,
+.recipe-carousel .carousel-control-next {
   border: none;
+  outline: none;
   box-shadow: none !important;
 }
 
-.carousel-item img {
+/* === Recipe Cards - scoped === */
+.recipe-card .card-img-top {
   width: 100%;
-  height: 500px; /* Adjust as per your requirement */
-  object-fit: cover; /* Ensures the image covers the space without distortion */
+  height: 400px;
+  object-fit: cover;
 }
 
-.carousel-item img:hover {
-  outline: none;
+.recipe-card.animate-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card-img-top {
-  width: 100%;
-  height: 400px; /* Adjust height as needed */
-  object-fit: cover; /* Ensures images are properly cropped to fit */
+.recipe-card.animate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
+
+/* === Footer: Red Themed Footer (e.g. for general pages) === */
+footer.bg-red-600 {
+  background-color: #dc2626;
+  color: #fef2f2;
+  padding: 2rem 0;
+}
+
+footer h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+footer p {
+  color: #fecaca;
+  margin-top: 0.25rem;
+}
+
+footer nav a {
+  color: #fef2f2;
+  text-decoration: none;
+  margin-right: 1.5rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+footer nav a:hover {
+  color: #f87171;
+  text-decoration: underline;
+}
+
+footer .flex.space-x-4 a {
+  color: #fef2f2;
+  transition: color 0.3s ease;
+}
+
+footer .flex.space-x-4 a:hover {
+  color: #fca5a5;
+}
+
+footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  footer .container {
+    flex-direction: row;
+  }
+}
+
+footer .text-center.text-red-200 {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  color: #fecaca;
+}
+
+/* === Footer: Recipe Footer (e.g. for recipe-specific pages) === */
 .recipe-footer {
   background-color: #333;
-  color: white;
+  color: #fff;
   padding: 40px 0 20px;
   margin-top: 50px;
 }
 
-.footer-content {
+.recipe-footer .footer-content {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   padding: 0 20px;
 }
 
-.footer-section {
+.recipe-footer .footer-section {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
-.footer-section h4 {
-  color: #fff;
-  margin-bottom: 15px;
+.recipe-footer .footer-section h4 {
   font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
-.footer-section a {
+.recipe-footer .footer-section a {
   color: #ddd;
   text-decoration: none;
   transition: color 0.3s;
 }
 
-.footer-section a:hover {
+.recipe-footer .footer-section a:hover {
   color: #fff;
 }
 
-.footer-section input {
+.recipe-footer .footer-section input {
   padding: 8px;
-  border-radius: 4px;
   border: none;
-  margin-bottom: 10px;
+  border-radius: 4px;
+  margin-bottom: 8px;
 }
 
-.subscribe-btn {
-  background-color: #4CAF50;
-  color: white;
+.recipe-footer .subscribe-btn {
+  background-color: #4caf50;
+  color: #fff;
   padding: 8px 15px;
   border: none;
   border-radius: 4px;
@@ -147,62 +242,25 @@ input:focus {
   transition: background-color 0.3s;
 }
 
-.subscribe-btn:hover {
+.recipe-footer .subscribe-btn:hover {
   background-color: #45a049;
 }
 
-.footer-bottom {
+.recipe-footer .footer-bottom {
   text-align: center;
   padding-top: 20px;
   margin-top: 30px;
   border-top: 1px solid #555;
+  font-size: 14px;
 }
 
 @media (max-width: 768px) {
-  .footer-content {
+  .recipe-footer .footer-content {
     grid-template-columns: 1fr;
     text-align: center;
   }
-  
-  .footer-section {
+
+  .recipe-footer .footer-section {
     align-items: center;
   }
-}
-.bg-dark {
-    background-color: #212529 !important;
-}
-
-.text-light {
-    color: #f8f9fa !important;
-}
-
-.footer h5 {
-    font-weight: 600;
-    margin-bottom: 1.2rem;
-}
-
-.footer ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer ul li a:hover {
-    color: #0d6efd !important;
-    transition: color 0.3s ease;
-}
-
-.footer .bi {
-    transition: transform 0.3s ease;
-}
-
-.footer .bi:hover {
-    transform: scale(1.2);
-}
-
-.footer hr {
-    opacity: 0.2;
-    margin: 1.5rem 0;
-}
-
-.gap-3 {
-    gap: 1rem !important;
 }

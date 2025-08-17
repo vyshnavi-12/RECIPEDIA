@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from 'react-icons/fa';
-import "./UserProfile.css";
+import "../styles/UserProfile.css"; 
 
 const UserProfile = () => {
   const navigate = useNavigate();
