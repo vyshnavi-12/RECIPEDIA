@@ -1,8 +1,9 @@
+
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./styles/animations.css";
 
-// Reusable and Core Page Imports with .jsx extension
+// Page Imports
 import RecipeListPage from "./pages/RecipeListPage.jsx";
 import RecipeDetailPage from "./pages/RecipeDetailPage.jsx";
 import RecipeHome from "./pages/RecipeHome.jsx";
@@ -11,49 +12,58 @@ import Register from "./pages/Register.jsx";
 import UserProfile from "./pages/UserProfile.jsx";
 import AddRecipe from "./pages/AddRecipe.jsx";
 import About from "./pages/About.jsx";
-import NotFound from './pages/NotFound.jsx';
-import ErrorPage from './pages/ErrorPage.jsx';
-import Explore from './pages/Explore.jsx';
+import NotFound from "./pages/NotFound.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
+import Explore from "./pages/Explore.jsx";
 
-// Component Imports with .jsx extension
+// Component Imports
 import Header from "./components/Header.jsx";
-import ScrollToTop from "./components/ScrollToTop.jsx";
 import Footer from "./components/Footer.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 import ScrollReset from "./components/ScrollReset.jsx";
 
-// App Content Component (needed for useLocation hook)
+// AppContent handles all routes and layout
 function AppContent() {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+  // Determine if current page is an auth page
+  const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
 
+  // Check login status on mount
   useEffect(() => {
     const user = localStorage.getItem("username");
     setIsLoggedIn(!!user);
   }, []);
 
+  // Add/remove body classes for auth pages
   useEffect(() => {
     if (isAuthPage) {
-      document.body.classList.add('auth-page');
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add("auth-page");
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.classList.remove('auth-page');
-      document.body.style.overflow = 'auto';
+      document.body.classList.remove("auth-page");
+      document.body.style.overflow = "auto";
     }
 
     return () => {
-      document.body.classList.remove('auth-page');
-      document.body.style.overflow = 'auto';
+      document.body.classList.remove("auth-page");
+      document.body.style.overflow = "auto";
     };
   }, [isAuthPage]);
 
   return (
     <div className="app-container">
       <ScrollToTop />
-      <ScrollReset/>
-      {/* Only show Header if NOT on auth pages */}
-      {!isAuthPage && <Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
+      <ScrollReset />
+
+      {/* Show Header only if NOT on auth pages */}
+      {!isAuthPage && (
+        <Header
+          isAuthenticated={!!sessionStorage.getItem("token")}
+          onLogout={() => setIsLoggedIn(false)}
+        />
+      )}
 
       <Routes>
         {/* Core Routes */}
@@ -70,7 +80,7 @@ function AppContent() {
         <Route path="/about" element={<About />} />
         <Route path="/explore" element={<Explore />} />
 
-        {/* Dynamic Category Pages */}
+        {/* Category Pages */}
         <Route path="/veg" element={<RecipeListPage category="veg" />} />
         <Route path="/nonveg" element={<RecipeListPage category="nonveg" />} />
         <Route path="/dessert" element={<RecipeListPage category="dessert" />} />
@@ -84,6 +94,7 @@ function AppContent() {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
+      {/* Show Footer only if NOT on auth pages */}
       {!isAuthPage && <Footer />}
     </div>
   );
