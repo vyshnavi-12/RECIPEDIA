@@ -275,6 +275,11 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.post("/logout", (req, res) => {
+  res.status(200).json({ message: "Logged out successfully" });
+});
+
+
 // Protected route - Get user profile
 app.get("/profile/:email", authenticateToken, async (req, res) => {
   try {
