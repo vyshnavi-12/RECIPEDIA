@@ -26,9 +26,10 @@ app.use('/recipes', recipeRoutes);
 app.use(errorHandler);
 
 // Connect DB & Start Server
-mongoose.connect(process.env.MONGO_URL)
-  .then(() => {
-    console.log('DB Connected Successfully');
-    app.listen(port, () => console.log(`Server running on port ${port}`));
-  })
-  .catch(err => console.error('DB Connection Error:', err));
+
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('DB Connection Error:', err));
