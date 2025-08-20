@@ -31,10 +31,10 @@ const Footer = () => {
         <div className="footer-section mb-4 links">
           <h4>Categories</h4>
           <ul>
-            <li><a href="/category/vegan" className="hover:text-white transition-colors duration-300">Vegan</a></li>
-            <li><a href="/category/desserts" className="hover:text-white transition-colors duration-300">Desserts</a></li>
-            <li><a href="/category/quick-meals" className="hover:text-white transition-colors duration-300">Quick Meals</a></li>
-            <li><a href="/category/healthy-snacks" className="hover:text-white transition-colors duration-300">Healthy Snacks</a></li>
+            <li><a href="/veg" className="hover:text-white transition-colors duration-300">Veg</a></li>
+            <li><a href="/nonveg" className="hover:text-white transition-colors duration-300">Non-Veg</a></li>
+            <li><a href="/dessert" className="hover:text-white transition-colors duration-300">Dessert</a></li>
+            <li><a href="/beverages" className="hover:text-white transition-colors duration-300">Beverages</a></li>
           </ul>
         </div>
 
