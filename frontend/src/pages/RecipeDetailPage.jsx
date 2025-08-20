@@ -196,7 +196,6 @@ const [value, setValue] = React.useState(3);
               <div key={c.id} className="bg-gray-50 dark:bg-slate-700 p-4 rounded-lg shadow">
                 <strong>{c.user}</strong>
                 <p>{c.text}</p>
-                      <Rating value={c.rating} readOnly size="large" />
               </div>
             ))
           ) : (
