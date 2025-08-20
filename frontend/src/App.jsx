@@ -25,7 +25,6 @@ import Explore from "./pages/Explore.jsx";
 import Navbar from "./components/Header.jsx"; // Changed from Header to Navbar
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import Footer from "./components/Footer.jsx";
-import ScrollToTop from "./components/ScrollToTop.jsx";
 import ScrollReset from "./components/ScrollReset.jsx";
 
 // AppContent handles all routes and layout
