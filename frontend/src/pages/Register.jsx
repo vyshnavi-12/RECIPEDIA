@@ -85,7 +85,7 @@ const Register = ({ setIsLoggedIn }) => {
 
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/register`,
+        `${import.meta.env.VITE_API_BASE_URL}/auth/register`,
         {
           username: formData.username.trim(),
           email: formData.email.trim().toLowerCase(),

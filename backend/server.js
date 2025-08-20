@@ -14,22 +14,31 @@ const recipeRoutes = require('./routes/recipe.routes'); // ensure file name matc
 const app = express();
 
 // ----- CORS -----
-const defaultAllowedOrigins = ['http://localhost:3001'];
+const defaultAllowedOrigins = [
+  "http://localhost:5173",                // Vite frontend (local)
+  "http://localhost:3001",                // old dev server (if you still use it)
+  "https://backend-recipedia.onrender.com" // deployed backend (Render)
+];
+
 const allowedOrigins = new Set(
-  (process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : [])
+  (process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(",") : [])
     .map(s => s.trim())
     .filter(Boolean)
     .concat(defaultAllowedOrigins)
 );
 
-app.use(cors({
-  origin: (origin, cb) => {
-    // Allow non-browser requests or those from allowed origins
-    if (!origin || allowedOrigins.has(origin)) return cb(null, true);
-    return cb(new Error(`CORS blocked for origin: ${origin}`));
-  },
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: (origin, cb) => {
+      if (!origin || allowedOrigins.has(origin)) {
+        return cb(null, true);
+      }
+      return cb(new Error(`CORS blocked for origin: ${origin}`));
+    },
+    credentials: true,
+  })
+);
+
 
 // Parse JSON
 app.use(express.json());
@@ -50,16 +59,16 @@ app.use(errorHandler);
 
 // ----- DB + Server start -----
 const PORT = process.env.PORT || 3000;
-const MONGO_URI = process.env.MONGO_URI;
+const MONGO_URL = process.env.MONGO_URL;
 
-if (!MONGO_URI) {
+if (!MONGO_URL) {
   console.error('Missing MONGO_URI env var. Set it in Render → Environment.');
   // Start server anyway to expose healthz (optional)
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`HTTP server listening on ${PORT} (no DB)`);
   });
 } else {
-  mongoose.connect(MONGO_URI)
+  mongoose.connect(MONGO_URL)
     .then(() => {
       console.log('MongoDB connected');
       app.listen(PORT, '0.0.0.0', () => {
