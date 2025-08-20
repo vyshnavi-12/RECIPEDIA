@@ -107,7 +107,7 @@ const HeroSection = () => {
   );
 
   return (
-    <section className="relative h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <section className="relative top-[60px] h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Background Slider */}
       <div className="absolute inset-0">
         {heroSlides.map((slide, index) => (
@@ -138,16 +138,16 @@ const HeroSection = () => {
       {/* Main Content */}
       <div className="relative z-10 h-full flex items-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[80vh]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 md:gap-8 gap-10 items-center min-h-[80vh]">
             {/* Text Content */}
-            <div className="lg:col-span-7 text-white mb-10 lg:mb-0">
+            <div className="lg:col-span-7 text-white mb-10 lg:mb-0 relative bottom-[30px]">
               <div className={`inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r ${currentSlideData.accent} bg-white/10 backdrop-blur-sm border border-white/20 mb-6 transform transition-all duration-700 ${isAnimating ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'}`}>
                 <ChefHat className="w-4 h-4 mr-2 animate-spin" style={{ animationDuration: '3s' }} />
                 <span className="text-sm font-semibold">Welcome to Recipedia</span>
               </div>
 
-              <div className="mb-6 overflow-hidden">
-                <h1 className={`text-4xl sm:text-5xl lg:text-7xl font-black leading-tight transform transition-all duration-700 delay-100 ${isAnimating ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'}`}>
+              <div className="mb-4 overflow-hidden">
+                <h1 className={`text-4xl sm:text-4xl lg:text-6xl font-black leading-tight transform transition-all duration-700 delay-100 ${isAnimating ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'}`}>
                   <span className="block">{currentSlideData.title}</span>
                   <span className={`block bg-gradient-to-r ${currentSlideData.accent} bg-clip-text text-transparent animate-pulse`}>
                     {currentSlideData.subtitle}
@@ -155,13 +155,13 @@ const HeroSection = () => {
                 </h1>
               </div>
 
-              <div className="mb-8 overflow-hidden">
+              <div className="mb-3 overflow-hidden">
                 <p className={`text-lg sm:text-xl text-gray-200 max-w-2xl leading-relaxed transform transition-all duration-700 delay-200 ${isAnimating ? 'translate-y-8 opacity-0' : 'translate-y-0 opacity-100'}`}>
                   {currentSlideData.description}
                 </p>
               </div>
 
-              <div className={`flex flex-wrap gap-6 mb-8 transform transition-all duration-700 delay-300 ${isAnimating ? 'translate-y-6 opacity-0' : 'translate-y-0 opacity-100'}`}>
+              <div className={`flex flex-wrap gap-6 md:mb-4 mb-6  transform transition-all duration-700 delay-300 ${isAnimating ? 'translate-y-6 opacity-0' : 'translate-y-0 opacity-100'}`}>
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/20">
                   <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${currentSlideData.accent} animate-pulse`} />
                   <span className="text-sm font-semibold">{currentSlideData.stats.recipes || currentSlideData.stats.tutorials} Recipes</span>
@@ -175,14 +175,14 @@ const HeroSection = () => {
               <div className={`flex flex-col sm:flex-row gap-4 transform transition-all duration-700 delay-500 ${isAnimating ? 'translate-y-4 opacity-0' : 'translate-y-0 opacity-100'}`}>
                 <a
                   href={currentSlideData.buttonLink}
-                  className={`group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r ${currentSlideData.accent} text-white font-bold text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 hover:-translate-y-1`}
+                  className={`group inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r ${currentSlideData.accent} text-white font-bold text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300 hover:-translate-y-1`}
                 >
                   {currentSlideData.buttonText}
                   <Play className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                 </a>
                 <a
                   href="/register"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold text-lg rounded-full border-2 border-white/30 hover:bg-white hover:text-gray-900 transform hover:scale-105 transition-all duration-300 hover:-translate-y-1"
+                  className="inline-flex items-center justify-center px-7 py-3 bg-white/10 backdrop-blur-sm text-white font-bold text-lg rounded-full border-2 border-white/30 hover:bg-white hover:text-gray-900 transform hover:scale-105 transition-all duration-300 hover:-translate-y-1"
                 >
                   Join Community
                   <Users className="w-5 h-5 ml-2" />
@@ -204,7 +204,7 @@ const HeroSection = () => {
       </div>
 
       {/* Desktop Bottom Navigation (visible lg+) */}
-      <div className="hidden lg:flex absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 items-center gap-4 bg-white/10 backdrop-blur-lg rounded-full p-2 border border-white/20">
+      <div className="hidden lg:flex absolute bottom-[50px] left-1/2 transform -translate-x-1/2 z-20 items-center gap-4 bg-white/10 backdrop-blur-lg rounded-full p-2 border border-white/20">
         {/* Previous Button */}
         <button
           onClick={prevSlide}

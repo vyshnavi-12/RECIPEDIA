@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import {
   FaBars,
   FaTimes,
@@ -35,7 +36,7 @@ ThemeToggle.propTypes = {
   toggleTheme: PropTypes.func.isRequired,
 };
 
-const Navbar = ({ isAuthenticated, onLogout }) => {
+const Navbar = ({ isAuthenticated,isLoggedIn, setIsLoggedIn,onLogout}) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [theme, setTheme] = useState(
@@ -80,6 +81,7 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
     closeMobileMenu();
     navigate("/");
   };
+
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -332,7 +334,7 @@ const Navbar = ({ isAuthenticated, onLogout }) => {
 
 Navbar.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  onLogout: PropTypes.func.isRequired,
+    onLogout: PropTypes.func.isRequired,
 };
 
 export default Navbar;
