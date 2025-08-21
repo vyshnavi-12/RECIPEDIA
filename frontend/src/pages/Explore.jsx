@@ -115,62 +115,64 @@ const ExplorePage = () => {
                 />
               </div>
 
-              <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                {section.data.length > 0 ? (
-                  section.data.map((recipe) => (
-                    <motion.div
-                      key={recipe.id}
-                      whileHover={{ y: -6 }}
-                      transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                      onClick={() =>
-                        navigate(`/recipes/${recipe.category}/${recipe.slug}`)
-                      }
-                      className="group cursor-pointer rounded-2xl overflow-hidden bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/15 transition-all duration-300 shadow-lg hover:shadow-2xl flex flex-col"
-                    >
-                      <div className="relative">
-                        <img
-                          src={`${recipe.imageUrl}?auto=format&fit=crop&w=800&h=450&q=80`}
-                          alt={recipe.title}
-                          className="w-full h-44 md:h-48 object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <span
-                          className={`absolute top-3 left-3 px-3 py-1 text-xs font-semibold rounded-full text-white shadow-md bg-gradient-to-r ${accent}`}
-                        >
-                          {recipe.category}
-                        </span>
-                      </div>
-                      <div className="p-5 flex flex-col flex-grow">
-                        <h3 className="text-lg font-bold text-white mb-1">
-                          {recipe.title}
-                        </h3>
-                        <p className="text-sm text-gray-200 line-clamp-2 flex-grow">
-                          {recipe.description}
-                        </p>
-
-                        <div className="mt-4">
+              <div className="relative">
+                <div className="flex overflow-x-auto space-x-6 snap-x snap-mandatory pb-4 scrollbar-hide md:scrollbar-default">
+                  {section.data.length > 0 ? (
+                    section.data.map((recipe) => (
+                      <motion.div
+                        key={recipe.id}
+                        whileHover={{ y: -6 }}
+                        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                        onClick={() =>
+                          navigate(`/recipes/${recipe.category}/${recipe.slug}`)
+                        }
+                        className="group cursor-pointer rounded-2xl overflow-hidden bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/15 transition-all duration-300 shadow-lg hover:shadow-2xl flex flex-col min-w-[280px] max-w-[280px] md:min-w-[320px] md:max-w-[320px] snap-start"
+                      >
+                        <div className="relative">
+                          <img
+                            src={`${recipe.imageUrl}?auto=format&fit=crop&w=800&h=450&q=80`}
+                            alt={recipe.title}
+                            className="w-full h-44 md:h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
                           <span
-                            className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r ${accent} border border-white/10 group-hover:shadow-xl transition`}
+                            className={`absolute top-3 left-3 px-3 py-1 text-xs font-semibold rounded-full text-white shadow-md bg-gradient-to-r ${accent}`}
                           >
-                            View Recipe
-                            <svg
-                              className="ml-2 w-4 h-4 transform group-hover:translate-x-0.5 transition-transform"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              viewBox="0 0 24 24"
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
+                            {recipe.category}
                           </span>
                         </div>
-                      </div>
-                    </motion.div>
-                  ))
-                ) : (
-                  <p className="text-gray-300 col-span-full text-center">
-                    No recipes found in this category.
-                  </p>
-                )}
+                        <div className="p-5 flex flex-col flex-grow">
+                          <h3 className="text-lg font-bold text-white mb-1">
+                            {recipe.title}
+                          </h3>
+                          <p className="text-sm text-gray-200 line-clamp-2 flex-grow">
+                            {recipe.description}
+                          </p>
+
+                          <div className="mt-4">
+                            <span
+                              className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r ${accent} border border-white/10 group-hover:shadow-xl transition`}
+                            >
+                              View Recipe
+                              <svg
+                                className="ml-2 w-4 h-4 transform group-hover:translate-x-0.5 transition-transform"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                              >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))
+                  ) : (
+                    <p className="text-gray-300 text-center py-8 w-full">
+                      No recipes found in this category.
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           );
